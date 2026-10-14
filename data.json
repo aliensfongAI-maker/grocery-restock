@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T16:25:30+08:00",
+  "updatedAt": "2026-10-14T17:55:57+08:00",
   "items": [
     {
       "type": "用紙／清潔",
@@ -7,7 +7,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "",
+      "note": "約每 23 日一包",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -137,7 +137,7 @@
       "lastPurchased": "2026-05-19",
       "daysSince": 148,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 149 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -168,8 +168,8 @@
       "name": "嬰幼兒濕廁紙",
       "lastPurchased": "2026-05-26",
       "daysSince": 141,
-      "suggest": "優先",
-      "note": "",
+      "suggest": "暫緩",
+      "note": "約每 201 日一包",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -234,7 +234,7 @@
       "lastPurchased": "2026-08-10",
       "daysSince": 65,
       "suggest": "優先",
-      "note": "約每 47 日一包",
+      "note": "約每 6 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -297,8 +297,8 @@
       "name": "洗潔精",
       "lastPurchased": "2026-09-19",
       "daysSince": 25,
-      "suggest": "優先",
-      "note": "約每 114 日一包",
+      "suggest": "暫緩",
+      "note": "約每 18 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -341,7 +341,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
       "suggest": "暫緩",
-      "note": "約每 67 日一包",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -406,7 +406,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
       "suggest": "暫緩",
-      "note": "",
+      "note": "約每 135 日一包",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -441,7 +441,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
       "suggest": "暫緩",
-      "note": "近已補，暫緩",
+      "note": "約每 32 日一卷；近已補，暫緩",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -516,7 +516,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
       "suggest": "暫緩",
-      "note": "約每 52 日一包",
+      "note": "約每 37 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -560,7 +560,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
       "suggest": "暫緩",
-      "note": "",
+      "note": "約每 251 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -626,7 +626,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "家居送貨",
+      "note": "約每 10 日一件；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -704,7 +704,7 @@
       "lastPurchased": "2026-05-26",
       "daysSince": 141,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 14 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -798,7 +798,7 @@
       "lastPurchased": "2026-08-03",
       "daysSince": 72,
       "suggest": "優先",
-      "note": "約每 91 日一包",
+      "note": "約每 78 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -853,7 +853,7 @@
       "lastPurchased": "2026-08-05",
       "daysSince": 70,
       "suggest": "優先",
-      "note": "約每 86 日一包",
+      "note": "約每 85 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -952,7 +952,7 @@
       "lastPurchased": "2026-09-05",
       "daysSince": 39,
       "suggest": "優先",
-      "note": "約每 75 日一包",
+      "note": "約每 10 日一罐",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1006,8 +1006,8 @@
       "name": "學習褲／拉拉褲",
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
-      "suggest": "暫緩",
-      "note": "約每 34 日一包",
+      "suggest": "優先",
+      "note": "約每 5 日一包",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1106,8 +1106,8 @@
       "name": "嬰兒濕紙巾",
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
-      "suggest": "暫緩",
-      "note": "約每 85 日一包",
+      "suggest": "優先",
+      "note": "約每 5 日一包",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1175,7 +1175,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "紙盒／利樂；唔歸入膠樽裝",
+      "note": "約每 8 日一件；紙盒／利樂；唔歸入膠樽裝",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1274,7 +1274,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "含 C.C.Lemon；含薏米露／蘋果茶；家居送貨",
+      "note": "約每 5 日一件；含 C.C.Lemon；含薏米露／蘋果茶；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1457,8 +1457,8 @@
       "name": "即食麵／米粉（需煮）",
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
-      "suggest": "優先",
-      "note": "袋裝／需煮熟類",
+      "suggest": "暫緩",
+      "note": "約每 16 日一包；袋裝／需煮熟類",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1553,8 +1553,8 @@
       "name": "清雞湯（紙盒）",
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
-      "suggest": "優先",
-      "note": "唔歸入膠樽裝",
+      "suggest": "暫緩",
+      "note": "約每 135 日一件；唔歸入膠樽裝",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1602,7 +1602,7 @@
       "lastPurchased": "2026-05-12",
       "daysSince": 155,
       "suggest": "優先",
-      "note": "睇雪櫃",
+      "note": "約每 31 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1634,7 +1634,7 @@
       "lastPurchased": "2026-06-23",
       "daysSince": 113,
       "suggest": "優先",
-      "note": "睇雪櫃",
+      "note": "約每 3 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1676,7 +1676,7 @@
       "lastPurchased": "2026-07-04",
       "daysSince": 102,
       "suggest": "優先",
-      "note": "睇雪櫃",
+      "note": "約每 18 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1710,7 +1710,7 @@
       "lastPurchased": "2026-07-16",
       "daysSince": 90,
       "suggest": "優先",
-      "note": "睇雪櫃",
+      "note": "約每 56 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1758,7 +1758,7 @@
       "lastPurchased": "2026-07-19",
       "daysSince": 87,
       "suggest": "優先",
-      "note": "睇雪櫃",
+      "note": "約每 16 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1814,7 +1814,7 @@
       "lastPurchased": "2026-07-21",
       "daysSince": 85,
       "suggest": "優先",
-      "note": "睇雪櫃",
+      "note": "約每 13 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1902,8 +1902,8 @@
       "name": "檸檬",
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
-      "suggest": "優先",
-      "note": "睇雪櫃",
+      "suggest": "暫緩",
+      "note": "約每 15 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1980,7 +1980,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
       "suggest": "優先",
-      "note": "睇雪櫃；消耗快",
+      "note": "約每 7 日一件；睇雪櫃；消耗快",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2099,7 +2099,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
       "suggest": "優先",
-      "note": "睇雪櫃",
+      "note": "約每 14 日一件；睇雪櫃",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2167,7 +2167,7 @@
       "lastPurchased": "2026-09-23",
       "daysSince": 21,
       "suggest": "優先",
-      "note": "時令",
+      "note": "約每 7 日一件；時令",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2209,7 +2209,7 @@
       "lastPurchased": "2026-10-13",
       "daysSince": 1,
       "suggest": "暫緩",
-      "note": "康怡已簽收 13/10",
+      "note": "約每 6 日一件；康怡已簽收 13/10",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2296,7 +2296,7 @@
       "lastPurchased": "2026-10-13",
       "daysSince": 1,
       "suggest": "暫緩",
-      "note": "康怡已簽收 13/10",
+      "note": "約每 68 日一件；康怡已簽收 13/10",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2329,7 +2329,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "家居送貨",
+      "note": "約每 4 日一件；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2416,7 +2416,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "家居送貨",
+      "note": "約每 4 日一件；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2514,7 +2514,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "與扒分開；家居＋康怡待取",
+      "note": "約每 6 日一件；與扒分開；家居＋康怡待取",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2588,7 +2588,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "與柳分開；家居＋康怡待取",
+      "note": "約每 7 日一件；與柳分開；家居＋康怡待取",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2650,7 +2650,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "家居送貨",
+      "note": "約每 21 日一件；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2716,7 +2716,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "三款合併；家居送貨",
+      "note": "約每 4 日一件；三款合併；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2834,7 +2834,7 @@
       "lastPurchased": "2026-05-06",
       "daysSince": 161,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 30 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2856,7 +2856,7 @@
       "lastPurchased": "2026-07-28",
       "daysSince": 78,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 16 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2939,7 +2939,7 @@
       "lastPurchased": "2026-08-07",
       "daysSince": 68,
       "suggest": "優先",
-      "note": "約每 55 日一包",
+      "note": "約每 10 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3005,7 +3005,7 @@
       "lastPurchased": "2026-08-07",
       "daysSince": 68,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 51 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3027,7 +3027,7 @@
       "lastPurchased": "2026-09-05",
       "daysSince": 39,
       "suggest": "優先",
-      "note": "三文魚扒／柳本週已夠，可輪換",
+      "note": "約每 6 日一件；三文魚扒／柳本週已夠，可輪換",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3119,7 +3119,7 @@
       "lastPurchased": "2026-09-19",
       "daysSince": 25,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 13 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3143,7 +3143,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 23 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3186,7 +3186,7 @@
       "lastPurchased": "2026-03-19",
       "daysSince": 209,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 19 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3284,7 +3284,7 @@
       "lastPurchased": "2026-07-16",
       "daysSince": 90,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 12 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3318,8 +3318,8 @@
       "name": "堅果",
       "lastPurchased": "2026-07-21",
       "daysSince": 85,
-      "suggest": "優先",
-      "note": "約每 88 日一包",
+      "suggest": "暫緩",
+      "note": "約每 263 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3375,7 +3375,7 @@
       "lastPurchased": "2026-07-24",
       "daysSince": 82,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 93 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3433,8 +3433,8 @@
       "name": "岩鹽",
       "lastPurchased": "2026-09-19",
       "daysSince": 25,
-      "suggest": "優先",
-      "note": "",
+      "suggest": "暫緩",
+      "note": "約每 70 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3476,7 +3476,7 @@
       "lastPurchased": "2026-09-29",
       "daysSince": 15,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 51 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3528,7 +3528,7 @@
       "lastPurchased": "2026-09-29",
       "daysSince": 15,
       "suggest": "優先",
-      "note": "約每 34 日一包",
+      "note": "約每 10 日一包",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3623,7 +3623,7 @@
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
       "suggest": "暫緩",
-      "note": "約每 74 日一包",
+      "note": "約每 115 日一支",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3667,7 +3667,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
       "suggest": "暫緩",
-      "note": "",
+      "note": "約每 16 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3781,7 +3781,7 @@
       "lastPurchased": "2026-10-13",
       "daysSince": 1,
       "suggest": "暫緩",
-      "note": "康怡已簽收 13/10",
+      "note": "約每 42 日一件；康怡已簽收 13/10",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3814,7 +3814,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "家居送貨",
+      "note": "約每 19 日一件；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3859,8 +3859,8 @@
       "name": "衛生巾",
       "lastPurchased": "2026-05-12",
       "daysSince": 155,
-      "suggest": "優先",
-      "note": "",
+      "suggest": "暫緩",
+      "note": "約每 173 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3916,8 +3916,8 @@
       "name": "牙膏",
       "lastPurchased": "2026-07-16",
       "daysSince": 90,
-      "suggest": "優先",
-      "note": "",
+      "suggest": "暫緩",
+      "note": "約每 56 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4016,7 +4016,7 @@
       "lastPurchased": "2026-08-05",
       "daysSince": 70,
       "suggest": "優先",
-      "note": "約每 70 日一包",
+      "note": "約每 21 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4083,7 +4083,7 @@
       "lastPurchased": "2026-08-10",
       "daysSince": 65,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 32 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4164,7 +4164,7 @@
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
       "suggest": "暫緩",
-      "note": "",
+      "note": "約每 98 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4198,7 +4198,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
       "suggest": "暫緩",
-      "note": "",
+      "note": "約每 69 日一件",
       "image": null,
       "imageAlt": null,
       "brands": [
