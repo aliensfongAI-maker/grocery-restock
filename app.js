@@ -65,7 +65,7 @@
       cancel: "取消",
       excludeConfirm: "確認剔除",
       hold: "手動暫緩",
-      holdHelp: "用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「未使買住」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。",
+      holdHelp: "用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「未使買住」，上次送貨同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。",
       holdPlaceholder: "例如：今日超市買咗",
       holdConfirm: "確認暫緩",
       updatedPrefix: "上次更新：",
@@ -78,6 +78,7 @@
       processingPrefix: "處理緊：",
       actionPrefix: "操作：",
       daysValue: "{n}日",
+      daysUntil: "還有 {n} 日",
       daysLabel: "距今天數",
       restore: "回復",
       unhold: "回復日子",
@@ -87,7 +88,8 @@
       excludedAtLabel: "剔除時間",
       noBrand: "未有牌子",
       publicLink: "公開連結",
-      lastPurchased: "上次購買",
+      lastPurchased: "上次送貨",
+      qtyValue: "{n} 件",
       noBrandDetail: "未有牌子明細",
       colName: "品名",
       colDays: "距今",
@@ -158,7 +160,7 @@
       cancel: "Cancel",
       excludeConfirm: "Confirm skip",
       hold: "Manual hold",
-      holdHelp: "Use this when you already restocked, but data.json has not updated. The item stays on the restock list and is not hidden. The suggestion shows as “Not needed yet”, and last purchase and days ago count from the hold date. To bring back the dates and suggestion from data.json, choose “Restore dates”.",
+      holdHelp: "Use this when you already restocked, but data.json has not updated. The item stays on the restock list and is not hidden. The suggestion shows as “Not needed yet”, and last delivery and days ago count from the hold date. To bring back the dates and suggestion from data.json, choose “Restore dates”.",
       holdPlaceholder: "e.g. bought at the supermarket today",
       holdConfirm: "Confirm hold",
       updatedPrefix: "Updated: ",
@@ -171,6 +173,7 @@
       processingPrefix: "Working: ",
       actionPrefix: "Actions: ",
       daysValue: "{n} days",
+      daysUntil: "{n} days left",
       daysLabel: "Days ago",
       restore: "Restore",
       unhold: "Restore dates",
@@ -180,7 +183,8 @@
       excludedAtLabel: "Skipped at",
       noBrand: "No brand",
       publicLink: "Public link",
-      lastPurchased: "Last bought",
+      lastPurchased: "Last delivery",
+      qtyValue: "{n} pcs",
       noBrandDetail: "No brand details",
       colName: "Item",
       colDays: "Ago",
@@ -251,7 +255,7 @@
       cancel: "Batal",
       excludeConfirm: "Konfirmasi lewati",
       hold: "Tunda manual",
-      holdHelp: "Pakai ini kalau barang sudah diisi ulang, tetapi data.json belum diperbarui. Item tetap di daftar restok dan tidak disembunyikan. Saran ditampilkan sebagai “Belum perlu beli”, lalu tanggal beli terakhir dan hari sejak itu dihitung dari tanggal tunda. Untuk mengembalikan tanggal dan saran dari data.json, pilih “Pulihkan tanggal”.",
+      holdHelp: "Pakai ini kalau barang sudah diisi ulang, tetapi data.json belum diperbarui. Item tetap di daftar restok dan tidak disembunyikan. Saran ditampilkan sebagai “Belum perlu beli”, lalu pengiriman terakhir dan hari sejak itu dihitung dari tanggal tunda. Untuk mengembalikan tanggal dan saran dari data.json, pilih “Pulihkan tanggal”.",
       holdPlaceholder: "misalnya: beli di supermarket hari ini",
       holdConfirm: "Konfirmasi tunda",
       updatedPrefix: "Diperbarui: ",
@@ -264,6 +268,7 @@
       processingPrefix: "Memproses: ",
       actionPrefix: "Aksi: ",
       daysValue: "{n} hari",
+      daysUntil: "{n} hari lagi",
       daysLabel: "Hari lalu",
       restore: "Pulihkan",
       unhold: "Pulihkan tanggal",
@@ -273,7 +278,8 @@
       excludedAtLabel: "Waktu dilewati",
       noBrand: "Tanpa merek",
       publicLink: "Tautan publik",
-      lastPurchased: "Terakhir beli",
+      lastPurchased: "Pengiriman terakhir",
+      qtyValue: "{n} buah",
       noBrandDetail: "Belum ada detail merek",
       colName: "Nama",
       colDays: "Lalu",
@@ -726,6 +732,55 @@
     }
   }
 
+  function finiteNumber(value) {
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    if (typeof value === "string") {
+      const text = value.trim();
+      if (text && /^-?\d+(\.\d+)?$/.test(text)) {
+        const n = Number(text);
+        if (Number.isFinite(n)) return n;
+      }
+    }
+    return null;
+  }
+
+  /** Calendar days from HKT today to ymd. Negative means that date is in the past. */
+  function daysAfterHktToday(ymd) {
+    if (typeof ymd !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return null;
+    const today = hktYmd(new Date());
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(today)) return null;
+    const start = Date.UTC(+today.slice(0, 4), +today.slice(5, 7) - 1, +today.slice(8, 10));
+    const end = Date.UTC(+ymd.slice(0, 4), +ymd.slice(5, 7) - 1, +ymd.slice(8, 10));
+    return Math.round((end - start) / 86400000);
+  }
+
+  /**
+   * Positive days until delivery, or null when this row is not a future delivery.
+   * Future when daysSince is negative, or lastPurchased is after HKT today.
+   * A negative daysSince supplies N (its absolute value).
+   */
+  function daysUntilDelivery(entry) {
+    if (!entry || typeof entry !== "object") return null;
+    const since = finiteNumber(entry.daysSince);
+    if (since != null && since < 0) return Math.abs(since);
+    const ahead = daysAfterHktToday(entry.lastPurchased);
+    if (ahead != null && ahead > 0) return ahead;
+    return null;
+  }
+
+  /** Bought pieces: qty, then quantity, then count. Missing or invalid is 1. */
+  function pieceCount(entry) {
+    const keys = ["qty", "quantity", "count"];
+    if (entry && typeof entry === "object") {
+      for (let i = 0; i < keys.length; i++) {
+        if (!Object.prototype.hasOwnProperty.call(entry, keys[i])) continue;
+        const n = finiteNumber(entry[keys[i]]);
+        if (n != null && n >= 1) return n;
+      }
+    }
+    return 1;
+  }
+
   /** Calendar days from heldAt in HKT. Hold day is 0. */
   function daysFromHeldAt(at) {
     const parsed = new Date(at);
@@ -768,6 +823,22 @@
     });
   }
 
+  /**
+   * Display overlay only. Does not rewrite data.json.
+   * A future delivery is shown, sorted, and filtered as 在途 (已下單).
+   * Manual holds stay 暫緩. 水果 / 蔬菜 stay off the suggest axis.
+   */
+  function applyFutureDeliveryOverlay(item) {
+    if (!item || item.manualHold || isHistoryOnly(item)) return item;
+    if (daysUntilDelivery(item) == null) return item;
+    if (item.suggest === "在途") return item;
+    return Object.assign({}, item, { suggest: "在途" });
+  }
+
+  function displayItem(item) {
+    return applyFutureDeliveryOverlay(applyHoldOverlay(item));
+  }
+
   function excludedDisplayItems() {
     const byKey = new Map(state.items.map((item) => [keyOf(item), item]));
     return listedExclusions().map((ex) => {
@@ -781,6 +852,9 @@
             suggest: base.suggest,
             note: base.note,
             pack: base.pack,
+            qty: base.qty,
+            quantity: base.quantity,
+            count: base.count,
             brands: Array.isArray(base.brands) ? base.brands : [],
           }
         : {
@@ -801,9 +875,9 @@
   }
 
   function sourceItems() {
-    if (state.view === "excluded") return excludedDisplayItems().map(applyHoldOverlay);
+    if (state.view === "excluded") return excludedDisplayItems().map(displayItem);
     const hidden = new Set(listedExclusions().map((ex) => exclusionKey(ex.type, ex.name)));
-    return state.items.filter((item) => !hidden.has(keyOf(item))).map(applyHoldOverlay);
+    return state.items.filter((item) => !hidden.has(keyOf(item))).map(displayItem);
   }
 
   function filterItems() {
@@ -811,7 +885,7 @@
     return sourceItems().filter((item) => {
       const historyOnly = isHistoryOnly(item);
       // data.json suggest is display-only. A manual hold may overlay 暫緩.
-      // History-only rows are not 優先 / 暫緩 / 在途, even when suggest is missing or set.
+      // A future delivery may overlay 在途. History-only rows stay out of those buckets.
       if (state.suggest !== "all") {
         if (historyOnly) return false;
         if ((item.suggest || "") !== state.suggest) return false;
@@ -886,7 +960,7 @@
 
   /**
    * suggest-type: 建議 then 類型. type-suggest: the other way.
-   * Manual holds already overlay suggest to 暫緩 before this runs.
+   * Manual holds overlay suggest to 暫緩, and future deliveries overlay 在途, before this runs.
    * History-only types: 「紀錄」 then type, or type then 「紀錄」.
    */
   function nest(items) {
@@ -1028,14 +1102,50 @@
     );
   }
 
-  function daysHtml(n) {
-    const text = formatDaysSince(n);
+  function daysHtml(entry) {
+    const until = daysUntilDelivery(entry);
+    if (until != null) {
+      return (
+        '<span class="item-days">' +
+        escapeHtml(t("daysUntil", { n: String(until) })) +
+        "</span>"
+      );
+    }
+    const text = formatDaysSince(entry && entry.daysSince);
     const shown = text === "—" ? "—" : t("daysValue", { n: text });
     return (
       '<span class="item-days"><span class="sr-only">' +
       escapeHtml(t("daysLabel")) +
       " </span>" +
       escapeHtml(shown) +
+      "</span>"
+    );
+  }
+
+  function daysMetaHtml(entry) {
+    const until = daysUntilDelivery(entry);
+    if (until != null) {
+      return (
+        '<div><span class="meta-value">' +
+        escapeHtml(t("daysUntil", { n: String(until) })) +
+        "</span></div>"
+      );
+    }
+    return (
+      '<div><span class="meta-label">' +
+      escapeHtml(t("daysLabel")) +
+      '</span><span class="meta-value">' +
+      escapeHtml(formatDaysSince(entry && entry.daysSince)) +
+      "</span></div>"
+    );
+  }
+
+  function qtyHtml(entry, className) {
+    return (
+      '<span class="' +
+      className +
+      '">' +
+      escapeHtml(t("qtyValue", { n: String(pieceCount(entry)) })) +
       "</span>"
     );
   }
@@ -1155,6 +1265,7 @@
       '<p class="brand-name">' +
       escapeHtml(labels.primary) +
       packHtml(entry.pack, "brand-pack") +
+      qtyHtml(entry, "brand-qty") +
       "</p>" +
       secondary +
       '<div class="item-meta brand-meta">' +
@@ -1163,11 +1274,7 @@
       '</span><span class="meta-value">' +
       escapeHtml(formatDate(entry.lastPurchased)) +
       "</span></div>" +
-      '<div><span class="meta-label">' +
-      escapeHtml(t("daysLabel")) +
-      '</span><span class="meta-value">' +
-      escapeHtml(formatDaysSince(entry.daysSince)) +
-      "</span></div>" +
+      daysMetaHtml(entry) +
       "</div>" +
       note +
       link +
@@ -1193,6 +1300,7 @@
       escapeHtml(catalogLabel("name", item.name)) +
       "</span>" +
       packHtml(item.pack, "item-pack") +
+      qtyHtml(item, "item-qty") +
       "</span>" +
       subtypeHtml +
       "</span>";
@@ -1242,7 +1350,7 @@
       '<div class="product-head">' +
       title +
       "</div>" +
-      daysHtml(item.daysSince) +
+      daysHtml(item) +
       suggestAndActions +
       "</div>" +
       when +
@@ -1493,7 +1601,7 @@
 
   function setView(view) {
     state.view = view === "excluded" ? "excluded" : "main";
-    if (state.view === "excluded") revealGroups(excludedDisplayItems().map(applyHoldOverlay));
+    if (state.view === "excluded") revealGroups(excludedDisplayItems().map(displayItem));
     render();
   }
 
@@ -1624,7 +1732,7 @@
         revealGroups(
           excludedDisplayItems()
             .filter((item) => item.type === type && item.name === name)
-            .map(applyHoldOverlay)
+            .map(displayItem)
         );
       }
     } catch (err) {
