@@ -7,4 +7,4 @@
  *
  * 唔好加 token，唔好放私人參數。網站請求只會帶 type、name、note。
  */
-window.GROCERY_EXCLUSIONS_API = "";
+window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/AKfycbwb226k6-iCnqirUgnk-1XVZSu2PupvxTtEros1haE5h5ku_GX_nuNEavevo1d0J6kS3A/exec";
