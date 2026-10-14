@@ -82,12 +82,66 @@ body {
   opacity: 0.9;
 }
 
+.header-aside {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-left: auto;
+  max-width: 100%;
+}
+
 .updated {
   margin: 0;
   font-size: 0.8125rem;
   background: rgba(255, 255, 255, 0.15);
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  min-width: 2.5rem;
+  min-height: 36px;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.lang-switch button:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.lang-switch button[aria-pressed="true"],
+.lang-switch button[aria-pressed="true"]:hover {
+  background: #fff;
+  color: #0a4f4f;
+}
+
+.lang-switch button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .main {
@@ -149,8 +203,10 @@ body {
   font-family: inherit;
   font-size: 0.875rem;
   font-weight: 700;
+  line-height: 1.2;
   color: var(--muted);
   cursor: pointer;
+  padding: 0.25rem 0.55rem;
 }
 
 .segment button.is-active {
@@ -1055,7 +1111,7 @@ body {
 @media (min-width: 900px) {
   :root {
     --page-max: 1200px;
-    --wide-cols: minmax(0, 1fr) 4.75rem 4.5rem 15.5rem;
+    --wide-cols: minmax(0, 1fr) 7rem max-content max-content;
   }
 
   .site-header {

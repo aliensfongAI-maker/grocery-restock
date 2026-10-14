@@ -14,8 +14,303 @@
   ];
   const CACHE_KEY = "grocery-exclusions-v1";
   const GROUP_MODE_KEY = "grocery-restock-group-mode";
+  const LANG_KEY = "grocery-restock-lang";
   const EXCLUSION_TIMEOUT_MS = 12000;
-  const HOLD_NOTE_DEFAULT = "已從非網購渠道補貨";
+  const HTML_LANG = { zh: "zh-Hant", en: "en", id: "id" };
+  const SUGGEST_KEYS = { 優先: "suggestPriority", 暫緩: "suggestHold", 在途: "suggestTransit" };
+
+  /**
+   * UI chrome only. Product names, types, packs, brand titles, and notes
+   * from data.json or the Sheet stay as returned.
+   */
+  const I18N = {
+    zh: {
+      appTitle: "超市補貨",
+      metaDescription: "超市補貨 — 睇歷史同補貨建議（唔下單）",
+      tagline: "睇歷史 · 睇建議 · 唔下單",
+      loading: "載入緊…",
+      langLabel: "語言",
+      toolbarLabel: "搜尋同篩選",
+      searchLabel: "搜尋品名、牌子、類型或備註",
+      searchPlaceholder: "搜尋品名／牌子／類型／備註…",
+      groupLabel: "分組",
+      groupSuggest: "建議優先",
+      groupType: "類型優先",
+      viewLabel: "清單",
+      viewMain: "補貨清單",
+      skip: "暫不考慮",
+      suggestLabel: "建議",
+      suggestAll: "全部",
+      suggestPriority: "優先",
+      suggestHold: "暫緩",
+      suggestTransit: "在途",
+      typeLabel: "類型",
+      typeAll: "全部類型",
+      expandAll: "全部展開",
+      collapseAll: "全部摺疊",
+      emptyFilter: "冇符合條件嘅項目。",
+      footer: "公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除同手動暫緩另存 Google Sheet",
+      excludeHelp: "呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：暫緩會留喺主清單。建議維持原樣，唔改 data.json。",
+      noteLabel: "備註（可留空）",
+      excludePlaceholder: "例如：屋企仲有",
+      cancel: "取消",
+      excludeConfirm: "確認剔除",
+      hold: "手動暫緩",
+      holdHelp: "用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「暫緩」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。",
+      holdPlaceholder: "例如：今日超市買咗",
+      holdConfirm: "確認暫緩",
+      updatedPrefix: "上次更新：",
+      updatedFailed: "上次更新：載入失敗",
+      noSuggest: "未有建議",
+      uncategorized: "未分類",
+      processing: "處理緊…",
+      noApiTitle: "未設定 Web App 網址",
+      processingPrefix: "處理緊：",
+      actionPrefix: "操作：",
+      daysValue: "{n}日",
+      daysLabel: "距今天數",
+      restore: "回復",
+      unhold: "回復日子",
+      holdNotePrefix: "暫緩備註：",
+      holdFlag: "手動暫緩 · 日子由暫緩當日計，原本建議未改",
+      exclusionNotePrefix: "剔除備註：",
+      excludedAtLabel: "剔除時間",
+      noBrand: "未有牌子",
+      publicLink: "公開連結",
+      lastPurchased: "上次購買",
+      noBrandDetail: "未有牌子明細",
+      colName: "品名",
+      colDays: "距今",
+      colAction: "操作",
+      loadingExclusions: "讀緊剔除清單…",
+      countExcluded: "暫不考慮 {n}／{total} 項",
+      countMain: "顯示 {n}／{total} 項",
+      emptyExcluded: "未有暫不考慮嘅項目。",
+      viewExcludedCount: "暫不考慮 ({n})",
+      errNotJson: "回應唔係 JSON。請確認 Web App 已部署為「任何人」。",
+      errBadFormat: "回應格式唔啱",
+      errTimeout: "連線逾時",
+      doneExclude: "已暫不考慮「{name}」。呢項會喺主清單隱藏。",
+      doneRestore: "已回復「{name}」到補貨清單。",
+      doneHold: "已手動暫緩「{name}」。仍然留喺補貨清單。",
+      doneUnhold: "已回復「{name}」嘅日子同建議。",
+      doneGeneric: "已更新。",
+      failExclude: "剔除失敗：",
+      failRestore: "回復失敗：",
+      failHold: "手動暫緩失敗：",
+      failUnhold: "回復日子失敗：",
+      failGeneric: "更新失敗：",
+      tryAgain: "請再試",
+      unknownError: "未知錯誤",
+      jsonpPrefix: "JSONP：",
+      warnNoHold: "讀到剔除清單，但呢個部署未支援「手動暫緩」。請喺 Apps Script 建立新版本。",
+      jsonpTimeout: "JSONP 逾時",
+      jsonpBadUrl: "JSONP 網址唔啱",
+      jsonpLoadFail: "JSONP 載入失敗",
+      jsonpNoCallback: "JSONP 回應冇呼叫 callback",
+      cacheNotice: "讀唔到 Google Sheet，暫時用本機暫存。連到試算表之後會以 Sheet 為準。",
+      failNotice: "讀唔到剔除清單。補貨清單照常顯示，剔除暫時用唔到。",
+      noApiNotice: "未設定剔除清單網址。請喺 config.js 貼上 Web App 網址，先用到「暫不考慮」同「手動暫緩」。",
+      loadFail: "載入 data.json 失敗（{status}）",
+      badData: "data.json 格式唔啱：缺少 items",
+      fileError: "讀唔到資料。請用本機靜態伺服器開啟（例如：python3 -m http.server 8080），唔好直接用 file://。",
+      holdNoteDefault: "已從非網購渠道補貨",
+    },
+    en: {
+      appTitle: "Grocery restock",
+      metaDescription: "Grocery restock — history and restock suggestions (no ordering)",
+      tagline: "History · suggestions · no ordering",
+      loading: "Loading…",
+      langLabel: "Language",
+      toolbarLabel: "Search and filters",
+      searchLabel: "Search name, brand, type, or note",
+      searchPlaceholder: "Search name / brand / type / note…",
+      groupLabel: "Group",
+      groupSuggest: "Suggestion first",
+      groupType: "Type first",
+      viewLabel: "List",
+      viewMain: "Restock list",
+      skip: "Skip for now",
+      suggestLabel: "Suggestion",
+      suggestAll: "All",
+      suggestPriority: "Priority",
+      suggestHold: "Hold",
+      suggestTransit: "In transit",
+      typeLabel: "Type",
+      typeAll: "All types",
+      expandAll: "Expand all",
+      collapseAll: "Collapse all",
+      emptyFilter: "No matching items.",
+      footer: "Public suggestion tool · no private data · times are Hong Kong time (HKT) · skips and manual holds are stored in a Google Sheet",
+      excludeHelp: "This item is hidden from the restock list. You can restore it later. A manual hold is different: it stays on the main list. The suggestion is left as-is, and data.json is not changed.",
+      noteLabel: "Note (optional)",
+      excludePlaceholder: "e.g. still have some at home",
+      cancel: "Cancel",
+      excludeConfirm: "Confirm skip",
+      hold: "Manual hold",
+      holdHelp: "Use this when you already restocked, but data.json has not updated. The item stays on the restock list and is not hidden. The suggestion shows as “Hold”, and last purchase and days ago count from the hold date. To bring back the dates and suggestion from data.json, choose “Restore dates”.",
+      holdPlaceholder: "e.g. bought at the supermarket today",
+      holdConfirm: "Confirm hold",
+      updatedPrefix: "Updated: ",
+      updatedFailed: "Updated: failed to load",
+      noSuggest: "No suggestion",
+      uncategorized: "Uncategorized",
+      processing: "Working…",
+      noApiTitle: "Web App URL is not set",
+      processingPrefix: "Working: ",
+      actionPrefix: "Actions: ",
+      daysValue: "{n} days",
+      daysLabel: "Days ago",
+      restore: "Restore",
+      unhold: "Restore dates",
+      holdNotePrefix: "Hold note: ",
+      holdFlag: "Manual hold · days count from the hold date; the original suggestion is unchanged",
+      exclusionNotePrefix: "Skip note: ",
+      excludedAtLabel: "Skipped at",
+      noBrand: "No brand",
+      publicLink: "Public link",
+      lastPurchased: "Last bought",
+      noBrandDetail: "No brand details",
+      colName: "Item",
+      colDays: "Ago",
+      colAction: "Actions",
+      loadingExclusions: "Loading skip list…",
+      countExcluded: "Skipped {n}/{total}",
+      countMain: "Showing {n}/{total}",
+      emptyExcluded: "Nothing skipped yet.",
+      viewExcludedCount: "Skip for now ({n})",
+      errNotJson: "The response is not JSON. Confirm the Web App is deployed as “Anyone”.",
+      errBadFormat: "Unexpected response format",
+      errTimeout: "Connection timed out",
+      doneExclude: "Skipped “{name}” for now. It is hidden from the main list.",
+      doneRestore: "Restored “{name}” to the restock list.",
+      doneHold: "Set a manual hold on “{name}”. It stays on the restock list.",
+      doneUnhold: "Restored the dates and suggestion for “{name}”.",
+      doneGeneric: "Updated.",
+      failExclude: "Could not skip: ",
+      failRestore: "Could not restore: ",
+      failHold: "Could not set a manual hold: ",
+      failUnhold: "Could not restore dates: ",
+      failGeneric: "Update failed: ",
+      tryAgain: "Please try again",
+      unknownError: "Unknown error",
+      jsonpPrefix: "JSONP: ",
+      warnNoHold: "The skip list loaded, but this deployment does not support “Manual hold”. Create a new Apps Script version.",
+      jsonpTimeout: "JSONP timed out",
+      jsonpBadUrl: "Invalid JSONP URL",
+      jsonpLoadFail: "JSONP failed to load",
+      jsonpNoCallback: "JSONP response did not call the callback",
+      cacheNotice: "Could not read the Google Sheet. Using the copy saved on this device for now. Once the spreadsheet connects, the Sheet is the source of truth.",
+      failNotice: "Could not read the skip list. The restock list still shows, but skipping is unavailable for now.",
+      noApiNotice: "Skip-list URL is not set. Paste the Web App URL in config.js to use “Skip for now” and “Manual hold”.",
+      loadFail: "Failed to load data.json ({status})",
+      badData: "Invalid data.json: missing items",
+      fileError: "Could not read the data. Open this page from a local static server (for example: python3 -m http.server 8080), not file://.",
+      holdNoteDefault: "Restocked outside online shopping",
+    },
+    id: {
+      appTitle: "Restok supermarket",
+      metaDescription: "Restok supermarket — riwayat dan saran isi ulang (tanpa memesan)",
+      tagline: "Riwayat · saran · tanpa memesan",
+      loading: "Memuat…",
+      langLabel: "Bahasa",
+      toolbarLabel: "Cari dan filter",
+      searchLabel: "Cari nama, merek, jenis, atau catatan",
+      searchPlaceholder: "Cari nama / merek / jenis / catatan…",
+      groupLabel: "Kelompok",
+      groupSuggest: "Saran dulu",
+      groupType: "Jenis dulu",
+      viewLabel: "Daftar",
+      viewMain: "Daftar restok",
+      skip: "Lewati dulu",
+      suggestLabel: "Saran",
+      suggestAll: "Semua",
+      suggestPriority: "Prioritas",
+      suggestHold: "Tunda",
+      suggestTransit: "Dalam perjalanan",
+      typeLabel: "Jenis",
+      typeAll: "Semua jenis",
+      expandAll: "Buka semua",
+      collapseAll: "Tutup semua",
+      emptyFilter: "Tidak ada item yang cocok.",
+      footer: "Alat saran publik · tanpa data pribadi · waktu dalam Waktu Hong Kong (HKT) · lewati dan tunda manual disimpan di Google Sheet",
+      excludeHelp: "Item ini disembunyikan dari daftar restok. Nanti bisa dipulihkan. Tunda manual berbeda: item tetap ada di daftar utama. Saran tidak diubah, dan data.json tidak diubah.",
+      noteLabel: "Catatan (opsional)",
+      excludePlaceholder: "misalnya: masih ada di rumah",
+      cancel: "Batal",
+      excludeConfirm: "Konfirmasi lewati",
+      hold: "Tunda manual",
+      holdHelp: "Pakai ini kalau barang sudah diisi ulang, tetapi data.json belum diperbarui. Item tetap di daftar restok dan tidak disembunyikan. Saran ditampilkan sebagai “Tunda”, lalu tanggal beli terakhir dan hari sejak itu dihitung dari tanggal tunda. Untuk mengembalikan tanggal dan saran dari data.json, pilih “Pulihkan tanggal”.",
+      holdPlaceholder: "misalnya: beli di supermarket hari ini",
+      holdConfirm: "Konfirmasi tunda",
+      updatedPrefix: "Diperbarui: ",
+      updatedFailed: "Diperbarui: gagal memuat",
+      noSuggest: "Tanpa saran",
+      uncategorized: "Tanpa jenis",
+      processing: "Memproses…",
+      noApiTitle: "URL Web App belum diatur",
+      processingPrefix: "Memproses: ",
+      actionPrefix: "Aksi: ",
+      daysValue: "{n} hari",
+      daysLabel: "Hari lalu",
+      restore: "Pulihkan",
+      unhold: "Pulihkan tanggal",
+      holdNotePrefix: "Catatan tunda: ",
+      holdFlag: "Tunda manual · hari dihitung dari tanggal tunda; saran asli tidak diubah",
+      exclusionNotePrefix: "Catatan lewati: ",
+      excludedAtLabel: "Waktu dilewati",
+      noBrand: "Tanpa merek",
+      publicLink: "Tautan publik",
+      lastPurchased: "Terakhir beli",
+      noBrandDetail: "Belum ada detail merek",
+      colName: "Nama",
+      colDays: "Lalu",
+      colAction: "Aksi",
+      loadingExclusions: "Memuat daftar lewati…",
+      countExcluded: "Dilewati {n}/{total}",
+      countMain: "Menampilkan {n}/{total}",
+      emptyExcluded: "Belum ada item yang dilewati.",
+      viewExcludedCount: "Lewati dulu ({n})",
+      errNotJson: "Respons bukan JSON. Pastikan Web App di-deploy sebagai “Siapa saja”.",
+      errBadFormat: "Format respons tidak sesuai",
+      errTimeout: "Koneksi habis waktu",
+      doneExclude: "“{name}” dilewati dulu. Item ini disembunyikan dari daftar utama.",
+      doneRestore: "“{name}” dipulihkan ke daftar restok.",
+      doneHold: "“{name}” ditunda manual. Tetap ada di daftar restok.",
+      doneUnhold: "Tanggal dan saran “{name}” dipulihkan.",
+      doneGeneric: "Diperbarui.",
+      failExclude: "Gagal melewati: ",
+      failRestore: "Gagal memulihkan: ",
+      failHold: "Gagal menunda manual: ",
+      failUnhold: "Gagal memulihkan tanggal: ",
+      failGeneric: "Pembaruan gagal: ",
+      tryAgain: "Silakan coba lagi",
+      unknownError: "Kesalahan tidak diketahui",
+      jsonpPrefix: "JSONP: ",
+      warnNoHold: "Daftar lewati terbaca, tetapi deployment ini belum mendukung “Tunda manual”. Buat versi Apps Script yang baru.",
+      jsonpTimeout: "JSONP habis waktu",
+      jsonpBadUrl: "URL JSONP tidak valid",
+      jsonpLoadFail: "JSONP gagal dimuat",
+      jsonpNoCallback: "Respons JSONP tidak memanggil callback",
+      cacheNotice: "Google Sheet tidak terbaca. Untuk sementara memakai salinan di perangkat ini. Setelah spreadsheet tersambung, Sheet yang dipakai.",
+      failNotice: "Daftar lewati tidak terbaca. Daftar restok tetap tampil, tetapi lewati belum bisa dipakai.",
+      noApiNotice: "URL daftar lewati belum diatur. Tempel URL Web App di config.js untuk memakai “Lewati dulu” dan “Tunda manual”.",
+      loadFail: "Gagal memuat data.json ({status})",
+      badData: "data.json tidak valid: items tidak ada",
+      fileError: "Data tidak terbaca. Buka halaman ini lewat server statis lokal (misalnya: python3 -m http.server 8080), bukan file://.",
+      holdNoteDefault: "Sudah diisi ulang di luar belanja online",
+    },
+  };
+
+  function readStoredLang() {
+    try {
+      const value = localStorage.getItem(LANG_KEY);
+      if (value === "zh" || value === "en" || value === "id") return value;
+    } catch (_) {
+      /* private mode */
+    }
+    return "zh";
+  }
 
   const state = {
     items: [],
@@ -25,6 +320,9 @@
     type: "all",
     view: "main",
     groupMode: readStoredGroupMode(),
+    lang: readStoredLang(),
+    loadSettled: false,
+    loadFailed: false,
     collapsedGroups: new Set(),
     openProducts: new Set(),
     exclusions: [],
@@ -32,17 +330,43 @@
     apiUrl: "",
     pendingKey: "",
     pendingAction: "",
-    baseNotice: "",
+    baseNotice: null,
     baseLevel: "",
-    flashNotice: "",
+    flashNotice: null,
     flashLevel: "",
     loadingExclusions: false,
     dialogItem: null,
     dialogTrigger: null,
   };
 
+  function t(key, vars) {
+    const pack = I18N[state.lang] || I18N.zh;
+    let str = Object.prototype.hasOwnProperty.call(pack, key) ? pack[key] : undefined;
+    if (str == null) str = I18N.zh[key];
+    if (str == null) return key;
+    if (!vars) return str;
+    return str.replace(/\{(\w+)\}/g, function (_, name) {
+      return vars[name] == null ? "" : String(vars[name]);
+    });
+  }
+
+  function suggestLabel(value) {
+    if (value == null || value === "") return "";
+    const key = SUGGEST_KEYS[value];
+    return key ? t(key) : String(value);
+  }
+
+  function appError(code, vars) {
+    const message = code === "http" ? "HTTP " + ((vars && vars.status) || "") : t(code, vars);
+    const err = new Error(message);
+    err.appCode = code;
+    if (vars) err.vars = vars;
+    return err;
+  }
+
   const els = {
     updatedAt: document.getElementById("updatedAt"),
+    langSwitch: document.getElementById("langSwitch"),
     searchInput: document.getElementById("searchInput"),
     suggestFilters: document.getElementById("suggestFilters"),
     viewFilters: document.getElementById("viewFilters"),
@@ -68,6 +392,63 @@
     holdCancel: document.getElementById("holdCancel"),
   };
 
+  function applyStaticI18n() {
+    document.documentElement.lang = HTML_LANG[state.lang] || "zh-Hant";
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      el.textContent = t(el.getAttribute("data-i18n"));
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+      el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+    });
+    document.querySelectorAll("[data-i18n-content]").forEach((el) => {
+      el.setAttribute("content", t(el.getAttribute("data-i18n-content")));
+    });
+  }
+
+  function syncLangSwitch() {
+    if (!els.langSwitch) return;
+    els.langSwitch.querySelectorAll("[data-lang]").forEach((btn) => {
+      const active = btn.getAttribute("data-lang") === state.lang;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+  }
+
+  function refreshUpdatedAt() {
+    if (state.loadFailed) {
+      els.updatedAt.textContent = t("updatedFailed");
+      return;
+    }
+    if (!state.loadSettled) {
+      els.updatedAt.textContent = t("loading");
+      return;
+    }
+    els.updatedAt.textContent = formatUpdatedAt(state.updatedAt);
+  }
+
+  function setLang(lang) {
+    const next = lang === "en" || lang === "id" || lang === "zh" ? lang : "zh";
+    if (next === state.lang) return;
+    const previousDefault = t("holdNoteDefault");
+    state.lang = next;
+    try {
+      localStorage.setItem(LANG_KEY, state.lang);
+    } catch (_) {
+      /* private mode; the choice still applies this visit */
+    }
+    applyStaticI18n();
+    syncLangSwitch();
+    if (els.holdDialog.open && els.holdNote.value === previousDefault) {
+      els.holdNote.value = t("holdNoteDefault");
+    }
+    refreshUpdatedAt();
+    if (!els.errorBox.hidden) els.errorBox.textContent = t("fileError");
+    render();
+  }
+
   function escapeHtml(str) {
     if (str == null) return "";
     return String(str)
@@ -78,24 +459,25 @@
       .replace(/'/g, "&#39;");
   }
 
-  /** Format updatedAt for humans in HKT */
-  function formatUpdatedAt(iso) {
-    if (!iso) return "上次更新：—";
+  /** Clock time in HKT. Locale-independent so the stamp stays YYYY-MM-DD HH:mm. */
+  function formatHktStamp(iso) {
+    if (!iso) return "—";
     try {
       const d = new Date(iso);
-      if (Number.isNaN(d.getTime())) return "上次更新：" + iso;
-      const fmt = new Intl.DateTimeFormat("zh-HK", {
+      if (Number.isNaN(d.getTime())) return String(iso);
+      const fmt = new Intl.DateTimeFormat("en-CA", {
         timeZone: "Asia/Hong_Kong",
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
+        hourCycle: "h23",
         hour12: false,
       });
       const parts = fmt.formatToParts(d);
-      const get = (t) => parts.find((p) => p.type === t)?.value || "";
-      const label =
+      const get = (type) => parts.find((p) => p.type === type)?.value || "";
+      return (
         get("year") +
         "-" +
         get("month") +
@@ -105,17 +487,20 @@
         get("hour") +
         ":" +
         get("minute") +
-        " HKT";
-      return "上次更新：" + label;
+        " HKT"
+      );
     } catch (_) {
-      return "上次更新：" + iso;
+      return String(iso);
     }
+  }
+
+  function formatUpdatedAt(iso) {
+    return t("updatedPrefix") + formatHktStamp(iso);
   }
 
   function formatExcludedAt(iso) {
     if (!iso) return "—";
-    const label = formatUpdatedAt(iso).replace(/^上次更新：/, "");
-    return label || iso;
+    return formatHktStamp(iso);
   }
 
   function formatDate(ymd) {
@@ -352,6 +737,7 @@
         item.type,
         item.note || "",
         item.suggest || "",
+        suggestLabel(item.suggest || ""),
         item.exclusionNote || "",
         item.holdNote || "",
         item.pack || "",
@@ -382,8 +768,8 @@
   }
 
   function groupLabel(node) {
-    if (node.kind === "suggest") return node.value || "未有建議";
-    return node.value || "未分類";
+    if (node.kind === "suggest") return node.value ? suggestLabel(node.value) : t("noSuggest");
+    return node.value || t("uncategorized");
   }
 
   /**
@@ -464,18 +850,17 @@
 
   function badgeHtml(suggest) {
     if (!suggest) return "";
-    const s = escapeHtml(suggest);
     const cls =
       suggest === "優先" || suggest === "暫緩" || suggest === "在途"
         ? "badge badge-" + suggest
         : "badge";
-    return '<span class="' + cls + '">' + s + "</span>";
+    return '<span class="' + cls + '">' + escapeHtml(suggestLabel(suggest)) + "</span>";
   }
 
   function sheetButtonHtml(item, action, label, className, asMenuItem) {
     const busy = state.pendingKey === keyOf(item);
     const pending = busy && state.pendingAction === action;
-    const shown = pending ? "處理緊…" : label;
+    const shown = pending ? t("processing") : label;
     const enabled = exclusionsEnabled() && !busy;
     return (
       '<button type="button" class="action-btn ' +
@@ -488,10 +873,10 @@
       escapeHtml(item.name) +
       '"' +
       (enabled ? "" : " disabled") +
-      (exclusionsEnabled() ? "" : ' title="未設定 Web App 網址"') +
+      (exclusionsEnabled() ? "" : ' title="' + escapeHtml(t("noApiTitle")) + '"') +
       (asMenuItem ? ' role="menuitem"' : "") +
       ' aria-label="' +
-      escapeHtml(shown + "：" + item.name) +
+      escapeHtml(shown + (state.lang === "zh" ? "：" : ": ") + item.name) +
       '">' +
       escapeHtml(shown) +
       "</button>"
@@ -501,7 +886,7 @@
   function rowMenuHtml(item) {
     const menuId = domId("menu", keyOf(item));
     const pending = state.pendingKey === keyOf(item);
-    const label = (pending ? "處理緊：" : "操作：") + item.name;
+    const label = (pending ? t("processingPrefix") : t("actionPrefix")) + item.name;
     return (
       '<div class="row-menu">' +
       '<button type="button" class="row-menu-trigger" aria-expanded="false" aria-haspopup="menu" aria-controls="' +
@@ -516,7 +901,7 @@
       '<div class="row-menu-panel" id="' +
       menuId +
       '" role="menu" hidden aria-label="' +
-      escapeHtml("操作：" + item.name) +
+      escapeHtml(t("actionPrefix") + item.name) +
       '">' +
       actionButtonsHtml(item, true) +
       "</div></div>"
@@ -527,7 +912,7 @@
   function rowActionsHtml(item) {
     return (
       '<div class="row-actions" role="group" aria-label="' +
-      escapeHtml("操作：" + item.name) +
+      escapeHtml(t("actionPrefix") + item.name) +
       '">' +
       actionButtonsHtml(item, false) +
       "</div>"
@@ -536,9 +921,11 @@
 
   function daysHtml(n) {
     const text = formatDaysSince(n);
-    const shown = text === "—" ? "—" : text + "日";
+    const shown = text === "—" ? "—" : t("daysValue", { n: text });
     return (
-      '<span class="item-days"><span class="sr-only">距今天數 </span>' +
+      '<span class="item-days"><span class="sr-only">' +
+      escapeHtml(t("daysLabel")) +
+      " </span>" +
       escapeHtml(shown) +
       "</span>"
     );
@@ -548,37 +935,39 @@
     const exclude = sheetButtonHtml(
       item,
       state.view === "excluded" ? "restore" : "exclude",
-      state.view === "excluded" ? "回復" : "暫不考慮",
+      state.view === "excluded" ? t("restore") : t("skip"),
       state.view === "excluded" ? "action-restore" : "action-exclude",
       asMenuItem
     );
     if (state.view === "excluded") {
       const unhold = item.manualHold
-        ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold", asMenuItem)
+        ? sheetButtonHtml(item, "unhold", t("unhold"), "action-unhold", asMenuItem)
         : "";
       return unhold + exclude;
     }
     const hold = item.manualHold
-      ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold", asMenuItem)
-      : sheetButtonHtml(item, "hold", "手動暫緩", "action-hold", asMenuItem);
+      ? sheetButtonHtml(item, "unhold", t("unhold"), "action-unhold", asMenuItem)
+      : sheetButtonHtml(item, "hold", t("hold"), "action-hold", asMenuItem);
     return hold + exclude;
   }
 
   function holdMetaHtml(item) {
     if (!item.manualHold) return "";
     const note = item.holdNote
-      ? '<p class="item-note">暫緩備註：' + escapeHtml(item.holdNote) + "</p>"
+      ? '<p class="item-note">' + escapeHtml(t("holdNotePrefix") + item.holdNote) + "</p>"
       : "";
-    return '<p class="hold-flag">手動暫緩 · 日子由暫緩當日計，原本建議未改</p>' + note;
+    return '<p class="hold-flag">' + escapeHtml(t("holdFlag")) + "</p>" + note;
   }
 
   function exclusionMetaHtml(item) {
     if (state.view !== "excluded") return "";
     const note = item.exclusionNote
-      ? '<p class="item-note">剔除備註：' + escapeHtml(item.exclusionNote) + "</p>"
+      ? '<p class="item-note">' + escapeHtml(t("exclusionNotePrefix") + item.exclusionNote) + "</p>"
       : "";
     return (
-      '<p class="exclusion-when"><span class="meta-label">剔除時間</span><span class="meta-value">' +
+      '<p class="exclusion-when"><span class="meta-label">' +
+      escapeHtml(t("excludedAtLabel")) +
+      '</span><span class="meta-value">' +
       escapeHtml(formatExcludedAt(item.excludedAt)) +
       "</span></p>" +
       note
@@ -622,7 +1011,7 @@
     if (brand && title) return { primary: brand, secondary: title };
     if (brand) return { primary: brand, secondary: "" };
     if (title) return { primary: title, secondary: "" };
-    return { primary: "未有牌子", secondary: "" };
+    return { primary: t("noBrand"), secondary: "" };
   }
 
   function brandHtml(entry) {
@@ -638,7 +1027,9 @@
     const link = href
       ? '<a class="public-link" href="' +
         escapeHtml(href) +
-        '" target="_blank" rel="noopener noreferrer">公開連結</a>'
+        '" target="_blank" rel="noopener noreferrer">' +
+        escapeHtml(t("publicLink")) +
+        "</a>"
       : "";
     const imgSrc = safeLink(entry.image);
     const img = imgSrc
@@ -657,10 +1048,14 @@
       "</p>" +
       secondary +
       '<div class="item-meta brand-meta">' +
-      '<div><span class="meta-label">上次購買</span><span class="meta-value">' +
+      '<div><span class="meta-label">' +
+      escapeHtml(t("lastPurchased")) +
+      '</span><span class="meta-value">' +
       escapeHtml(formatDate(entry.lastPurchased)) +
       "</span></div>" +
-      '<div><span class="meta-label">距今天數</span><span class="meta-value">' +
+      '<div><span class="meta-label">' +
+      escapeHtml(t("daysLabel")) +
+      '</span><span class="meta-value">' +
       escapeHtml(formatDaysSince(entry.daysSince)) +
       "</span></div>" +
       "</div>" +
@@ -695,7 +1090,7 @@
         nameAndPack +
         "</button>"
       : '<div class="product-title-static">' + nameAndPack + "</div>";
-    const empty = canExpand ? "" : '<p class="brand-empty">未有牌子明細</p>';
+    const empty = canExpand ? "" : '<p class="brand-empty">' + escapeHtml(t("noBrandDetail")) + "</p>";
     const brandList = canExpand
       ? '<ul class="brand-list" id="' +
         panelId +
@@ -706,7 +1101,9 @@
         "</ul>"
       : "";
     const when = item.lastPurchased
-      ? '<p class="item-when"><span class="meta-label">上次購買</span><span class="meta-value">' +
+      ? '<p class="item-when"><span class="meta-label">' +
+        escapeHtml(t("lastPurchased")) +
+        '</span><span class="meta-value">' +
         escapeHtml(formatDate(item.lastPurchased)) +
         "</span></p>"
       : "";
@@ -783,7 +1180,15 @@
     return (
       '<ul class="item-list">' +
       '<li class="item-columns" aria-hidden="true">' +
-      "<span>品名</span><span>距今</span><span>建議</span><span>操作</span>" +
+      "<span>" +
+      escapeHtml(t("colName")) +
+      "</span><span>" +
+      escapeHtml(t("colDays")) +
+      "</span><span>" +
+      escapeHtml(t("suggestLabel")) +
+      "</span><span>" +
+      escapeHtml(t("colAction")) +
+      "</span>" +
       "</li>" +
       items.map(cardHtml).join("") +
       "</ul>"
@@ -803,10 +1208,42 @@
       .join("");
   }
 
+  function formatNotice(entry) {
+    if (!entry) return "";
+    if (entry.kind === "text") return entry.text || "";
+    if (entry.kind === "loading") return t("loadingExclusions");
+    if (entry.kind === "noApi") return t("noApiNotice");
+    if (entry.kind === "noHold") return t("warnNoHold");
+    if (entry.kind === "cache") return noticeWithReason(t("cacheNotice"), entry.err, entry.jsonpErr);
+    if (entry.kind === "failRead") return noticeWithReason(t("failNotice"), entry.err, entry.jsonpErr);
+    if (entry.kind === "done") {
+      const key = {
+        exclude: "doneExclude",
+        restore: "doneRestore",
+        hold: "doneHold",
+        unhold: "doneUnhold",
+      }[entry.action];
+      return key ? t(key, { name: entry.name }) : t("doneGeneric");
+    }
+    if (entry.kind === "failAction") {
+      const key = {
+        exclude: "failExclude",
+        restore: "failRestore",
+        hold: "failHold",
+        unhold: "failUnhold",
+      }[entry.action];
+      const detail = entry.err ? shortReason(entry.err) : t("tryAgain");
+      return t(key || "failGeneric") + detail;
+    }
+    return "";
+  }
+
   function syncNotice() {
     const parts = [];
-    if (state.flashNotice) parts.push(state.flashNotice);
-    if (state.baseNotice) parts.push(state.baseNotice);
+    const flash = formatNotice(state.flashNotice);
+    const base = formatNotice(state.baseNotice);
+    if (flash) parts.push(flash);
+    if (base) parts.push(base);
     const text = parts.join(" ");
     const level = state.flashNotice ? state.flashLevel : state.baseLevel;
     els.exclusionNotice.hidden = !text;
@@ -822,17 +1259,24 @@
       btn.setAttribute("aria-pressed", active ? "true" : "false");
     });
     const n = state.exclusions.length;
-    els.excludedViewBtn.textContent = n > 0 ? "暫不考慮 (" + n + ")" : "暫不考慮";
+    els.excludedViewBtn.textContent = n > 0 ? t("viewExcludedCount", { n: n }) : t("skip");
   }
 
   function render() {
     syncNotice();
     syncViewChips();
 
+    if (state.loadFailed || !state.loadSettled) {
+      els.sections.innerHTML = "";
+      els.emptyState.hidden = true;
+      els.resultCount.textContent = "";
+      return;
+    }
+
     if (state.loadingExclusions) {
       els.sections.innerHTML = "";
       els.emptyState.hidden = false;
-      els.emptyState.textContent = "讀緊剔除清單…";
+      els.emptyState.textContent = t("loadingExclusions");
       els.resultCount.textContent = "";
       return;
     }
@@ -843,16 +1287,16 @@
 
     els.resultCount.textContent =
       state.view === "excluded"
-        ? "暫不考慮 " + filtered.length + "／" + universe + " 項"
-        : "顯示 " + filtered.length + "／" + universe + " 項";
+        ? t("countExcluded", { n: filtered.length, total: universe })
+        : t("countMain", { n: filtered.length, total: universe });
 
     if (groups.length === 0) {
       els.sections.innerHTML = "";
       els.emptyState.hidden = false;
       els.emptyState.textContent =
         state.view === "excluded" && state.exclusions.length === 0
-          ? "未有暫不考慮嘅項目。"
-          : "冇符合條件嘅項目。";
+          ? t("emptyExcluded")
+          : t("emptyFilter");
       return;
     }
     els.emptyState.hidden = true;
@@ -974,7 +1418,7 @@
     state.dialogItem = { type: type, name: name, kind: "hold" };
     state.dialogTrigger = trigger || null;
     els.holdDialogItem.textContent = type + " · " + name;
-    els.holdNote.value = HOLD_NOTE_DEFAULT;
+    els.holdNote.value = t("holdNoteDefault");
     if (typeof els.holdDialog.showModal === "function") {
       els.holdDialog.showModal();
       els.holdNote.focus();
@@ -998,16 +1442,16 @@
     try {
       data = JSON.parse(text);
     } catch (_) {
-      throw new Error("回應唔係 JSON。請確認 Web App 已部署為「任何人」。");
+      throw appError("errNotJson");
     }
-    if (!data || typeof data !== "object") throw new Error("回應格式唔啱");
-    if (!res.ok && !data.error) throw new Error("HTTP " + res.status);
+    if (!data || typeof data !== "object") throw appError("errBadFormat");
+    if (!res.ok && !data.error) throw appError("http", { status: String(res.status) });
     return data;
   }
 
   function withTimeout(promise, ms) {
     return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error("連線逾時")), ms);
+      const timer = setTimeout(() => reject(appError("errTimeout")), ms);
       promise.then(
         (value) => {
           clearTimeout(timer);
@@ -1027,7 +1471,7 @@
     if (state.pendingKey) return;
     state.pendingKey = key;
     state.pendingAction = action;
-    state.flashNotice = "";
+    state.flashNotice = null;
     state.flashLevel = "";
     render();
     try {
@@ -1042,17 +1486,11 @@
       });
       if (Array.isArray(data.items)) {
         applyFromSheet(data.items, Array.isArray(data.held) ? data.held : undefined);
-        state.baseNotice = "";
+        state.baseNotice = null;
         state.baseLevel = "";
       }
       if (data.error) throw new Error(data.error);
-      const done = {
-        exclude: "已暫不考慮「" + name + "」。呢項會喺主清單隱藏。",
-        restore: "已回復「" + name + "」到補貨清單。",
-        hold: "已手動暫緩「" + name + "」。仍然留喺補貨清單。",
-        unhold: "已回復「" + name + "」嘅日子同建議。",
-      };
-      state.flashNotice = done[action] || "已更新。";
+      state.flashNotice = { kind: "done", action: action, name: name };
       state.flashLevel = "ok";
       if (action === "exclude" && state.view === "excluded") {
         revealGroups(
@@ -1062,13 +1500,7 @@
         );
       }
     } catch (err) {
-      const failed = {
-        exclude: "剔除失敗：",
-        restore: "回復失敗：",
-        hold: "手動暫緩失敗：",
-        unhold: "回復日子失敗：",
-      };
-      state.flashNotice = (failed[action] || "更新失敗：") + (err && err.message ? err.message : "請再試");
+      state.flashNotice = { kind: "failAction", action: action, err: err };
       state.flashLevel = "error";
     } finally {
       state.pendingKey = "";
@@ -1390,9 +1822,17 @@
     );
   }
 
+  function describeError(err) {
+    if (!err) return "";
+    if (err.appCode === "http") return "HTTP " + ((err.vars && err.vars.status) || "");
+    if (err.appCode) return t(err.appCode, err.vars);
+    const msg = err.message ? String(err.message).replace(/\s+/g, " ").trim() : "";
+    return msg;
+  }
+
   function shortReason(err) {
-    const msg = err && err.message ? String(err.message).replace(/\s+/g, " ").trim() : "";
-    if (!msg) return "未知錯誤";
+    const msg = describeError(err);
+    if (!msg) return t("unknownError");
     return msg.length > 140 ? msg.slice(0, 140) + "…" : msg;
   }
 
@@ -1402,28 +1842,28 @@
     if (primary) bits.push(primary);
     if (extraErr) {
       const extra = shortReason(extraErr);
-      if (extra && extra !== primary) bits.push("JSONP：" + extra);
+      if (extra && extra !== primary) bits.push(t("jsonpPrefix") + extra);
     }
     if (!bits.length) return sentence;
     return sentence + "（" + bits.join("；") + "）";
   }
 
   function acceptExclusionPayload(data) {
-    if (!data || typeof data !== "object") throw new Error("回應格式唔啱");
+    if (!data || typeof data !== "object") throw appError("errBadFormat");
     if (data.error && !Array.isArray(data.items)) throw new Error(data.error);
     const hasHeld = Array.isArray(data.held);
     applyFromSheet(Array.isArray(data.items) ? data.items : [], hasHeld ? data.held : undefined);
     if (data.error) {
-      state.baseNotice = data.error;
+      state.baseNotice = { kind: "text", text: String(data.error) };
       state.baseLevel = "error";
       return;
     }
     if (!hasHeld) {
-      state.baseNotice = "讀到剔除清單，但呢個部署未支援「手動暫緩」。請喺 Apps Script 建立新版本。";
+      state.baseNotice = { kind: "noHold" };
       state.baseLevel = "warn";
       return;
     }
-    state.baseNotice = "";
+    state.baseNotice = null;
     state.baseLevel = "";
   }
 
@@ -1446,7 +1886,7 @@
         Math.floor(Math.random() * 1e9).toString(36);
       let settled = false;
       const script = document.createElement("script");
-      const timer = setTimeout(() => finish(new Error("JSONP 逾時")), EXCLUSION_TIMEOUT_MS);
+      const timer = setTimeout(() => finish(appError("jsonpTimeout")), EXCLUSION_TIMEOUT_MS);
 
       function cleanup() {
         clearTimeout(timer);
@@ -1477,14 +1917,14 @@
       try {
         script.src = withCallbackParam(url, callbackName);
       } catch (err) {
-        finish(err instanceof Error ? err : new Error("JSONP 網址唔啱"));
+        finish(err instanceof Error ? err : appError("jsonpBadUrl"));
         return;
       }
       script.onerror = function () {
-        finish(new Error("JSONP 載入失敗"));
+        finish(appError("jsonpLoadFail"));
       };
       script.onload = function () {
-        if (!settled) finish(new Error("JSONP 回應冇呼叫 callback"));
+        if (!settled) finish(appError("jsonpNoCallback"));
       };
       document.head.appendChild(script);
     });
@@ -1495,21 +1935,13 @@
     if (cached) {
       state.exclusions = cached.items;
       state.holds = cached.held;
-      state.baseNotice = noticeWithReason(
-        "讀唔到 Google Sheet，暫時用本機暫存。連到試算表之後會以 Sheet 為準。",
-        err,
-        jsonpErr
-      );
+      state.baseNotice = { kind: "cache", err: err, jsonpErr: jsonpErr };
       state.baseLevel = "warn";
       return;
     }
     state.exclusions = [];
     state.holds = [];
-    state.baseNotice = noticeWithReason(
-      "讀唔到剔除清單。補貨清單照常顯示，剔除暫時用唔到。",
-      err,
-      jsonpErr
-    );
+    state.baseNotice = { kind: "failRead", err: err, jsonpErr: jsonpErr };
     state.baseLevel = "error";
   }
 
@@ -1521,15 +1953,14 @@
     if (!url) {
       state.exclusions = [];
       state.holds = [];
-      state.baseNotice =
-        "未設定剔除清單網址。請喺 config.js 貼上 Web App 網址，先用到「暫不考慮」同「手動暫緩」。";
+      state.baseNotice = { kind: "noApi" };
       state.baseLevel = "warn";
       state.loadingExclusions = false;
       return;
     }
 
     state.loadingExclusions = true;
-    state.baseNotice = "讀緊剔除清單…";
+    state.baseNotice = { kind: "loading" };
     state.baseLevel = "";
     render();
     try {
@@ -1552,14 +1983,16 @@
   async function load() {
     try {
       const res = await fetch("./data.json", { cache: "no-store" });
-      if (!res.ok) throw new Error("載入 data.json 失敗（" + res.status + "）");
+      if (!res.ok) throw appError("loadFail", { status: String(res.status) });
       const data = await res.json();
       if (!data || !Array.isArray(data.items)) {
-        throw new Error("data.json 格式唔啱：缺少 items");
+        throw appError("badData");
       }
       state.updatedAt = data.updatedAt || null;
       state.items = data.items;
-      els.updatedAt.textContent = formatUpdatedAt(state.updatedAt);
+      state.loadFailed = false;
+      state.loadSettled = true;
+      refreshUpdatedAt();
 
       refreshTypeFilter();
 
@@ -1569,13 +2002,22 @@
       render();
     } catch (err) {
       console.error(err);
-      els.updatedAt.textContent = "上次更新：載入失敗";
+      state.loadFailed = true;
+      state.loadSettled = true;
+      refreshUpdatedAt();
       els.errorBox.hidden = false;
-      els.errorBox.textContent =
-        "讀唔到資料。請用本機靜態伺服器開啟（例如：python3 -m http.server 8080），唔好直接用 file://。";
+      els.errorBox.textContent = t("fileError");
     }
   }
 
+  els.langSwitch.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-lang]");
+    if (!btn) return;
+    setLang(btn.getAttribute("data-lang"));
+  });
+
+  applyStaticI18n();
+  syncLangSwitch();
   bindEvents();
   syncGroupMode();
   load();

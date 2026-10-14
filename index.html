@@ -3,105 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="超市補貨 — 睇歷史同補貨建議（唔下單）" />
-  <title>超市補貨</title>
+  <meta name="description" content="超市補貨 — 睇歷史同補貨建議（唔下單）" data-i18n-content="metaDescription" />
+  <title data-i18n="appTitle">超市補貨</title>
   <link rel="stylesheet" href="./styles.css" />
+  <script>
+    (function () {
+      var lang = "zh-Hant";
+      try {
+        var stored = localStorage.getItem("grocery-restock-lang");
+        if (stored === "en") lang = "en";
+        else if (stored === "id") lang = "id";
+      } catch (e) {}
+      document.documentElement.lang = lang;
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">
-        <h1>超市補貨</h1>
-        <p class="tagline">睇歷史 · 睇建議 · 唔下單</p>
+        <h1 data-i18n="appTitle">超市補貨</h1>
+        <p class="tagline" data-i18n="tagline">睇歷史 · 睇建議 · 唔下單</p>
       </div>
-      <p class="updated" id="updatedAt" aria-live="polite">載入緊…</p>
+      <div class="header-aside">
+        <p class="updated" id="updatedAt" aria-live="polite" data-i18n="loading">載入緊…</p>
+        <div class="lang-switch" id="langSwitch" role="group" data-i18n-aria="langLabel" aria-label="語言">
+          <button type="button" data-lang="zh" lang="zh-Hant" aria-pressed="true" aria-label="中文">中</button>
+          <button type="button" data-lang="en" lang="en" aria-pressed="false" aria-label="English">eng</button>
+          <button type="button" data-lang="id" lang="id" aria-pressed="false" aria-label="Bahasa Indonesia">印</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <main class="main">
-    <section class="toolbar" aria-label="搜尋同篩選">
+    <section class="toolbar" aria-label="搜尋同篩選" data-i18n-aria="toolbarLabel">
       <div class="search-wrap">
-        <label for="searchInput" class="sr-only">搜尋品名、牌子、類型或備註</label>
+        <label for="searchInput" class="sr-only" data-i18n="searchLabel">搜尋品名、牌子、類型或備註</label>
         <input
           type="search"
           id="searchInput"
           placeholder="搜尋品名／牌子／類型／備註…"
+          data-i18n-placeholder="searchPlaceholder"
           autocomplete="off"
           enterkeyhint="search"
         />
       </div>
       <p id="exclusionNotice" class="notice" hidden role="status"></p>
       <div class="group-switch">
-        <span class="filter-label" id="groupModeLabel">分組</span>
+        <span class="filter-label" id="groupModeLabel" data-i18n="groupLabel">分組</span>
         <div class="segment" id="groupMode" role="group" aria-labelledby="groupModeLabel">
-          <button type="button" data-group-mode="suggest-type" aria-pressed="true">建議優先</button>
-          <button type="button" data-group-mode="type-suggest" aria-pressed="false">類型優先</button>
+          <button type="button" data-group-mode="suggest-type" aria-pressed="true" data-i18n="groupSuggest">建議優先</button>
+          <button type="button" data-group-mode="type-suggest" aria-pressed="false" data-i18n="groupType">類型優先</button>
         </div>
       </div>
       <div class="filters">
         <div class="filter-group">
-          <span class="filter-label" id="viewLabel">清單</span>
+          <span class="filter-label" id="viewLabel" data-i18n="viewLabel">清單</span>
           <div class="chip-row" role="group" aria-labelledby="viewLabel" id="viewFilters">
-            <button type="button" class="chip is-active" data-view="main" aria-pressed="true">補貨清單</button>
-            <button type="button" class="chip chip-exclude" data-view="excluded" id="excludedViewBtn" aria-pressed="false">暫不考慮</button>
+            <button type="button" class="chip is-active" data-view="main" aria-pressed="true" data-i18n="viewMain">補貨清單</button>
+            <button type="button" class="chip chip-exclude" data-view="excluded" id="excludedViewBtn" aria-pressed="false" data-i18n="skip">暫不考慮</button>
           </div>
         </div>
         <div class="filter-group">
-          <span class="filter-label" id="suggestLabel">建議</span>
+          <span class="filter-label" id="suggestLabel" data-i18n="suggestLabel">建議</span>
           <div class="chip-row" role="group" aria-labelledby="suggestLabel" id="suggestFilters">
-            <button type="button" class="chip is-active" data-suggest="all" aria-pressed="true">全部</button>
-            <button type="button" class="chip chip-priority" data-suggest="優先" aria-pressed="false">優先</button>
-            <button type="button" class="chip chip-hold" data-suggest="暫緩" aria-pressed="false">暫緩</button>
-            <button type="button" class="chip chip-transit" data-suggest="在途" aria-pressed="false">在途</button>
+            <button type="button" class="chip is-active" data-suggest="all" aria-pressed="true" data-i18n="suggestAll">全部</button>
+            <button type="button" class="chip chip-priority" data-suggest="優先" aria-pressed="false" data-i18n="suggestPriority">優先</button>
+            <button type="button" class="chip chip-hold" data-suggest="暫緩" aria-pressed="false" data-i18n="suggestHold">暫緩</button>
+            <button type="button" class="chip chip-transit" data-suggest="在途" aria-pressed="false" data-i18n="suggestTransit">在途</button>
           </div>
         </div>
         <div class="filter-group">
-          <label for="typeFilter" class="filter-label">類型</label>
-          <select id="typeFilter">
-            <option value="all">全部類型</option>
+          <label for="typeFilter" class="filter-label" data-i18n="typeLabel">類型</label>
+          <select id="typeFilter" translate="no">
+            <option value="all" data-i18n="typeAll">全部類型</option>
           </select>
         </div>
       </div>
       <div class="toolbar-actions">
-        <button type="button" id="expandAll" class="text-btn">全部展開</button>
-        <button type="button" id="collapseAll" class="text-btn">全部摺疊</button>
+        <button type="button" id="expandAll" class="text-btn" data-i18n="expandAll">全部展開</button>
+        <button type="button" id="collapseAll" class="text-btn" data-i18n="collapseAll">全部摺疊</button>
         <p class="result-count" id="resultCount" aria-live="polite"></p>
       </div>
     </section>
 
     <div id="errorBox" class="error-box" hidden role="alert"></div>
-    <div id="sections" class="sections"></div>
-    <p id="emptyState" class="empty-state" hidden>冇符合條件嘅項目。</p>
+    <div id="sections" class="sections" translate="no"></div>
+    <p id="emptyState" class="empty-state" hidden data-i18n="emptyFilter">冇符合條件嘅項目。</p>
   </main>
 
   <footer class="site-footer">
-    <p>公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除同手動暫緩另存 Google Sheet</p>
+    <p data-i18n="footer">公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除同手動暫緩另存 Google Sheet</p>
   </footer>
 
   <dialog id="excludeDialog" class="sheet-dialog" aria-labelledby="excludeDialogTitle">
     <form id="excludeForm" method="dialog">
-      <h2 id="excludeDialogTitle">暫不考慮</h2>
-      <p id="excludeDialogItem" class="exclude-dialog-item"></p>
-      <p class="exclude-dialog-help">呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：暫緩會留喺主清單。建議維持原樣，唔改 data.json。</p>
-      <label for="excludeNote">備註（可留空）</label>
-      <textarea id="excludeNote" name="note" maxlength="200" rows="3" placeholder="例如：屋企仲有" autocomplete="off"></textarea>
+      <h2 id="excludeDialogTitle" data-i18n="skip">暫不考慮</h2>
+      <p id="excludeDialogItem" class="exclude-dialog-item" translate="no"></p>
+      <p class="exclude-dialog-help" data-i18n="excludeHelp">呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：暫緩會留喺主清單。建議維持原樣，唔改 data.json。</p>
+      <label for="excludeNote" data-i18n="noteLabel">備註（可留空）</label>
+      <textarea id="excludeNote" name="note" maxlength="200" rows="3" placeholder="例如：屋企仲有" data-i18n-placeholder="excludePlaceholder" autocomplete="off"></textarea>
       <div class="dialog-actions">
-        <button type="button" class="text-btn" id="excludeCancel">取消</button>
-        <button type="submit" class="action-btn action-exclude" id="excludeConfirm">確認剔除</button>
+        <button type="button" class="text-btn" id="excludeCancel" data-i18n="cancel">取消</button>
+        <button type="submit" class="action-btn action-exclude" id="excludeConfirm" data-i18n="excludeConfirm">確認剔除</button>
       </div>
     </form>
   </dialog>
 
   <dialog id="holdDialog" class="sheet-dialog" aria-labelledby="holdDialogTitle">
     <form id="holdForm" method="dialog">
-      <h2 id="holdDialogTitle">手動暫緩</h2>
-      <p id="holdDialogItem" class="exclude-dialog-item"></p>
-      <p class="exclude-dialog-help">用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「暫緩」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。</p>
-      <label for="holdNote">備註（可留空）</label>
-      <textarea id="holdNote" name="note" maxlength="200" rows="3" placeholder="例如：今日超市買咗" autocomplete="off"></textarea>
+      <h2 id="holdDialogTitle" data-i18n="hold">手動暫緩</h2>
+      <p id="holdDialogItem" class="exclude-dialog-item" translate="no"></p>
+      <p class="exclude-dialog-help" data-i18n="holdHelp">用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「暫緩」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。</p>
+      <label for="holdNote" data-i18n="noteLabel">備註（可留空）</label>
+      <textarea id="holdNote" name="note" maxlength="200" rows="3" placeholder="例如：今日超市買咗" data-i18n-placeholder="holdPlaceholder" autocomplete="off"></textarea>
       <div class="dialog-actions">
-        <button type="button" class="text-btn" id="holdCancel">取消</button>
-        <button type="submit" class="action-btn action-hold" id="holdConfirm">確認暫緩</button>
+        <button type="button" class="text-btn" id="holdCancel" data-i18n="cancel">取消</button>
+        <button type="submit" class="action-btn action-hold" id="holdConfirm" data-i18n="holdConfirm">確認暫緩</button>
       </div>
     </form>
   </dialog>
