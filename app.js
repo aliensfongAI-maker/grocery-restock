@@ -2,11 +2,17 @@
   "use strict";
 
   const SUGGEST_ORDER = { 優先: 0, 在途: 1, 暫緩: 2 };
+  /** Purchase history only. Exact `type` match; 鮮果蔬 stays a normal suggestion type. */
+  const HISTORY_ONLY_TYPES = new Set(["水果", "蔬菜"]);
+  /** Sits after 優先 / 在途 / 暫緩 and before an empty 「未有建議」 bucket. */
+  const HISTORY_GROUP_RANK = 3;
   const TYPE_ORDER = [
     "用紙／清潔",
     "嬰兒／幼兒",
     "飲品／即食",
     "鮮果蔬",
+    "水果",
+    "蔬菜",
     "急凍蛋白",
     "乾貨／調味",
     "個人護理",
@@ -42,26 +48,27 @@
       suggestLabel: "建議",
       suggestAll: "全部",
       suggestPriority: "優先",
-      suggestHold: "暫緩",
-      suggestTransit: "在途",
+      suggestHold: "未使買住",
+      suggestTransit: "已下單",
       typeLabel: "類型",
       typeAll: "全部類型",
       expandAll: "全部展開",
       collapseAll: "全部摺疊",
       emptyFilter: "冇符合條件嘅項目。",
       footer: "公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除同手動暫緩另存 Google Sheet",
-      excludeHelp: "呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：暫緩會留喺主清單。建議維持原樣，唔改 data.json。",
+      excludeHelp: "呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：未使買住會留喺主清單。建議維持原樣，唔改 data.json。",
       noteLabel: "備註（可留空）",
       excludePlaceholder: "例如：屋企仲有",
       cancel: "取消",
       excludeConfirm: "確認剔除",
       hold: "手動暫緩",
-      holdHelp: "用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「暫緩」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。",
+      holdHelp: "用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「未使買住」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。",
       holdPlaceholder: "例如：今日超市買咗",
       holdConfirm: "確認暫緩",
       updatedPrefix: "上次更新：",
       updatedFailed: "上次更新：載入失敗",
       noSuggest: "未有建議",
+      historyGroup: "紀錄",
       uncategorized: "未分類",
       processing: "處理緊…",
       noApiTitle: "未設定 Web App 網址",
@@ -134,8 +141,8 @@
       suggestLabel: "Suggestion",
       suggestAll: "All",
       suggestPriority: "Priority",
-      suggestHold: "Hold",
-      suggestTransit: "In transit",
+      suggestHold: "No need yet",
+      suggestTransit: "Ordered",
       typeLabel: "Type",
       typeAll: "All types",
       expandAll: "Expand all",
@@ -148,12 +155,13 @@
       cancel: "Cancel",
       excludeConfirm: "Confirm skip",
       hold: "Manual hold",
-      holdHelp: "Use this when you already restocked, but data.json has not updated. The item stays on the restock list and is not hidden. The suggestion shows as “Hold”, and last purchase and days ago count from the hold date. To bring back the dates and suggestion from data.json, choose “Restore dates”.",
+      holdHelp: "Use this when you already restocked, but data.json has not updated. The item stays on the restock list and is not hidden. The suggestion shows as “No need yet”, and last purchase and days ago count from the hold date. To bring back the dates and suggestion from data.json, choose “Restore dates”.",
       holdPlaceholder: "e.g. bought at the supermarket today",
       holdConfirm: "Confirm hold",
       updatedPrefix: "Updated: ",
       updatedFailed: "Updated: failed to load",
       noSuggest: "No suggestion",
+      historyGroup: "Record",
       uncategorized: "Uncategorized",
       processing: "Working…",
       noApiTitle: "Web App URL is not set",
@@ -226,8 +234,8 @@
       suggestLabel: "Saran",
       suggestAll: "Semua",
       suggestPriority: "Prioritas",
-      suggestHold: "Tunda",
-      suggestTransit: "Dalam perjalanan",
+      suggestHold: "Belum perlu",
+      suggestTransit: "Sudah dipesan",
       typeLabel: "Jenis",
       typeAll: "Semua jenis",
       expandAll: "Buka semua",
@@ -240,12 +248,13 @@
       cancel: "Batal",
       excludeConfirm: "Konfirmasi lewati",
       hold: "Tunda manual",
-      holdHelp: "Pakai ini kalau barang sudah diisi ulang, tetapi data.json belum diperbarui. Item tetap di daftar restok dan tidak disembunyikan. Saran ditampilkan sebagai “Tunda”, lalu tanggal beli terakhir dan hari sejak itu dihitung dari tanggal tunda. Untuk mengembalikan tanggal dan saran dari data.json, pilih “Pulihkan tanggal”.",
+      holdHelp: "Pakai ini kalau barang sudah diisi ulang, tetapi data.json belum diperbarui. Item tetap di daftar restok dan tidak disembunyikan. Saran ditampilkan sebagai “Belum perlu”, lalu tanggal beli terakhir dan hari sejak itu dihitung dari tanggal tunda. Untuk mengembalikan tanggal dan saran dari data.json, pilih “Pulihkan tanggal”.",
       holdPlaceholder: "misalnya: beli di supermarket hari ini",
       holdConfirm: "Konfirmasi tunda",
       updatedPrefix: "Diperbarui: ",
       updatedFailed: "Diperbarui: gagal memuat",
       noSuggest: "Tanpa saran",
+      historyGroup: "Riwayat",
       uncategorized: "Tanpa jenis",
       processing: "Memproses…",
       noApiTitle: "URL Web App belum diatur",
@@ -518,15 +527,33 @@
     return i === -1 ? 999 : i;
   }
 
+  /** Exact type match. Missing or null suggest does not change this. */
+  function isHistoryOnlyType(type) {
+    return HISTORY_ONLY_TYPES.has(type);
+  }
+
+  function isHistoryOnly(item) {
+    return !!item && isHistoryOnlyType(item.type);
+  }
+
+  /** Sheet rows for 水果 / 蔬菜 stay put, but the page does not hide history behind them. */
+  function listedExclusions() {
+    return state.exclusions.filter((ex) => !isHistoryOnlyType(ex.type));
+  }
+
   function sortItems(items) {
     return items.slice().sort((a, b) => {
       const ta = typeSortKey(a.type);
       const tb = typeSortKey(b.type);
       if (ta !== tb) return ta - tb;
-      const sa = SUGGEST_ORDER[a.suggest] ?? 9;
-      const sb = SUGGEST_ORDER[b.suggest] ?? 9;
-      if (sa !== sb) return sa - sb;
-      // more days since first within same suggest
+      const aHistory = isHistoryOnly(a);
+      const bHistory = isHistoryOnly(b);
+      if (!aHistory && !bHistory) {
+        const sa = SUGGEST_ORDER[a.suggest] ?? 9;
+        const sb = SUGGEST_ORDER[b.suggest] ?? 9;
+        if (sa !== sb) return sa - sb;
+      }
+      // more days since first within same suggest (history rows ignore suggest)
       if (b.daysSince !== a.daysSince) return (b.daysSince || 0) - (a.daysSince || 0);
       return String(a.name).localeCompare(String(b.name), "zh-HK");
     });
@@ -668,8 +695,10 @@
   /**
    * Display overlay only. data.json suggest and dates stay untouched.
    * A hold forces the badge to 暫緩 and counts days from heldAt in HKT.
+   * 水果 / 蔬菜 stay on the data.json dates; holds do not apply.
    */
   function applyHoldOverlay(item) {
+    if (isHistoryOnly(item)) return item;
     const hold = holdRecord(item.type, item.name);
     if (!hold) return item;
     const heldDay = hktYmd(new Date(hold.at));
@@ -686,7 +715,7 @@
 
   function excludedDisplayItems() {
     const byKey = new Map(state.items.map((item) => [keyOf(item), item]));
-    return state.exclusions.map((ex) => {
+    return listedExclusions().map((ex) => {
       const base = byKey.get(exclusionKey(ex.type, ex.name));
       const grocery = base
         ? {
@@ -718,15 +747,20 @@
 
   function sourceItems() {
     if (state.view === "excluded") return excludedDisplayItems().map(applyHoldOverlay);
-    const hidden = new Set(state.exclusions.map((ex) => exclusionKey(ex.type, ex.name)));
+    const hidden = new Set(listedExclusions().map((ex) => exclusionKey(ex.type, ex.name)));
     return state.items.filter((item) => !hidden.has(keyOf(item))).map(applyHoldOverlay);
   }
 
   function filterItems() {
     const q = state.search.trim().toLowerCase();
     return sourceItems().filter((item) => {
+      const historyOnly = isHistoryOnly(item);
       // data.json suggest is display-only. A manual hold may overlay 暫緩.
-      if (state.suggest !== "all" && item.suggest !== state.suggest) return false;
+      // History-only rows are not 優先 / 暫緩 / 在途, even when suggest is missing or set.
+      if (state.suggest !== "all") {
+        if (historyOnly) return false;
+        if ((item.suggest || "") !== state.suggest) return false;
+      }
       if (state.type !== "all" && item.type !== state.type) return false;
       if (!q) return true;
       const brandBits = brandsOf(item).map((entry) =>
@@ -736,8 +770,8 @@
         item.name,
         item.type,
         item.note || "",
-        item.suggest || "",
-        suggestLabel(item.suggest || ""),
+        historyOnly ? "" : item.suggest || "",
+        historyOnly ? "" : suggestLabel(item.suggest || ""),
         item.exclusionNote || "",
         item.holdNote || "",
         item.pack || "",
@@ -760,6 +794,7 @@
   }
 
   function groupRank(node) {
+    if (node.kind === "history") return HISTORY_GROUP_RANK;
     if (node.kind === "type") return typeSortKey(node.value);
     if (!node.value) return 50;
     return Object.prototype.hasOwnProperty.call(SUGGEST_ORDER, node.value)
@@ -768,24 +803,32 @@
   }
 
   function groupLabel(node) {
+    if (node.kind === "history") return t("historyGroup");
     if (node.kind === "suggest") return node.value ? suggestLabel(node.value) : t("noSuggest");
     return node.value || t("uncategorized");
   }
 
   /**
+   * Suggest axis for grouping. 水果 / 蔬菜 always use the history bucket,
+   * so a missing or leftover suggest cannot file them under 優先 / 暫緩 / 在途.
+   * Other items with a missing suggest stay in 「未有建議」.
+   */
+  function suggestNode(item) {
+    if (isHistoryOnly(item)) return { kind: "history", value: "" };
+    return { kind: "suggest", value: item.suggest || "" };
+  }
+
+  /**
    * suggest-type: 建議 then 類型. type-suggest: the other way.
    * Manual holds already overlay suggest to 暫緩 before this runs.
+   * History-only types: 「紀錄」 then type, or type then 「紀錄」.
    */
   function nest(items) {
     const suggestFirst = state.groupMode !== "type-suggest";
     const outerOf = (item) =>
-      suggestFirst
-        ? { kind: "suggest", value: item.suggest || "" }
-        : { kind: "type", value: item.type || "" };
+      suggestFirst ? suggestNode(item) : { kind: "type", value: item.type || "" };
     const innerOf = (item) =>
-      suggestFirst
-        ? { kind: "type", value: item.type || "" }
-        : { kind: "suggest", value: item.suggest || "" };
+      suggestFirst ? { kind: "type", value: item.type || "" } : suggestNode(item);
     const outerMap = new Map();
     for (const item of items) {
       const outer = outerOf(item);
@@ -932,6 +975,7 @@
   }
 
   function actionButtonsHtml(item, asMenuItem) {
+    if (isHistoryOnly(item)) return "";
     const exclude = sheetButtonHtml(
       item,
       state.view === "excluded" ? "restore" : "exclude",
@@ -1107,10 +1151,19 @@
         escapeHtml(formatDate(item.lastPurchased)) +
         "</span></p>"
       : "";
+    const historyOnly = isHistoryOnly(item);
+    const suggestAndActions = historyOnly
+      ? ""
+      : '<span class="item-suggest">' +
+        badgeHtml(item.suggest) +
+        "</span>" +
+        rowMenuHtml(item) +
+        rowActionsHtml(item);
     return (
       '<li class="item-card' +
       (isOpen ? " is-open" : "") +
-      (item.manualHold ? " is-held" : "") +
+      (historyOnly ? " is-history" : "") +
+      (!historyOnly && item.manualHold ? " is-held" : "") +
       '" data-key="' +
       escapeHtml(key) +
       '">' +
@@ -1119,11 +1172,7 @@
       title +
       "</div>" +
       daysHtml(item.daysSince) +
-      '<span class="item-suggest">' +
-      badgeHtml(item.suggest) +
-      "</span>" +
-      rowMenuHtml(item) +
-      rowActionsHtml(item) +
+      suggestAndActions +
       "</div>" +
       when +
       note +
@@ -1177,18 +1226,25 @@
   }
 
   function itemListHtml(items) {
+    const history = items.length > 0 && items.every(isHistoryOnly);
+    const suggestCols = history
+      ? ""
+      : "<span>" +
+        escapeHtml(t("suggestLabel")) +
+        "</span><span>" +
+        escapeHtml(t("colAction")) +
+        "</span>";
     return (
-      '<ul class="item-list">' +
+      '<ul class="item-list' +
+      (history ? " is-history" : "") +
+      '">' +
       '<li class="item-columns" aria-hidden="true">' +
       "<span>" +
       escapeHtml(t("colName")) +
       "</span><span>" +
       escapeHtml(t("colDays")) +
-      "</span><span>" +
-      escapeHtml(t("suggestLabel")) +
-      "</span><span>" +
-      escapeHtml(t("colAction")) +
       "</span>" +
+      suggestCols +
       "</li>" +
       items.map(cardHtml).join("") +
       "</ul>"
@@ -1258,7 +1314,7 @@
       btn.classList.toggle("is-active", active);
       btn.setAttribute("aria-pressed", active ? "true" : "false");
     });
-    const n = state.exclusions.length;
+    const n = listedExclusions().length;
     els.excludedViewBtn.textContent = n > 0 ? t("viewExcludedCount", { n: n }) : t("skip");
   }
 
@@ -1283,7 +1339,8 @@
 
     const filtered = sortItems(filterItems());
     const groups = nest(filtered);
-    const universe = state.view === "excluded" ? state.exclusions.length : state.items.length;
+    const excludedCount = listedExclusions().length;
+    const universe = state.view === "excluded" ? excludedCount : state.items.length;
 
     els.resultCount.textContent =
       state.view === "excluded"
@@ -1294,7 +1351,7 @@
       els.sections.innerHTML = "";
       els.emptyState.hidden = false;
       els.emptyState.textContent =
-        state.view === "excluded" && state.exclusions.length === 0
+        state.view === "excluded" && listedExclusions().length === 0
           ? t("emptyExcluded")
           : t("emptyFilter");
       return;
@@ -1402,7 +1459,7 @@
   }
 
   function openExcludeDialog(type, name, trigger) {
-    if (!exclusionsEnabled() || state.pendingKey) return;
+    if (!exclusionsEnabled() || state.pendingKey || isHistoryOnlyType(type)) return;
     state.dialogItem = { type: type, name: name, kind: "exclude" };
     state.dialogTrigger = trigger || null;
     els.excludeDialogItem.textContent = type + " · " + name;
@@ -1414,7 +1471,7 @@
   }
 
   function openHoldDialog(type, name, trigger) {
-    if (!exclusionsEnabled() || state.pendingKey) return;
+    if (!exclusionsEnabled() || state.pendingKey || isHistoryOnlyType(type)) return;
     state.dialogItem = { type: type, name: name, kind: "hold" };
     state.dialogTrigger = trigger || null;
     els.holdDialogItem.textContent = type + " · " + name;
@@ -1466,7 +1523,7 @@
   }
 
   async function postExclusion(action, type, name, note) {
-    if (!exclusionsEnabled()) return;
+    if (!exclusionsEnabled() || isHistoryOnlyType(type)) return;
     const key = exclusionKey(type, name);
     if (state.pendingKey) return;
     state.pendingKey = key;
