@@ -68,19 +68,33 @@
   </main>
 
   <footer class="site-footer">
-    <p>公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除清單另存 Google Sheet</p>
+    <p>公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除同手動暫緩另存 Google Sheet</p>
   </footer>
 
-  <dialog id="excludeDialog" class="exclude-dialog" aria-labelledby="excludeDialogTitle">
+  <dialog id="excludeDialog" class="sheet-dialog" aria-labelledby="excludeDialogTitle">
     <form id="excludeForm" method="dialog">
       <h2 id="excludeDialogTitle">暫不考慮</h2>
       <p id="excludeDialogItem" class="exclude-dialog-item"></p>
-      <p class="exclude-dialog-help">呢項會喺補貨清單隱藏，之後可以回復。建議維持原樣。</p>
+      <p class="exclude-dialog-help">呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：暫緩會留喺主清單。建議維持原樣，唔改 data.json。</p>
       <label for="excludeNote">備註（可留空）</label>
       <textarea id="excludeNote" name="note" maxlength="200" rows="3" placeholder="例如：屋企仲有" autocomplete="off"></textarea>
       <div class="dialog-actions">
         <button type="button" class="text-btn" id="excludeCancel">取消</button>
         <button type="submit" class="action-btn action-exclude" id="excludeConfirm">確認剔除</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="holdDialog" class="sheet-dialog" aria-labelledby="holdDialogTitle">
+    <form id="holdForm" method="dialog">
+      <h2 id="holdDialogTitle">手動暫緩</h2>
+      <p id="holdDialogItem" class="exclude-dialog-item"></p>
+      <p class="exclude-dialog-help">用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「暫緩」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。</p>
+      <label for="holdNote">備註（可留空）</label>
+      <textarea id="holdNote" name="note" maxlength="200" rows="3" placeholder="例如：今日超市買咗" autocomplete="off"></textarea>
+      <div class="dialog-actions">
+        <button type="button" class="text-btn" id="holdCancel">取消</button>
+        <button type="submit" class="action-btn action-hold" id="holdConfirm">確認暫緩</button>
       </div>
     </form>
   </dialog>
