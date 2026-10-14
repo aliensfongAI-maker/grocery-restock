@@ -488,11 +488,46 @@
       '"' +
       (enabled ? "" : " disabled") +
       (exclusionsEnabled() ? "" : ' title="未設定 Web App 網址"') +
-      ' aria-label="' +
+      ' role="menuitem" aria-label="' +
       escapeHtml(shown + "：" + item.name) +
       '">' +
       escapeHtml(shown) +
       "</button>"
+    );
+  }
+
+  function rowMenuHtml(item) {
+    const menuId = domId("menu", keyOf(item));
+    const pending = state.pendingKey === keyOf(item);
+    const label = (pending ? "處理緊：" : "操作：") + item.name;
+    return (
+      '<div class="row-menu">' +
+      '<button type="button" class="row-menu-trigger" aria-expanded="false" aria-haspopup="menu" aria-controls="' +
+      menuId +
+      '" aria-label="' +
+      escapeHtml(label) +
+      '"' +
+      (pending ? ' aria-busy="true" disabled' : "") +
+      ">" +
+      '<span class="row-menu-glyph" aria-hidden="true">⋯</span>' +
+      "</button>" +
+      '<div class="row-menu-panel" id="' +
+      menuId +
+      '" role="menu" hidden aria-label="' +
+      escapeHtml("操作：" + item.name) +
+      '">' +
+      actionButtonsHtml(item) +
+      "</div></div>"
+    );
+  }
+
+  function daysHtml(n) {
+    const text = formatDaysSince(n);
+    const shown = text === "—" ? "—" : text + "日";
+    return (
+      '<span class="item-days"><span class="sr-only">距今天數 </span>' +
+      escapeHtml(shown) +
+      "</span>"
     );
   }
 
@@ -656,6 +691,11 @@
         brands.map(brandHtml).join("") +
         "</ul>"
       : "";
+    const when = item.lastPurchased
+      ? '<p class="item-when"><span class="meta-label">上次購買</span><span class="meta-value">' +
+        escapeHtml(formatDate(item.lastPurchased)) +
+        "</span></p>"
+      : "";
     return (
       '<li class="item-card' +
       (isOpen ? " is-open" : "") +
@@ -663,24 +703,18 @@
       '" data-key="' +
       escapeHtml(key) +
       '">' +
+      '<div class="product-row">' +
       '<div class="product-head">' +
       title +
+      "</div>" +
+      daysHtml(item.daysSince) +
       badgeHtml(item.suggest) +
+      rowMenuHtml(item) +
       "</div>" +
-      '<div class="item-meta">' +
-      "<div><span class=\"meta-label\">上次購買</span><span class=\"meta-value\">" +
-      escapeHtml(formatDate(item.lastPurchased)) +
-      "</span></div>" +
-      "<div><span class=\"meta-label\">距今天數</span><span class=\"meta-value\">" +
-      escapeHtml(formatDaysSince(item.daysSince)) +
-      "</span></div>" +
-      "</div>" +
+      when +
       note +
       holdMetaHtml(item) +
       exclusionMetaHtml(item) +
-      '<div class="item-actions">' +
-      actionButtonsHtml(item) +
-      "</div>" +
       empty +
       brandList +
       "</li>"
@@ -1016,6 +1050,135 @@
     }
   }
 
+  function enabledMenuItems(panel) {
+    return Array.from(panel.querySelectorAll('[role="menuitem"]:not([disabled])'));
+  }
+
+  function placeRowMenu(menu) {
+    const trigger = menu.querySelector(".row-menu-trigger");
+    const panel = menu.querySelector(".row-menu-panel");
+    if (!trigger || !panel || panel.hidden) return;
+    const rect = trigger.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) {
+      closeRowMenu(menu, false);
+      return;
+    }
+    const margin = 8;
+    const width = panel.offsetWidth;
+    const height = panel.offsetHeight;
+    let top = rect.bottom + 4;
+    if (top + height > window.innerHeight - margin && rect.top - height - 4 >= margin) {
+      top = rect.top - height - 4;
+    }
+    let left = rect.right - width;
+    if (left < margin) left = margin;
+    if (left + width > window.innerWidth - margin) {
+      left = Math.max(margin, window.innerWidth - margin - width);
+    }
+    panel.style.top = Math.round(top) + "px";
+    panel.style.left = Math.round(left) + "px";
+  }
+
+  function closeRowMenu(menu, restoreFocus) {
+    const trigger = menu.querySelector(".row-menu-trigger");
+    const panel = menu.querySelector(".row-menu-panel");
+    if (!trigger || !panel) return;
+    const wasOpen = trigger.getAttribute("aria-expanded") === "true";
+    trigger.setAttribute("aria-expanded", "false");
+    panel.hidden = true;
+    menu.classList.remove("is-open");
+    panel.style.top = "";
+    panel.style.left = "";
+    if (restoreFocus && wasOpen) trigger.focus();
+  }
+
+  function closeRowMenus(restoreFocus) {
+    els.sections.querySelectorAll(".row-menu.is-open").forEach((menu) => {
+      closeRowMenu(menu, restoreFocus);
+    });
+  }
+
+  function openRowMenu(menu) {
+    closeRowMenus(false);
+    const trigger = menu.querySelector(".row-menu-trigger");
+    const panel = menu.querySelector(".row-menu-panel");
+    if (!trigger || !panel || trigger.disabled) return;
+    trigger.setAttribute("aria-expanded", "true");
+    panel.hidden = false;
+    menu.classList.add("is-open");
+    placeRowMenu(menu);
+    const items = enabledMenuItems(panel);
+    if (items.length) items[0].focus();
+  }
+
+  function onRowMenuKeydown(e) {
+    if (els.excludeDialog.open || els.holdDialog.open) return;
+    const openMenu = els.sections.querySelector(".row-menu.is-open");
+    const inMenu = e.target.closest ? e.target.closest(".row-menu") : null;
+
+    if (e.key === "Escape") {
+      if (!openMenu) return;
+      e.preventDefault();
+      closeRowMenu(openMenu, true);
+      return;
+    }
+
+    const trigger = e.target.closest ? e.target.closest(".row-menu-trigger") : null;
+    if (
+      trigger &&
+      trigger.getAttribute("aria-expanded") !== "true" &&
+      (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ")
+    ) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        openRowMenu(trigger.closest(".row-menu"));
+      }
+      return;
+    }
+
+    if (!openMenu || inMenu !== openMenu) return;
+
+    const panel = openMenu.querySelector(".row-menu-panel");
+    const items = enabledMenuItems(panel);
+    const triggerEl = openMenu.querySelector(".row-menu-trigger");
+    const cycle = [triggerEl].concat(items);
+    const index = cycle.indexOf(document.activeElement);
+
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      if (!items.length) return;
+      e.preventDefault();
+      const current = items.indexOf(document.activeElement);
+      const delta = e.key === "ArrowDown" ? 1 : -1;
+      const next =
+        current === -1
+          ? delta === 1
+            ? 0
+            : items.length - 1
+          : (current + delta + items.length) % items.length;
+      items[next].focus();
+      return;
+    }
+    if (e.key === "Home") {
+      if (!items.length) return;
+      e.preventDefault();
+      items[0].focus();
+      return;
+    }
+    if (e.key === "End") {
+      if (!items.length) return;
+      e.preventDefault();
+      items[items.length - 1].focus();
+      return;
+    }
+    if (e.key === "Tab") {
+      if (cycle.length < 2) return;
+      e.preventDefault();
+      const from = index === -1 ? 0 : index;
+      const next = e.shiftKey ? (from - 1 + cycle.length) % cycle.length : (from + 1) % cycle.length;
+      cycle[next].focus();
+    }
+  }
+
   function bindEvents() {
     let searchTimer = null;
     els.searchInput.addEventListener("input", () => {
@@ -1044,18 +1207,31 @@
     });
 
     els.sections.addEventListener("click", (e) => {
-      const actionBtn = e.target.closest("[data-action]");
-      if (actionBtn) {
-        if (actionBtn.disabled) return;
-        const type = actionBtn.getAttribute("data-type");
-        const name = actionBtn.getAttribute("data-name");
-        const action = actionBtn.getAttribute("data-action");
-        if (action === "exclude") openExcludeDialog(type, name, actionBtn);
-        if (action === "restore") postExclusion("restore", type, name);
-        if (action === "hold") openHoldDialog(type, name, actionBtn);
-        if (action === "unhold") postExclusion("unhold", type, name);
+      const inMenu = e.target.closest(".row-menu");
+      if (inMenu) {
+        const trigger = e.target.closest(".row-menu-trigger");
+        if (trigger) {
+          if (trigger.getAttribute("aria-expanded") === "true") closeRowMenu(inMenu, false);
+          else openRowMenu(inMenu);
+          return;
+        }
+        const actionBtn = e.target.closest("[data-action]");
+        if (actionBtn) {
+          if (actionBtn.disabled) return;
+          const menuTrigger = inMenu.querySelector(".row-menu-trigger");
+          const type = actionBtn.getAttribute("data-type");
+          const name = actionBtn.getAttribute("data-name");
+          const action = actionBtn.getAttribute("data-action");
+          closeRowMenu(inMenu, false);
+          if (action === "exclude") openExcludeDialog(type, name, menuTrigger || actionBtn);
+          if (action === "restore") postExclusion("restore", type, name);
+          if (action === "hold") openHoldDialog(type, name, menuTrigger || actionBtn);
+          if (action === "unhold") postExclusion("unhold", type, name);
+          return;
+        }
         return;
       }
+      closeRowMenus(false);
       const productBtn = e.target.closest(".product-toggle");
       if (productBtn) {
         const card = productBtn.closest(".item-card");
@@ -1130,6 +1306,37 @@
         els.holdDialog.close();
       }
     });
+
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".row-menu")) return;
+      closeRowMenus(false);
+    });
+
+    els.sections.addEventListener("focusout", (e) => {
+      const menu = e.target.closest(".row-menu");
+      if (!menu || !menu.classList.contains("is-open")) return;
+      requestAnimationFrame(() => {
+        if (!menu.isConnected || !menu.classList.contains("is-open")) return;
+        if (menu.contains(document.activeElement)) return;
+        closeRowMenu(menu, false);
+      });
+    });
+
+    document.addEventListener("keydown", onRowMenuKeydown);
+
+    window.addEventListener("resize", () => {
+      const open = els.sections.querySelector(".row-menu.is-open");
+      if (open) placeRowMenu(open);
+    });
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        const open = els.sections.querySelector(".row-menu.is-open");
+        if (open) placeRowMenu(open);
+      },
+      true
+    );
   }
 
   function shortReason(err) {

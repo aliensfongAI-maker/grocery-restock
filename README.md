@@ -22,6 +22,8 @@
 
 兩層都可以獨立展開同摺疊。選擇記喺瀏覽器 `grocery-restock-group-mode`（`suggest-type` 或 `type-suggest`）。
 
+每行預設只顯示品名、包裝、距今天數同建議。手動動作收喺右邊「⋯」入面（手動暫緩、暫不考慮、回復、回復日子），撳開先見到。
+
 ## GitHub Pages
 
 1. 建 public repo `grocery-restock`（或將呢啲檔放喺 repo **main 分支根目錄**）。
@@ -57,7 +59,7 @@ window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/…/exec";
 
 6. Commit 並 push 到 GitHub Pages 用緊嘅分支。之後改 `Code.gs`，要喺「管理部署」建立**新版本**先會生效。
 
-`GROCERY_EXCLUSIONS_API` 留空時，頁面照常顯示補貨清單，「暫不考慮」同「手動暫緩」按鈕會停用。網站請求只帶 `type`、`name`、`note`（時間由試算表寫入），冇 token、冇私人資料。瀏覽器可能用 localStorage 暫存剔除同暫緩，但每次成功讀到 Sheet 都會以試算表覆蓋。
+`GROCERY_EXCLUSIONS_API` 留空時，頁面照常顯示補貨清單，「⋯」入面嘅「暫不考慮」同「手動暫緩」會停用。網站請求只帶 `type`、`name`、`note`（時間由試算表寫入），冇 token、冇私人資料。瀏覽器可能用 localStorage 暫存剔除同暫緩，但每次成功讀到 Sheet 都會以試算表覆蓋。
 
 ### 讀清單：fetch，失敗就 JSONP
 
