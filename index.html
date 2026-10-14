@@ -30,7 +30,15 @@
           enterkeyhint="search"
         />
       </div>
+      <p id="exclusionNotice" class="notice" hidden role="status"></p>
       <div class="filters">
+        <div class="filter-group">
+          <span class="filter-label" id="viewLabel">清單</span>
+          <div class="chip-row" role="group" aria-labelledby="viewLabel" id="viewFilters">
+            <button type="button" class="chip is-active" data-view="main" aria-pressed="true">補貨清單</button>
+            <button type="button" class="chip chip-exclude" data-view="excluded" id="excludedViewBtn" aria-pressed="false">暫不考慮</button>
+          </div>
+        </div>
         <div class="filter-group">
           <span class="filter-label" id="suggestLabel">建議</span>
           <div class="chip-row" role="group" aria-labelledby="suggestLabel" id="suggestFilters">
@@ -60,9 +68,24 @@
   </main>
 
   <footer class="site-footer">
-    <p>公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT）</p>
+    <p>公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除清單另存 Google Sheet</p>
   </footer>
 
+  <dialog id="excludeDialog" class="exclude-dialog" aria-labelledby="excludeDialogTitle">
+    <form id="excludeForm" method="dialog">
+      <h2 id="excludeDialogTitle">暫不考慮</h2>
+      <p id="excludeDialogItem" class="exclude-dialog-item"></p>
+      <p class="exclude-dialog-help">呢項會喺補貨清單隱藏，之後可以回復。建議維持原樣。</p>
+      <label for="excludeNote">備註（可留空）</label>
+      <textarea id="excludeNote" name="note" maxlength="200" rows="3" placeholder="例如：屋企仲有" autocomplete="off"></textarea>
+      <div class="dialog-actions">
+        <button type="button" class="text-btn" id="excludeCancel">取消</button>
+        <button type="submit" class="action-btn action-exclude" id="excludeConfirm">確認剔除</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="./config.js"></script>
   <script src="./app.js" defer></script>
 </body>
 </html>

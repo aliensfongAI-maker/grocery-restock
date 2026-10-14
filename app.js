@@ -12,6 +12,8 @@
     "個人護理",
     "口罩／防疫",
   ];
+  const CACHE_KEY = "grocery-exclusions-v1";
+  const EXCLUSION_TIMEOUT_MS = 12000;
 
   const state = {
     items: [],
@@ -19,13 +21,26 @@
     search: "",
     suggest: "all",
     type: "all",
+    view: "main",
     openTypes: new Set(),
+    exclusions: [],
+    apiUrl: "",
+    pendingKey: "",
+    baseNotice: "",
+    baseLevel: "",
+    flashNotice: "",
+    flashLevel: "",
+    loadingExclusions: false,
+    dialogItem: null,
+    dialogTrigger: null,
   };
 
   const els = {
     updatedAt: document.getElementById("updatedAt"),
     searchInput: document.getElementById("searchInput"),
     suggestFilters: document.getElementById("suggestFilters"),
+    viewFilters: document.getElementById("viewFilters"),
+    excludedViewBtn: document.getElementById("excludedViewBtn"),
     typeFilter: document.getElementById("typeFilter"),
     sections: document.getElementById("sections"),
     emptyState: document.getElementById("emptyState"),
@@ -33,6 +48,12 @@
     resultCount: document.getElementById("resultCount"),
     expandAll: document.getElementById("expandAll"),
     collapseAll: document.getElementById("collapseAll"),
+    exclusionNotice: document.getElementById("exclusionNotice"),
+    excludeDialog: document.getElementById("excludeDialog"),
+    excludeForm: document.getElementById("excludeForm"),
+    excludeDialogItem: document.getElementById("excludeDialogItem"),
+    excludeNote: document.getElementById("excludeNote"),
+    excludeCancel: document.getElementById("excludeCancel"),
   };
 
   function escapeHtml(str) {
@@ -79,6 +100,12 @@
     }
   }
 
+  function formatExcludedAt(iso) {
+    if (!iso) return "—";
+    const label = formatUpdatedAt(iso).replace(/^上次更新：/, "");
+    return label || iso;
+  }
+
   function formatDate(ymd) {
     if (!ymd) return "—";
     return ymd;
@@ -109,17 +136,123 @@
   }
 
   function uniqueTypes(items) {
-    const set = new Set(items.map((i) => i.type));
+    const set = new Set(items.map((i) => i.type).filter(Boolean));
     return Array.from(set).sort((a, b) => typeSortKey(a) - typeSortKey(b));
+  }
+
+  function exclusionKey(type, name) {
+    return String(type) + "|" + String(name);
+  }
+
+  function keyOf(item) {
+    return exclusionKey(item.type, item.name);
+  }
+
+  function exclusionsEnabled() {
+    return state.apiUrl.length > 0;
+  }
+
+  /** Sheet payload only. suggest is never derived here. */
+  function normalizeExclusions(items) {
+    if (!Array.isArray(items)) return [];
+    const out = [];
+    const seen = new Set();
+    for (const raw of items) {
+      if (!raw || typeof raw !== "object") continue;
+      const type = String(raw.type || "").trim();
+      const name = String(raw.name || "").trim();
+      if (!type || !name) continue;
+      if (raw.status && raw.status !== "excluded") continue;
+      const key = exclusionKey(type, name);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({
+        type: type,
+        name: name,
+        excludedAt: String(raw.excludedAt || ""),
+        note: String(raw.note || ""),
+        status: "excluded",
+      });
+    }
+    return out;
+  }
+
+  function applyFromSheet(items) {
+    state.exclusions = normalizeExclusions(items);
+    try {
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({ items: state.exclusions, savedAt: new Date().toISOString() })
+      );
+    } catch (_) {
+      /* private mode or quota; Sheet remains source of truth on next load */
+    }
+  }
+
+  function readCache() {
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.items)) return null;
+      return normalizeExclusions(parsed.items);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function excludedDisplayItems() {
+    const byKey = new Map(state.items.map((item) => [keyOf(item), item]));
+    return state.exclusions.map((ex) => {
+      const base = byKey.get(exclusionKey(ex.type, ex.name));
+      const grocery = base
+        ? {
+            type: base.type,
+            name: base.name,
+            lastPurchased: base.lastPurchased,
+            daysSince: base.daysSince,
+            suggest: base.suggest,
+            note: base.note,
+            image: base.image,
+            imageAlt: base.imageAlt,
+          }
+        : {
+            type: ex.type,
+            name: ex.name,
+            lastPurchased: "",
+            daysSince: null,
+            suggest: "",
+            note: "",
+            image: null,
+            imageAlt: null,
+          };
+      return Object.assign(grocery, {
+        exclusionNote: ex.note || "",
+        excludedAt: ex.excludedAt || "",
+      });
+    });
+  }
+
+  function sourceItems() {
+    if (state.view === "excluded") return excludedDisplayItems();
+    const hidden = new Set(state.exclusions.map((ex) => exclusionKey(ex.type, ex.name)));
+    return state.items.filter((item) => !hidden.has(keyOf(item)));
   }
 
   function filterItems() {
     const q = state.search.trim().toLowerCase();
-    return state.items.filter((item) => {
+    return sourceItems().filter((item) => {
+      // Display the stored suggest only — never recalculate it.
       if (state.suggest !== "all" && item.suggest !== state.suggest) return false;
       if (state.type !== "all" && item.type !== state.type) return false;
       if (!q) return true;
-      const hay = [item.name, item.type, item.note || "", item.suggest]
+      const hay = [
+        item.name,
+        item.type,
+        item.note || "",
+        item.suggest || "",
+        item.exclusionNote || "",
+      ]
         .join(" ")
         .toLowerCase();
       return hay.includes(q);
@@ -153,12 +286,52 @@
   }
 
   function badgeHtml(suggest) {
+    if (!suggest) return "";
     const s = escapeHtml(suggest);
     const cls =
       suggest === "優先" || suggest === "暫緩" || suggest === "在途"
         ? "badge badge-" + suggest
         : "badge";
     return '<span class="' + cls + '">' + s + "</span>";
+  }
+
+  function actionButtonHtml(item) {
+    const restore = state.view === "excluded";
+    const action = restore ? "restore" : "exclude";
+    const pending = state.pendingKey === keyOf(item);
+    const label = pending ? "處理緊…" : restore ? "回復" : "暫不考慮";
+    const enabled = exclusionsEnabled() && !pending;
+    return (
+      '<button type="button" class="action-btn ' +
+      (restore ? "action-restore" : "action-exclude") +
+      '" data-action="' +
+      action +
+      '" data-type="' +
+      escapeHtml(item.type) +
+      '" data-name="' +
+      escapeHtml(item.name) +
+      '"' +
+      (enabled ? "" : " disabled") +
+      (exclusionsEnabled() ? "" : ' title="未設定 Web App 網址"') +
+      ' aria-label="' +
+      escapeHtml(label + "：" + item.name) +
+      '">' +
+      escapeHtml(label) +
+      "</button>"
+    );
+  }
+
+  function exclusionMetaHtml(item) {
+    if (state.view !== "excluded") return "";
+    const note = item.exclusionNote
+      ? '<p class="item-note">剔除備註：' + escapeHtml(item.exclusionNote) + "</p>"
+      : "";
+    return (
+      '<p class="exclusion-when"><span class="meta-label">剔除時間</span><span class="meta-value">' +
+      escapeHtml(formatExcludedAt(item.excludedAt)) +
+      "</span></p>" +
+      note
+    );
   }
 
   function cardHtml(item) {
@@ -191,6 +364,10 @@
       "</span></div>" +
       "</div>" +
       note +
+      exclusionMetaHtml(item) +
+      '<div class="item-actions">' +
+      actionButtonHtml(item) +
+      "</div>" +
       "</div>" +
       "</li>"
     );
@@ -200,6 +377,14 @@
     const imgCell = item.image
       ? '<td class="col-img">' + thumbHtml(item, "thumb-sm") + "</td>"
       : '<td class="col-img"></td>';
+    const excludedCells =
+      state.view === "excluded"
+        ? "<td>" +
+          escapeHtml(formatExcludedAt(item.excludedAt)) +
+          "</td><td>" +
+          escapeHtml(item.exclusionNote || "") +
+          "</td>"
+        : "";
     return (
       "<tr>" +
       imgCell +
@@ -221,7 +406,24 @@
       '<td class="note-cell">' +
       escapeHtml(item.note || "") +
       "</td>" +
+      excludedCells +
+      '<td class="action-cell">' +
+      actionButtonHtml(item) +
+      "</td>" +
       "</tr>"
+    );
+  }
+
+  function tableHeadHtml() {
+    const extra =
+      state.view === "excluded" ? "<th>剔除時間</th><th>剔除備註</th>" : "";
+    return (
+      "<thead><tr>" +
+      '<th class="col-img"></th>' +
+      "<th>品名</th><th>類型</th><th>上次購買</th><th>距今天數</th><th>建議</th><th>短備註</th>" +
+      extra +
+      "<th>操作</th>" +
+      "</tr></thead>"
     );
   }
 
@@ -254,17 +456,14 @@
       '<div class="category-body" id="' +
       panelId +
       '"' +
-      (isOpen ? "" : ' hidden') +
+      (isOpen ? "" : " hidden") +
       ">" +
       '<ul class="item-list">' +
       cards +
       "</ul>" +
       '<div class="table-wrap">' +
       '<table class="data-table">' +
-      "<thead><tr>" +
-      "<th class=\"col-img\"></th>" +
-      "<th>品名</th><th>類型</th><th>上次購買</th><th>距今天數</th><th>建議</th><th>短備註</th>" +
-      "</tr></thead>" +
+      tableHeadHtml() +
       "<tbody>" +
       rows +
       "</tbody></table></div>" +
@@ -272,16 +471,56 @@
     );
   }
 
+  function syncNotice() {
+    const parts = [];
+    if (state.flashNotice) parts.push(state.flashNotice);
+    if (state.baseNotice) parts.push(state.baseNotice);
+    const text = parts.join(" ");
+    const level = state.flashNotice ? state.flashLevel : state.baseLevel;
+    els.exclusionNotice.hidden = !text;
+    els.exclusionNotice.textContent = text;
+    els.exclusionNotice.classList.remove("is-warn", "is-error", "is-ok");
+    if (text && level) els.exclusionNotice.classList.add("is-" + level);
+  }
+
+  function syncViewChips() {
+    els.viewFilters.querySelectorAll("[data-view]").forEach((btn) => {
+      const active = btn.getAttribute("data-view") === state.view;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+    const n = state.exclusions.length;
+    els.excludedViewBtn.textContent = n > 0 ? "暫不考慮 (" + n + ")" : "暫不考慮";
+  }
+
   function render() {
+    syncNotice();
+    syncViewChips();
+
+    if (state.loadingExclusions) {
+      els.sections.innerHTML = "";
+      els.emptyState.hidden = false;
+      els.emptyState.textContent = "讀緊剔除清單…";
+      els.resultCount.textContent = "";
+      return;
+    }
+
     const filtered = sortItems(filterItems());
     const groups = groupByType(filtered);
+    const universe = state.view === "excluded" ? state.exclusions.length : state.items.length;
 
     els.resultCount.textContent =
-      "顯示 " + filtered.length + "／" + state.items.length + " 項";
+      state.view === "excluded"
+        ? "暫不考慮 " + filtered.length + "／" + universe + " 項"
+        : "顯示 " + filtered.length + "／" + universe + " 項";
 
     if (groups.length === 0) {
       els.sections.innerHTML = "";
       els.emptyState.hidden = false;
+      els.emptyState.textContent =
+        state.view === "excluded" && state.exclusions.length === 0
+          ? "未有暫不考慮嘅項目。"
+          : "冇符合條件嘅項目。";
       return;
     }
     els.emptyState.hidden = true;
@@ -290,7 +529,7 @@
 
   function populateTypeFilter(types) {
     const sel = els.typeFilter;
-    // keep first "全部類型"
+    const current = state.type;
     while (sel.options.length > 1) sel.remove(1);
     for (const t of types) {
       const opt = document.createElement("option");
@@ -298,6 +537,19 @@
       opt.textContent = t;
       sel.appendChild(opt);
     }
+    if ([...sel.options].some((opt) => opt.value === current)) {
+      sel.value = current;
+    } else {
+      state.type = "all";
+      sel.value = "all";
+    }
+  }
+
+  function refreshTypeFilter() {
+    const types = uniqueTypes(
+      state.items.concat(state.exclusions.map((ex) => ({ type: ex.type })))
+    );
+    populateTypeFilter(types);
   }
 
   function setSuggestFilter(value) {
@@ -308,6 +560,14 @@
       btn.classList.toggle("is-active", active);
       btn.setAttribute("aria-pressed", active ? "true" : "false");
     });
+    render();
+  }
+
+  function setView(view) {
+    state.view = view === "excluded" ? "excluded" : "main";
+    if (state.view === "excluded") {
+      for (const item of excludedDisplayItems()) state.openTypes.add(item.type);
+    }
     render();
   }
 
@@ -328,6 +588,93 @@
     render();
   }
 
+  function openExcludeDialog(type, name, trigger) {
+    if (!exclusionsEnabled() || state.pendingKey) return;
+    state.dialogItem = { type: type, name: name };
+    state.dialogTrigger = trigger || null;
+    els.excludeDialogItem.textContent = type + " · " + name;
+    els.excludeNote.value = "";
+    if (typeof els.excludeDialog.showModal === "function") {
+      els.excludeDialog.showModal();
+      els.excludeNote.focus();
+    }
+  }
+
+  async function fetchJson(url, options) {
+    const res = await fetch(
+      url,
+      Object.assign(
+        { credentials: "omit", cache: "no-store", redirect: "follow" },
+        options || {}
+      )
+    );
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (_) {
+      throw new Error("回應唔係 JSON。請確認 Web App 已部署為「任何人」。");
+    }
+    if (!data || typeof data !== "object") throw new Error("回應格式唔啱");
+    if (!res.ok && !data.error) throw new Error("HTTP " + res.status);
+    return data;
+  }
+
+  function withTimeout(promise, ms) {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("連線逾時")), ms);
+      promise.then(
+        (value) => {
+          clearTimeout(timer);
+          resolve(value);
+        },
+        (err) => {
+          clearTimeout(timer);
+          reject(err);
+        }
+      );
+    });
+  }
+
+  async function postExclusion(action, type, name, note) {
+    if (!exclusionsEnabled()) return;
+    const key = exclusionKey(type, name);
+    if (state.pendingKey) return;
+    state.pendingKey = key;
+    state.flashNotice = "";
+    state.flashLevel = "";
+    render();
+    try {
+      const payload = { action: action, type: type, name: name };
+      if (action === "exclude") payload.note = String(note || "").trim();
+      // text/plain keeps the browser from sending a CORS preflight, which Apps Script does not answer.
+      const data = await fetchJson(state.apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+      if (Array.isArray(data.items)) {
+        applyFromSheet(data.items);
+        state.baseNotice = "";
+        state.baseLevel = "";
+      }
+      if (data.error) throw new Error(data.error);
+      state.flashNotice =
+        action === "exclude" ? "已暫不考慮「" + name + "」。" : "已回復「" + name + "」。";
+      state.flashLevel = "ok";
+      if (action === "exclude" && state.view === "excluded") state.openTypes.add(type);
+    } catch (err) {
+      state.flashNotice =
+        (action === "exclude" ? "剔除失敗：" : "回復失敗：") +
+        (err && err.message ? err.message : "請再試");
+      state.flashLevel = "error";
+    } finally {
+      state.pendingKey = "";
+      refreshTypeFilter();
+      render();
+    }
+  }
+
   function bindEvents() {
     let searchTimer = null;
     els.searchInput.addEventListener("input", () => {
@@ -344,12 +691,28 @@
       setSuggestFilter(btn.getAttribute("data-suggest"));
     });
 
+    els.viewFilters.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-view]");
+      if (!btn) return;
+      setView(btn.getAttribute("data-view"));
+    });
+
     els.typeFilter.addEventListener("change", () => {
       state.type = els.typeFilter.value;
       render();
     });
 
     els.sections.addEventListener("click", (e) => {
+      const actionBtn = e.target.closest("[data-action]");
+      if (actionBtn) {
+        if (actionBtn.disabled) return;
+        const type = actionBtn.getAttribute("data-type");
+        const name = actionBtn.getAttribute("data-name");
+        const action = actionBtn.getAttribute("data-action");
+        if (action === "exclude") openExcludeDialog(type, name, actionBtn);
+        if (action === "restore") postExclusion("restore", type, name);
+        return;
+      }
       const btn = e.target.closest(".category-toggle");
       if (!btn) return;
       const section = btn.closest(".category");
@@ -359,6 +722,71 @@
 
     els.expandAll.addEventListener("click", expandAllVisible);
     els.collapseAll.addEventListener("click", collapseAll);
+
+    els.excludeCancel.addEventListener("click", () => {
+      state.dialogItem = null;
+      els.excludeDialog.close();
+    });
+
+    els.excludeForm.addEventListener("submit", () => {
+      const item = state.dialogItem;
+      const note = els.excludeNote.value;
+      state.dialogItem = null;
+      if (!item) return;
+      postExclusion("exclude", item.type, item.name, note);
+    });
+
+    els.excludeDialog.addEventListener("close", () => {
+      const trigger = state.dialogTrigger;
+      state.dialogTrigger = null;
+      if (trigger && typeof trigger.focus === "function") trigger.focus();
+    });
+
+    els.excludeDialog.addEventListener("click", (e) => {
+      if (e.target === els.excludeDialog) {
+        state.dialogItem = null;
+        els.excludeDialog.close();
+      }
+    });
+  }
+
+  async function loadExclusions() {
+    const url = String(
+      typeof window.GROCERY_EXCLUSIONS_API === "string" ? window.GROCERY_EXCLUSIONS_API : ""
+    ).trim();
+    state.apiUrl = url;
+    if (!url) {
+      state.exclusions = [];
+      state.baseNotice = "未設定剔除清單網址。請喺 config.js 貼上 Web App 網址，先用到「暫不考慮」。";
+      state.baseLevel = "warn";
+      state.loadingExclusions = false;
+      return;
+    }
+
+    state.loadingExclusions = true;
+    state.baseNotice = "讀緊剔除清單…";
+    state.baseLevel = "";
+    render();
+    try {
+      const data = await withTimeout(fetchJson(url, { method: "GET" }), EXCLUSION_TIMEOUT_MS);
+      if (data.error && !Array.isArray(data.items)) throw new Error(data.error);
+      applyFromSheet(Array.isArray(data.items) ? data.items : []);
+      state.baseNotice = data.error ? data.error : "";
+      state.baseLevel = data.error ? "error" : "";
+    } catch (err) {
+      const cached = readCache();
+      if (cached) {
+        state.exclusions = cached;
+        state.baseNotice = "讀唔到 Google Sheet，暫時用本機暫存。連到試算表之後會以 Sheet 為準。";
+        state.baseLevel = "warn";
+      } else {
+        state.exclusions = [];
+        state.baseNotice = "讀唔到剔除清單。補貨清單照常顯示，剔除暫時用唔到。";
+        state.baseLevel = "error";
+      }
+    } finally {
+      state.loadingExclusions = false;
+    }
   }
 
   async function load() {
@@ -373,12 +801,12 @@
       state.items = data.items;
       els.updatedAt.textContent = formatUpdatedAt(state.updatedAt);
 
-      const types = uniqueTypes(state.items);
-      populateTypeFilter(types);
-      // default: open all categories so first paint shows content
-      for (const t of types) state.openTypes.add(t);
+      refreshTypeFilter();
+      for (const t of uniqueTypes(state.items)) state.openTypes.add(t);
 
       els.errorBox.hidden = true;
+      await loadExclusions();
+      refreshTypeFilter();
       render();
     } catch (err) {
       console.error(err);

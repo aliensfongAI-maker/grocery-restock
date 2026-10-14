@@ -8,8 +8,10 @@
 |------|------|
 | `index.html` | 頁面結構 |
 | `styles.css` | 樣式（mobile-first） |
-| `app.js` | 讀 `data.json`、搜尋／篩選、按類型摺疊 |
-| `data.json` | 建議資料（前端只顯示 `suggest`，唔重算） |
+| `app.js` | 讀 `data.json`、搜尋／篩選、按類型摺疊、呼叫剔除清單 |
+| `config.js` | 剔除清單 Web App 網址（預設留空） |
+| `gas/Code.gs` | Apps Script：讀寫 Google Sheet |
+| `data.json` | 建議資料（前端只顯示 `suggest`，唔重算；唔存剔除） |
 
 ## GitHub Pages
 
@@ -18,6 +20,26 @@
 3. 等一兩分鐘，開 `https://<user>.github.io/grocery-restock/`。
 
 唔好放私人資料、價錢、地址、帳戶資訊入 `data.json`。
+
+## 暫不考慮（Google Sheet）
+
+剔除／回復唔寫入 `data.json`。Google Sheet 先算數；主清單照舊只讀 `data.json`，`suggest` 唔會重算。每項主鍵係 `type|name`。回復只把 `status` 改做 `restored`，保留該列做審計。
+
+1. 開新 Google 試算表，名稱 **超市補貨-剔除**（用第一個工作表，唔使自己打欄位）。
+2. 擴充功能 → **Apps Script**。刪除預設程式，將 `gas/Code.gs` 全部貼上，儲存。
+3. **部署 → 新增部署 → 網頁應用程式**。
+   - 執行身分：**我**（Execute as Me）
+   - 誰可以存取：**任何人**（Anyone）
+4. 授權試算表存取。複製以 `/exec` 結尾嘅 Web App 網址。
+5. 貼入 `config.js`：
+
+```js
+window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/…/exec";
+```
+
+6. Commit 並 push 到 GitHub Pages 用緊嘅分支。之後改 `Code.gs`，要喺「管理部署」建立**新版本**先會生效。
+
+`GROCERY_EXCLUSIONS_API` 留空時，頁面照常顯示補貨清單，「暫不考慮」按鈕會停用。網站請求只帶 `type`、`name`、`note`（時間由試算表寫入），冇 token、冇私人資料。瀏覽器可能用 localStorage 暫存剔除清單，但每次成功讀到 Sheet 都會以試算表覆蓋。
 
 ## 本機預覽
 
