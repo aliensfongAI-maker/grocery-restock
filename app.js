@@ -13,6 +13,7 @@
     "口罩／防疫",
   ];
   const CACHE_KEY = "grocery-exclusions-v1";
+  const GROUP_MODE_KEY = "grocery-restock-group-mode";
   const EXCLUSION_TIMEOUT_MS = 12000;
 
   const state = {
@@ -22,7 +23,8 @@
     suggest: "all",
     type: "all",
     view: "main",
-    openTypes: new Set(),
+    groupMode: readStoredGroupMode(),
+    collapsedGroups: new Set(),
     openProducts: new Set(),
     exclusions: [],
     holds: [],
@@ -51,6 +53,7 @@
     resultCount: document.getElementById("resultCount"),
     expandAll: document.getElementById("expandAll"),
     collapseAll: document.getElementById("collapseAll"),
+    groupMode: document.getElementById("groupMode"),
     exclusionNotice: document.getElementById("exclusionNotice"),
     excludeDialog: document.getElementById("excludeDialog"),
     excludeForm: document.getElementById("excludeForm"),
@@ -359,16 +362,89 @@
     });
   }
 
-  function groupByType(items) {
-    const map = new Map();
-    for (const item of items) {
-      if (!map.has(item.type)) map.set(item.type, []);
-      map.get(item.type).push(item);
+  function readStoredGroupMode() {
+    try {
+      const value = localStorage.getItem(GROUP_MODE_KEY);
+      if (value === "type-suggest" || value === "suggest-type") return value;
+    } catch (_) {
+      /* private mode */
     }
-    const types = Array.from(map.keys()).sort(
-      (a, b) => typeSortKey(a) - typeSortKey(b)
-    );
-    return types.map((type) => ({ type, items: map.get(type) }));
+    return "suggest-type";
+  }
+
+  function groupRank(node) {
+    if (node.kind === "type") return typeSortKey(node.value);
+    if (!node.value) return 50;
+    return Object.prototype.hasOwnProperty.call(SUGGEST_ORDER, node.value)
+      ? SUGGEST_ORDER[node.value]
+      : 40;
+  }
+
+  function groupLabel(node) {
+    if (node.kind === "suggest") return node.value || "未有建議";
+    return node.value || "未分類";
+  }
+
+  /**
+   * suggest-type: 建議 then 類型. type-suggest: the other way.
+   * Manual holds already overlay suggest to 暫緩 before this runs.
+   */
+  function nest(items) {
+    const suggestFirst = state.groupMode !== "type-suggest";
+    const outerOf = (item) =>
+      suggestFirst
+        ? { kind: "suggest", value: item.suggest || "" }
+        : { kind: "type", value: item.type || "" };
+    const innerOf = (item) =>
+      suggestFirst
+        ? { kind: "type", value: item.type || "" }
+        : { kind: "suggest", value: item.suggest || "" };
+    const outerMap = new Map();
+    for (const item of items) {
+      const outer = outerOf(item);
+      const outerKey = outer.kind + ":" + outer.value;
+      if (!outerMap.has(outerKey)) {
+        outerMap.set(outerKey, { kind: outer.kind, value: outer.value, key: outerKey, inners: new Map() });
+      }
+      const bucket = outerMap.get(outerKey);
+      const inner = innerOf(item);
+      const innerKey = outerKey + ">" + inner.kind + ":" + inner.value;
+      if (!bucket.inners.has(innerKey)) {
+        bucket.inners.set(innerKey, {
+          kind: inner.kind,
+          value: inner.value,
+          key: innerKey,
+          items: [],
+        });
+      }
+      bucket.inners.get(innerKey).items.push(item);
+    }
+    const outers = Array.from(outerMap.values());
+    outers.sort((a, b) => groupRank(a) - groupRank(b) || groupLabel(a).localeCompare(groupLabel(b), "zh-HK"));
+    for (const outer of outers) {
+      outer.groups = Array.from(outer.inners.values());
+      outer.groups.sort(
+        (a, b) => groupRank(a) - groupRank(b) || groupLabel(a).localeCompare(groupLabel(b), "zh-HK")
+      );
+      let count = 0;
+      for (const group of outer.groups) {
+        group.items = sortItems(group.items);
+        group.count = group.items.length;
+        count += group.count;
+      }
+      outer.count = count;
+      delete outer.inners;
+    }
+    return outers;
+  }
+
+  function collectGroupKeys(outers) {
+    const keys = [];
+    for (const outer of outers) {
+      keys.push(outer.key);
+      for (const inner of outer.groups) keys.push(inner.key);
+    }
+    return keys;
   }
 
   function thumbHtml(item, className) {
@@ -611,29 +687,35 @@
     );
   }
 
-  function sectionHtml(group) {
-    const isOpen = state.openTypes.has(group.type);
-    const openClass = isOpen ? " is-open" : "";
-    const expanded = isOpen ? "true" : "false";
-    const panelId = "panel-" + encodeURIComponent(group.type).replace(/%/g, "");
-    const cards = group.items.map(cardHtml).join("");
+  function groupHeadingHtml(node) {
+    const label = '<span class="category-title">' + escapeHtml(groupLabel(node)) + "</span>";
+    if (node.kind === "suggest" && node.value) return label + badgeHtml(node.value);
+    return label;
+  }
+
+  function accordionHtml(node, bodyHtml, extraClass) {
+    const isOpen = !state.collapsedGroups.has(node.key);
+    const panelId = domId("group", node.key);
     return (
       '<section class="category' +
-      openClass +
-      '" data-type="' +
-      escapeHtml(group.type) +
+      (extraClass ? " " + extraClass : "") +
+      (isOpen ? " is-open" : "") +
+      '" data-group-key="' +
+      escapeHtml(node.key) +
+      '" data-kind="' +
+      escapeHtml(node.kind) +
+      '" data-value="' +
+      escapeHtml(node.value) +
       '">' +
       '<button type="button" class="category-toggle" aria-expanded="' +
-      expanded +
+      (isOpen ? "true" : "false") +
       '" aria-controls="' +
       panelId +
       '">' +
       '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
-      '<span class="category-title">' +
-      escapeHtml(group.type) +
-      "</span>" +
+      groupHeadingHtml(node) +
       '<span class="category-count">' +
-      group.items.length +
+      node.count +
       "</span>" +
       "</button>" +
       '<div class="category-body" id="' +
@@ -641,11 +723,26 @@
       '"' +
       (isOpen ? "" : " hidden") +
       ">" +
-      '<ul class="item-list">' +
-      cards +
-      "</ul>" +
+      bodyHtml +
       "</div></section>"
     );
+  }
+
+  function nestedHtml(outers) {
+    return outers
+      .map((outer) => {
+        const inners = outer.groups
+          .map((group) =>
+            accordionHtml(
+              group,
+              '<ul class="item-list">' + group.items.map(cardHtml).join("") + "</ul>",
+              "category-inner"
+            )
+          )
+          .join("");
+        return accordionHtml(outer, inners, "");
+      })
+      .join("");
   }
 
   function syncNotice() {
@@ -683,7 +780,7 @@
     }
 
     const filtered = sortItems(filterItems());
-    const groups = groupByType(filtered);
+    const groups = nest(filtered);
     const universe = state.view === "excluded" ? state.exclusions.length : state.items.length;
 
     els.resultCount.textContent =
@@ -701,7 +798,7 @@
       return;
     }
     els.emptyState.hidden = true;
-    els.sections.innerHTML = groups.map(sectionHtml).join("");
+    els.sections.innerHTML = nestedHtml(groups);
   }
 
   function populateTypeFilter(types) {
@@ -740,18 +837,45 @@
     render();
   }
 
-  function setView(view) {
-    state.view = view === "excluded" ? "excluded" : "main";
-    if (state.view === "excluded") {
-      for (const item of excludedDisplayItems()) state.openTypes.add(item.type);
+  function revealGroups(items) {
+    for (const key of collectGroupKeys(nest(items))) state.collapsedGroups.delete(key);
+  }
+
+  function setGroupMode(mode) {
+    state.groupMode = mode === "type-suggest" ? "type-suggest" : "suggest-type";
+    try {
+      localStorage.setItem(GROUP_MODE_KEY, state.groupMode);
+    } catch (_) {
+      /* private mode; the choice still applies this visit */
     }
+    syncGroupMode();
     render();
   }
 
-  function toggleType(type) {
-    if (state.openTypes.has(type)) state.openTypes.delete(type);
-    else state.openTypes.add(type);
+  function syncGroupMode() {
+    if (!els.groupMode) return;
+    els.groupMode.querySelectorAll("[data-group-mode]").forEach((btn) => {
+      const active = btn.getAttribute("data-group-mode") === state.groupMode;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+  }
+
+  function setView(view) {
+    state.view = view === "excluded" ? "excluded" : "main";
+    if (state.view === "excluded") revealGroups(excludedDisplayItems().map(applyHoldOverlay));
     render();
+  }
+
+  function toggleGroup(key) {
+    if (state.collapsedGroups.has(key)) state.collapsedGroups.delete(key);
+    else state.collapsedGroups.add(key);
+    render();
+    const escaped = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(key) : key;
+    const btn = els.sections.querySelector(
+      '.category[data-group-key="' + escaped + '"] > .category-toggle'
+    );
+    if (btn) btn.focus();
   }
 
   function toggleProduct(key) {
@@ -766,13 +890,12 @@
   }
 
   function expandAllVisible() {
-    const filtered = filterItems();
-    for (const item of filtered) state.openTypes.add(item.type);
+    for (const key of collectGroupKeys(nest(filterItems()))) state.collapsedGroups.delete(key);
     render();
   }
 
   function collapseAll() {
-    state.openTypes.clear();
+    for (const key of collectGroupKeys(nest(filterItems()))) state.collapsedGroups.add(key);
     render();
   }
 
@@ -869,7 +992,13 @@
       };
       state.flashNotice = done[action] || "已更新。";
       state.flashLevel = "ok";
-      if (action === "exclude" && state.view === "excluded") state.openTypes.add(type);
+      if (action === "exclude" && state.view === "excluded") {
+        revealGroups(
+          excludedDisplayItems()
+            .filter((item) => item.type === type && item.name === name)
+            .map(applyHoldOverlay)
+        );
+      }
     } catch (err) {
       const failed = {
         exclude: "剔除失敗：",
@@ -937,8 +1066,14 @@
       const btn = e.target.closest(".category-toggle");
       if (!btn) return;
       const section = btn.closest(".category");
-      if (!section) return;
-      toggleType(section.getAttribute("data-type"));
+      const key = section && section.getAttribute("data-group-key");
+      if (key) toggleGroup(key);
+    });
+
+    els.groupMode.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-group-mode]");
+      if (!btn) return;
+      setGroupMode(btn.getAttribute("data-group-mode"));
     });
 
     els.expandAll.addEventListener("click", expandAllVisible);
@@ -1169,7 +1304,6 @@
       els.updatedAt.textContent = formatUpdatedAt(state.updatedAt);
 
       refreshTypeFilter();
-      for (const t of uniqueTypes(state.items)) state.openTypes.add(t);
 
       els.errorBox.hidden = true;
       await loadExclusions();
@@ -1185,5 +1319,6 @@
   }
 
   bindEvents();
+  syncGroupMode();
   load();
 })();

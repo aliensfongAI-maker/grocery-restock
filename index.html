@@ -31,6 +31,13 @@
         />
       </div>
       <p id="exclusionNotice" class="notice" hidden role="status"></p>
+      <div class="group-switch">
+        <span class="filter-label" id="groupModeLabel">分組</span>
+        <div class="segment" id="groupMode" role="group" aria-labelledby="groupModeLabel">
+          <button type="button" data-group-mode="suggest-type" aria-pressed="true">建議優先</button>
+          <button type="button" data-group-mode="type-suggest" aria-pressed="false">類型優先</button>
+        </div>
+      </div>
       <div class="filters">
         <div class="filter-group">
           <span class="filter-label" id="viewLabel">清單</span>
