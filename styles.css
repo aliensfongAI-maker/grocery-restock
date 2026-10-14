@@ -419,6 +419,11 @@ body {
   white-space: nowrap;
 }
 
+.brand-pack {
+  margin-left: 0.4rem;
+  vertical-align: 0.05em;
+}
+
 .product-head .badge {
   margin-top: 0.55rem;
   flex-shrink: 0;
