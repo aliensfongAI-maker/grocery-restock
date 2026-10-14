@@ -507,7 +507,7 @@
 
     const filtered = sortItems(filterItems());
     const groups = groupByType(filtered);
-    const universe = sourceItems().length;
+    const universe = state.view === "excluded" ? state.exclusions.length : state.items.length;
 
     els.resultCount.textContent =
       state.view === "excluded"
