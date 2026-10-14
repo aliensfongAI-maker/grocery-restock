@@ -24,10 +24,13 @@
   const EXCLUSION_TIMEOUT_MS = 12000;
   const HTML_LANG = { zh: "zh-Hant", en: "en", id: "id" };
   const SUGGEST_KEYS = { 優先: "suggestPriority", 暫緩: "suggestHold", 在途: "suggestTransit" };
+  /** view.html sets this. index.html leaves it unset, so actions stay available. */
+  const READ_ONLY = window.GROCERY_READ_ONLY === true;
 
   /**
-   * UI chrome only. Product names, types, packs, brand titles, and notes
-   * from data.json or the Sheet stay as returned.
+   * UI chrome only. Notes, packs, and brand titles from data.json or the
+   * Sheet stay as returned. type, subtype, and item name are display-mapped
+   * from i18n-data.json when the language is English or Indonesian.
    */
   const I18N = {
     zh: {
@@ -365,6 +368,43 @@
     return key ? t(key) : String(value);
   }
 
+  /** Static zh→en/id maps. Missing or blank entries stay the original Chinese. */
+  let catalogI18n = { type: {}, subtype: {}, name: {} };
+
+  function catalogLabel(kind, value) {
+    if (value == null) return "";
+    const text = String(value);
+    if (!text) return "";
+    if (state.lang !== "en" && state.lang !== "id") return text;
+    const table = catalogI18n[kind];
+    if (!table || !Object.prototype.hasOwnProperty.call(table, text)) return text;
+    const entry = table[text];
+    if (!entry || typeof entry !== "object") return text;
+    const translated = entry[state.lang];
+    if (translated == null || String(translated).trim() === "") return text;
+    return String(translated);
+  }
+
+  function dialogItemText(type, name) {
+    return catalogLabel("type", type) + " · " + catalogLabel("name", name);
+  }
+
+  async function loadCatalogI18n() {
+    try {
+      const res = await fetch("./i18n-data.json", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data || typeof data !== "object") return;
+      catalogI18n = {
+        type: data.type && typeof data.type === "object" ? data.type : {},
+        subtype: data.subtype && typeof data.subtype === "object" ? data.subtype : {},
+        name: data.name && typeof data.name === "object" ? data.name : {},
+      };
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   function appError(code, vars) {
     const message = code === "http" ? "HTTP " + ((vars && vars.status) || "") : t(code, vars);
     const err = new Error(message);
@@ -450,11 +490,26 @@
     }
     applyStaticI18n();
     syncLangSwitch();
-    if (els.holdDialog.open && els.holdNote.value === previousDefault) {
+    if (
+      els.holdDialog &&
+      els.holdDialog.open &&
+      els.holdNote &&
+      els.holdNote.value === previousDefault
+    ) {
       els.holdNote.value = t("holdNoteDefault");
+    }
+    if (state.dialogItem) {
+      const text = dialogItemText(state.dialogItem.type, state.dialogItem.name);
+      if (els.excludeDialog && els.excludeDialog.open && els.excludeDialogItem) {
+        els.excludeDialogItem.textContent = text;
+      }
+      if (els.holdDialog && els.holdDialog.open && els.holdDialogItem) {
+        els.holdDialogItem.textContent = text;
+      }
     }
     refreshUpdatedAt();
     if (!els.errorBox.hidden) els.errorBox.textContent = t("fileError");
+    refreshTypeFilter();
     render();
   }
 
@@ -768,7 +823,11 @@
       );
       const hay = [
         item.name,
+        catalogLabel("name", item.name),
         item.type,
+        catalogLabel("type", item.type || ""),
+        item.subtype || "",
+        catalogLabel("subtype", item.subtype || ""),
         item.note || "",
         historyOnly ? "" : item.suggest || "",
         historyOnly ? "" : suggestLabel(item.suggest || ""),
@@ -805,7 +864,14 @@
   function groupLabel(node) {
     if (node.kind === "history") return t("historyGroup");
     if (node.kind === "suggest") return node.value ? suggestLabel(node.value) : t("noSuggest");
+    if (node.kind === "type") return node.value ? catalogLabel("type", node.value) : t("uncategorized");
     return node.value || t("uncategorized");
+  }
+
+  /** Type groups keep the Chinese key so language does not reshuffle them. */
+  function groupTieBreak(node) {
+    if (node.kind === "type") return node.value || "";
+    return groupLabel(node);
   }
 
   /**
@@ -850,11 +916,11 @@
       bucket.inners.get(innerKey).items.push(item);
     }
     const outers = Array.from(outerMap.values());
-    outers.sort((a, b) => groupRank(a) - groupRank(b) || groupLabel(a).localeCompare(groupLabel(b), "zh-HK"));
+    outers.sort((a, b) => groupRank(a) - groupRank(b) || groupTieBreak(a).localeCompare(groupTieBreak(b), "zh-HK"));
     for (const outer of outers) {
       outer.groups = Array.from(outer.inners.values());
       outer.groups.sort(
-        (a, b) => groupRank(a) - groupRank(b) || groupLabel(a).localeCompare(groupLabel(b), "zh-HK")
+        (a, b) => groupRank(a) - groupRank(b) || groupTieBreak(a).localeCompare(groupTieBreak(b), "zh-HK")
       );
       let count = 0;
       for (const group of outer.groups) {
@@ -879,7 +945,7 @@
 
   function thumbHtml(item, className) {
     if (!item.image) return "";
-    const alt = escapeHtml(item.imageAlt || item.name || "");
+    const alt = escapeHtml(item.imageAlt || catalogLabel("name", item.name) || "");
     return (
       '<img class="' +
       className +
@@ -919,7 +985,7 @@
       (exclusionsEnabled() ? "" : ' title="' + escapeHtml(t("noApiTitle")) + '"') +
       (asMenuItem ? ' role="menuitem"' : "") +
       ' aria-label="' +
-      escapeHtml(shown + (state.lang === "zh" ? "：" : ": ") + item.name) +
+      escapeHtml(shown + (state.lang === "zh" ? "：" : ": ") + catalogLabel("name", item.name)) +
       '">' +
       escapeHtml(shown) +
       "</button>"
@@ -929,7 +995,7 @@
   function rowMenuHtml(item) {
     const menuId = domId("menu", keyOf(item));
     const pending = state.pendingKey === keyOf(item);
-    const label = (pending ? t("processingPrefix") : t("actionPrefix")) + item.name;
+    const label = (pending ? t("processingPrefix") : t("actionPrefix")) + catalogLabel("name", item.name);
     return (
       '<div class="row-menu">' +
       '<button type="button" class="row-menu-trigger" aria-expanded="false" aria-haspopup="menu" aria-controls="' +
@@ -944,7 +1010,7 @@
       '<div class="row-menu-panel" id="' +
       menuId +
       '" role="menu" hidden aria-label="' +
-      escapeHtml(t("actionPrefix") + item.name) +
+      escapeHtml(t("actionPrefix") + catalogLabel("name", item.name)) +
       '">' +
       actionButtonsHtml(item, true) +
       "</div></div>"
@@ -955,7 +1021,7 @@
   function rowActionsHtml(item) {
     return (
       '<div class="row-actions" role="group" aria-label="' +
-      escapeHtml(t("actionPrefix") + item.name) +
+      escapeHtml(t("actionPrefix") + catalogLabel("name", item.name)) +
       '">' +
       actionButtonsHtml(item, false) +
       "</div>"
@@ -996,7 +1062,7 @@
   }
 
   function holdMetaHtml(item) {
-    if (!item.manualHold) return "";
+    if (READ_ONLY || !item.manualHold) return "";
     const note = item.holdNote
       ? '<p class="item-note">' + escapeHtml(t("holdNotePrefix") + item.holdNote) + "</p>"
       : "";
@@ -1118,11 +1184,17 @@
     const note = item.note
       ? '<p class="item-note">' + escapeHtml(item.note) + "</p>"
       : "";
+    const subtypeHtml =
+      item.subtype && String(item.subtype).trim()
+        ? '<span class="item-subtype">' + escapeHtml(catalogLabel("subtype", item.subtype)) + "</span>"
+        : "";
     const nameAndPack =
-      '<span class="item-title"><span class="item-name">' +
-      escapeHtml(item.name) +
+      '<span class="item-title"><span class="item-name-row"><span class="item-name">' +
+      escapeHtml(catalogLabel("name", item.name)) +
       "</span>" +
       packHtml(item.pack, "item-pack") +
+      "</span>" +
+      subtypeHtml +
       "</span>";
     const title = canExpand
       ? '<button type="button" class="product-toggle" aria-expanded="' +
@@ -1157,8 +1229,7 @@
       : '<span class="item-suggest">' +
         badgeHtml(item.suggest) +
         "</span>" +
-        rowMenuHtml(item) +
-        rowActionsHtml(item);
+        (READ_ONLY ? "" : rowMenuHtml(item) + rowActionsHtml(item));
     return (
       '<li class="item-card' +
       (isOpen ? " is-open" : "") +
@@ -1231,12 +1302,11 @@
       ? ""
       : "<span>" +
         escapeHtml(t("suggestLabel")) +
-        "</span><span>" +
-        escapeHtml(t("colAction")) +
-        "</span>";
+        "</span>" +
+        (READ_ONLY ? "" : "<span>" + escapeHtml(t("colAction")) + "</span>");
     return (
       '<ul class="item-list' +
-      (history ? " is-history" : "") +
+      (history ? " is-history" : READ_ONLY ? " is-readonly" : "") +
       '">' +
       '<li class="item-columns" aria-hidden="true">' +
       "<span>" +
@@ -1279,7 +1349,7 @@
         hold: "doneHold",
         unhold: "doneUnhold",
       }[entry.action];
-      return key ? t(key, { name: entry.name }) : t("doneGeneric");
+      return key ? t(key, { name: catalogLabel("name", entry.name) }) : t("doneGeneric");
     }
     if (entry.kind === "failAction") {
       const key = {
@@ -1309,6 +1379,7 @@
   }
 
   function syncViewChips() {
+    if (!els.viewFilters || !els.excludedViewBtn) return;
     els.viewFilters.querySelectorAll("[data-view]").forEach((btn) => {
       const active = btn.getAttribute("data-view") === state.view;
       btn.classList.toggle("is-active", active);
@@ -1364,10 +1435,10 @@
     const sel = els.typeFilter;
     const current = state.type;
     while (sel.options.length > 1) sel.remove(1);
-    for (const t of types) {
+    for (const typeName of types) {
       const opt = document.createElement("option");
-      opt.value = t;
-      opt.textContent = t;
+      opt.value = typeName;
+      opt.textContent = catalogLabel("type", typeName);
       sel.appendChild(opt);
     }
     if ([...sel.options].some((opt) => opt.value === current)) {
@@ -1459,10 +1530,10 @@
   }
 
   function openExcludeDialog(type, name, trigger) {
-    if (!exclusionsEnabled() || state.pendingKey || isHistoryOnlyType(type)) return;
+    if (READ_ONLY || !exclusionsEnabled() || state.pendingKey || isHistoryOnlyType(type)) return;
     state.dialogItem = { type: type, name: name, kind: "exclude" };
     state.dialogTrigger = trigger || null;
-    els.excludeDialogItem.textContent = type + " · " + name;
+    els.excludeDialogItem.textContent = dialogItemText(type, name);
     els.excludeNote.value = "";
     if (typeof els.excludeDialog.showModal === "function") {
       els.excludeDialog.showModal();
@@ -1471,10 +1542,10 @@
   }
 
   function openHoldDialog(type, name, trigger) {
-    if (!exclusionsEnabled() || state.pendingKey || isHistoryOnlyType(type)) return;
+    if (READ_ONLY || !exclusionsEnabled() || state.pendingKey || isHistoryOnlyType(type)) return;
     state.dialogItem = { type: type, name: name, kind: "hold" };
     state.dialogTrigger = trigger || null;
-    els.holdDialogItem.textContent = type + " · " + name;
+    els.holdDialogItem.textContent = dialogItemText(type, name);
     els.holdNote.value = t("holdNoteDefault");
     if (typeof els.holdDialog.showModal === "function") {
       els.holdDialog.showModal();
@@ -1523,7 +1594,7 @@
   }
 
   async function postExclusion(action, type, name, note) {
-    if (!exclusionsEnabled() || isHistoryOnlyType(type)) return;
+    if (READ_ONLY || !exclusionsEnabled() || isHistoryOnlyType(type)) return;
     const key = exclusionKey(type, name);
     if (state.pendingKey) return;
     state.pendingKey = key;
@@ -1629,7 +1700,7 @@
   }
 
   function onRowMenuKeydown(e) {
-    if (els.excludeDialog.open || els.holdDialog.open) return;
+    if ((els.excludeDialog && els.excludeDialog.open) || (els.holdDialog && els.holdDialog.open)) return;
     const openMenu = els.sections.querySelector(".row-menu.is-open");
     const inMenu = e.target.closest ? e.target.closest(".row-menu") : null;
 
@@ -1697,7 +1768,7 @@
   }
 
   function runRowAction(actionBtn, focusEl) {
-    if (!actionBtn || actionBtn.disabled) return;
+    if (READ_ONLY || !actionBtn || actionBtn.disabled) return;
     const type = actionBtn.getAttribute("data-type");
     const name = actionBtn.getAttribute("data-name");
     const action = actionBtn.getAttribute("data-action");
@@ -1724,11 +1795,13 @@
       setSuggestFilter(btn.getAttribute("data-suggest"));
     });
 
-    els.viewFilters.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-view]");
-      if (!btn) return;
-      setView(btn.getAttribute("data-view"));
-    });
+    if (els.viewFilters) {
+      els.viewFilters.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-view]");
+        if (!btn) return;
+        setView(btn.getAttribute("data-view"));
+      });
+    }
 
     els.typeFilter.addEventListener("change", () => {
       state.type = els.typeFilter.value;
@@ -1783,57 +1856,61 @@
     els.expandAll.addEventListener("click", expandAllVisible);
     els.collapseAll.addEventListener("click", collapseAll);
 
-    els.excludeCancel.addEventListener("click", () => {
-      state.dialogItem = null;
-      els.excludeDialog.close();
-    });
-
-    els.excludeForm.addEventListener("submit", () => {
-      const item = state.dialogItem;
-      const note = els.excludeNote.value;
-      state.dialogItem = null;
-      if (!item) return;
-      postExclusion("exclude", item.type, item.name, note);
-    });
-
-    els.excludeDialog.addEventListener("close", () => {
-      const trigger = state.dialogTrigger;
-      state.dialogTrigger = null;
-      if (trigger && typeof trigger.focus === "function") trigger.focus();
-    });
-
-    els.excludeDialog.addEventListener("click", (e) => {
-      if (e.target === els.excludeDialog) {
+    if (els.excludeCancel && els.excludeDialog && els.excludeForm) {
+      els.excludeCancel.addEventListener("click", () => {
         state.dialogItem = null;
         els.excludeDialog.close();
-      }
-    });
+      });
 
-    els.holdCancel.addEventListener("click", () => {
-      state.dialogItem = null;
-      els.holdDialog.close();
-    });
+      els.excludeForm.addEventListener("submit", () => {
+        const item = state.dialogItem;
+        const note = els.excludeNote.value;
+        state.dialogItem = null;
+        if (!item) return;
+        postExclusion("exclude", item.type, item.name, note);
+      });
 
-    els.holdForm.addEventListener("submit", () => {
-      const item = state.dialogItem;
-      const note = els.holdNote.value;
-      state.dialogItem = null;
-      if (!item || item.kind !== "hold") return;
-      postExclusion("hold", item.type, item.name, note);
-    });
+      els.excludeDialog.addEventListener("close", () => {
+        const trigger = state.dialogTrigger;
+        state.dialogTrigger = null;
+        if (trigger && typeof trigger.focus === "function") trigger.focus();
+      });
 
-    els.holdDialog.addEventListener("close", () => {
-      const trigger = state.dialogTrigger;
-      state.dialogTrigger = null;
-      if (trigger && typeof trigger.focus === "function") trigger.focus();
-    });
+      els.excludeDialog.addEventListener("click", (e) => {
+        if (e.target === els.excludeDialog) {
+          state.dialogItem = null;
+          els.excludeDialog.close();
+        }
+      });
+    }
 
-    els.holdDialog.addEventListener("click", (e) => {
-      if (e.target === els.holdDialog) {
+    if (els.holdCancel && els.holdDialog && els.holdForm) {
+      els.holdCancel.addEventListener("click", () => {
         state.dialogItem = null;
         els.holdDialog.close();
-      }
-    });
+      });
+
+      els.holdForm.addEventListener("submit", () => {
+        const item = state.dialogItem;
+        const note = els.holdNote.value;
+        state.dialogItem = null;
+        if (!item || item.kind !== "hold") return;
+        postExclusion("hold", item.type, item.name, note);
+      });
+
+      els.holdDialog.addEventListener("close", () => {
+        const trigger = state.dialogTrigger;
+        state.dialogTrigger = null;
+        if (trigger && typeof trigger.focus === "function") trigger.focus();
+      });
+
+      els.holdDialog.addEventListener("click", (e) => {
+        if (e.target === els.holdDialog) {
+          state.dialogItem = null;
+          els.holdDialog.close();
+        }
+      });
+    }
 
     document.addEventListener("click", (e) => {
       if (e.target.closest(".row-menu")) return;
@@ -2038,6 +2115,7 @@
   }
 
   async function load() {
+    const catalogPromise = loadCatalogI18n();
     try {
       const res = await fetch("./data.json", { cache: "no-store" });
       if (!res.ok) throw appError("loadFail", { status: String(res.status) });
@@ -2049,12 +2127,13 @@
       state.items = data.items;
       state.loadFailed = false;
       state.loadSettled = true;
+      await catalogPromise;
       refreshUpdatedAt();
 
       refreshTypeFilter();
 
       els.errorBox.hidden = true;
-      await loadExclusions();
+      if (!READ_ONLY) await loadExclusions();
       refreshTypeFilter();
       render();
     } catch (err) {

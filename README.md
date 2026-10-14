@@ -1,14 +1,16 @@
 # 超市補貨
 
-公開靜態單頁：睇補貨歷史同建議（唔下單）。顯示名「超市補貨」。粵語／繁中、香港時間（HKT）、手機優先。
+公開靜態頁：睇補貨歷史同建議（唔下單）。`index.html` 可以暫不考慮同手動暫緩。`view.html` 只供睇。顯示名「超市補貨」。粵語／繁中、英文、印尼文、香港時間（HKT）、手機優先。
 
 ## 檔案
 
 | 檔案 | 用途 |
 |------|------|
-| `index.html` | 頁面結構 |
+| `index.html` | 編輯頁：搜尋、分組、剔除同手動暫緩 |
+| `view.html` | 唯讀頁。同一份資料同語言，冇寫入動作，亦冇連去編輯頁 |
 | `styles.css` | 樣式（mobile-first） |
-| `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組、牌子摺疊、呼叫剔除同手動暫緩 |
+| `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組、牌子摺疊。`window.GROCERY_READ_ONLY` 為真時唔呼叫剔除／暫緩 |
+| `i18n-data.json` | `type`、`subtype`、品名嘅英文同印尼文對照（靜態檔，冇翻譯 API） |
 | `config.js` | Sheet Web App 網址（預設留空；剔除同暫緩共用） |
 | `gas/Code.gs` | Apps Script：讀寫 Google Sheet |
 | `data.json` | 建議資料（前端只顯示 `suggest`，唔重算；唔存剔除或暫緩） |
@@ -32,7 +34,15 @@
 
 兩層都可以獨立展開同摺疊。選擇記喺瀏覽器 `grocery-restock-group-mode`（`suggest-type` 或 `type-suggest`）。
 
-每行預設只顯示品名、包裝、距今天數同建議（水果同蔬菜冇建議欄同操作欄）。窄螢幕（手機）手動動作收喺右邊「⋯」入面（手動暫緩、暫不考慮、回復、回復日子），撳開先見到。闊螢幕（900px 或以上，例如 Windows 電腦）同一行直接顯示呢啲動作按鈕，欄位對齊成品名、距今、建議、操作。水果同蔬菜喺闊螢幕只對齊品名同距今。
+每行預設顯示品名、`subtype`、包裝、距今天數同建議（水果同蔬菜冇建議欄同操作欄）。窄螢幕（手機）手動動作收喺右邊「⋯」入面（手動暫緩、暫不考慮、回復、回復日子），撳開先見到。闊螢幕（900px 或以上，例如 Windows 電腦）同一行直接顯示呢啲動作按鈕，欄位對齊成品名、距今、建議、操作。水果同蔬菜喺闊螢幕只對齊品名同距今。`view.html` 唔顯示呢啲動作。
+
+## 語言
+
+頁頂可以切「中」「eng」「印」。介面字句喺 `app.js`。`type`（分組標題同類型篩選）、`subtype`（每行）、品名由 `i18n-data.json` 對照英文同印尼文。中文顯示 `data.json` 原文。對唔到或者譯文空白都顯示原本中文。`note`、牌子、牌子標題、`pack` 唔翻譯。冇翻譯 API。
+
+## 唯讀頁
+
+`view.html` 同 `index.html` 讀同一份 `data.json` 同 `i18n-data.json`。保留語言、分組、搜尋、類型篩選、兩層摺疊同牌子展開。頁面喺載入 `app.js` 之前設 `window.GROCERY_READ_ONLY = true`，所以唔顯示「⋯」、手動暫緩、暫不考慮、回復、暫緩備註，亦唔讀寫 Google Sheet。文件標題同 `h1` 仍然係「超市補貨」。頁內冇連去 `/` 或 `index.html`。
 
 ## GitHub Pages
 
@@ -102,7 +112,8 @@ python3 -m http.server 8080
 ## data.json
 
 - `updatedAt`：ISO 8601，HKT（例如 `2026-10-14T16:25:30+08:00`）
-- `items[]`：`type`（大類摺疊）、`name`（貨品種類）、`lastPurchased`、`daysSince`、`suggest`（只得 `優先`｜`暫緩`｜`在途`；前端只顯示，唔重算。`暫緩` 顯示做「未使買住」，`在途` 顯示做「已下單」）、`note`、可選 `pack`、`brands[]`（一定有，可以係空陣列）
+- `items[]`：`type`（大類摺疊）、`subtype`（HKTVmall 第二層，顯示喺品名下）、`name`（貨品種類）、`lastPurchased`、`daysSince`、`suggest`（只得 `優先`｜`暫緩`｜`在途`；前端只顯示，唔重算。`暫緩` 顯示做「未使買住」，`在途` 顯示做「已下單」）、`note`、可選 `pack`、`brands[]`（一定有，可以係空陣列）
+- eng／印 顯示 `type`、`subtype`、`name` 時讀 `i18n-data.json`。`note`、`brand`、`title`、`pack` 維持呢度嘅原文。
 - `type` 剛好係「水果」或「蔬菜」：可以冇 `suggest`，或者係 null。前端唔顯示建議，亦唔提供暫緩／剔除。其他類型如果 `suggest` 缺失，會落入「未有建議」，唔會當成優先／暫緩／在途。
 - `brands[]`：`brand`（可空）、可選 `title`、`lastPurchased`、`daysSince`、`image`、`imageAlt`、`link`（公開連結）、`note`、可選 `pack`
 - 剔除主鍵仍然係成件貨嘅 `type|name`，唔係逐個牌子。`brands` 唔入 Google Sheet。

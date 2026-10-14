@@ -1,0 +1,728 @@
+{
+  "type": {
+    "紙品／即棄品": {
+      "en": "Paper goods / disposables",
+      "id": "Produk kertas / barang sekali pakai"
+    },
+    "家居清潔用品": {
+      "en": "Household cleaning",
+      "id": "Pembersih rumah tangga"
+    },
+    "嬰兒用品／食品": {
+      "en": "Baby supplies / food",
+      "id": "Perlengkapan / makanan bayi"
+    },
+    "飲品／即沖飲品": {
+      "en": "Drinks / instant drinks",
+      "id": "Minuman / minuman instan"
+    },
+    "即食麵／麵／意粉": {
+      "en": "Instant noodles / noodles / pasta",
+      "id": "Mi instan / mi / pasta"
+    },
+    "湯／熟食／醃製食品": {
+      "en": "Soup / prepared food / pickles",
+      "id": "Sup / makanan matang / asinan"
+    },
+    "早餐／果醬": {
+      "en": "Breakfast / jam",
+      "id": "Sarapan / selai"
+    },
+    "米／食油": {
+      "en": "Rice / cooking oil",
+      "id": "Beras / minyak goreng"
+    },
+    "罐頭／乾貨": {
+      "en": "Canned / dry goods",
+      "id": "Makanan kaleng / bahan kering"
+    },
+    "零食／甜品": {
+      "en": "Snacks / desserts",
+      "id": "Camilan / hidangan penutup"
+    },
+    "酒類": {
+      "en": "Alcoholic drinks",
+      "id": "Minuman beralkohol"
+    },
+    "水果": {
+      "en": "Fruit",
+      "id": "Buah"
+    },
+    "蔬菜": {
+      "en": "Vegetables",
+      "id": "Sayuran"
+    },
+    "冷凍／急凍食品": {
+      "en": "Frozen / deep-frozen food",
+      "id": "Makanan beku / beku cepat"
+    },
+    "鹽／糖／生粉": {
+      "en": "Salt / sugar / cornstarch",
+      "id": "Garam / gula / tepung maizena"
+    },
+    "豉油／生抽／頭抽／蒸魚豉油／蠔油": {
+      "en": "Soy sauce / light soy / first-draw soy / steamed-fish soy / oyster sauce",
+      "id": "Kecap / kecap asin / kecap tarikan pertama / kecap untuk ikan kukus / saus tiram"
+    },
+    "個人護理用品": {
+      "en": "Personal care",
+      "id": "Perawatan diri"
+    }
+  },
+  "subtype": {
+    "濕紙巾": {
+      "en": "Wet wipes",
+      "id": "Tisu basah"
+    },
+    "密實袋": {
+      "en": "Zip bags",
+      "id": "Kantong ziplock"
+    },
+    "廁紙": {
+      "en": "Toilet paper",
+      "id": "Tisu toilet"
+    },
+    "廚紙": {
+      "en": "Kitchen paper",
+      "id": "Tisu dapur"
+    },
+    "面紙": {
+      "en": "Facial tissues",
+      "id": "Tisu wajah"
+    },
+    "紙手巾": {
+      "en": "Paper hand towels",
+      "id": "Tisu tangan"
+    },
+    "洗衣液": {
+      "en": "Laundry detergent",
+      "id": "Detergen cair"
+    },
+    "柔順劑": {
+      "en": "Fabric softener",
+      "id": "Pelembut pakaian"
+    },
+    "清潔劑": {
+      "en": "Cleaner",
+      "id": "Pembersih"
+    },
+    "洗潔精": {
+      "en": "Dishwashing liquid",
+      "id": "Sabun cuci piring"
+    },
+    "潔廁用品": {
+      "en": "Toilet cleaner",
+      "id": "Pembersih toilet"
+    },
+    "百潔布": {
+      "en": "Scouring pads",
+      "id": "Spons cuci"
+    },
+    "嬰兒用品": {
+      "en": "Baby supplies",
+      "id": "Perlengkapan bayi"
+    },
+    "嬰兒護膚": {
+      "en": "Baby skincare",
+      "id": "Perawatan kulit bayi"
+    },
+    "嬰兒食品": {
+      "en": "Baby food",
+      "id": "Makanan bayi"
+    },
+    "嬰兒營養": {
+      "en": "Baby nutrition",
+      "id": "Nutrisi bayi"
+    },
+    "紙尿褲": {
+      "en": "Diapers",
+      "id": "Popok"
+    },
+    "奶粉": {
+      "en": "Formula milk",
+      "id": "Susu formula"
+    },
+    "即沖飲品": {
+      "en": "Instant drinks",
+      "id": "Minuman instan"
+    },
+    "乳製品": {
+      "en": "Dairy",
+      "id": "Produk susu"
+    },
+    "膠樽裝飲品": {
+      "en": "Bottled drinks",
+      "id": "Minuman botol"
+    },
+    "意粉 通心粉": {
+      "en": "Pasta / macaroni",
+      "id": "Pasta / makaroni"
+    },
+    "即食麵": {
+      "en": "Instant noodles",
+      "id": "Mi instan"
+    },
+    "湯": {
+      "en": "Soup",
+      "id": "Sup"
+    },
+    "牛油 人造牛油": {
+      "en": "Butter / margarine",
+      "id": "Mentega / margarin"
+    },
+    "即食穀類": {
+      "en": "Ready-to-eat cereal",
+      "id": "Sereal siap santap"
+    },
+    "麵包": {
+      "en": "Bread",
+      "id": "Roti"
+    },
+    "米": {
+      "en": "Rice",
+      "id": "Beras"
+    },
+    "食油": {
+      "en": "Cooking oil",
+      "id": "Minyak goreng"
+    },
+    "乾貨": {
+      "en": "Dry goods",
+      "id": "Bahan kering"
+    },
+    "罐頭": {
+      "en": "Canned food",
+      "id": "Makanan kaleng"
+    },
+    "花生 果仁": {
+      "en": "Peanuts / nuts",
+      "id": "Kacang tanah / kacang"
+    },
+    "餅乾": {
+      "en": "Biscuits",
+      "id": "Biskuit"
+    },
+    "清酒": {
+      "en": "Sake",
+      "id": "Sake"
+    },
+    "新鮮水果": {
+      "en": "Fresh fruit",
+      "id": "Buah segar"
+    },
+    "新鮮蔬菜": {
+      "en": "Fresh vegetables",
+      "id": "Sayuran segar"
+    },
+    "急凍海鮮": {
+      "en": "Frozen seafood",
+      "id": "Makanan laut beku"
+    },
+    "急凍肉類": {
+      "en": "Frozen meat",
+      "id": "Daging beku"
+    },
+    "豆製品": {
+      "en": "Soy products",
+      "id": "Produk kedelai"
+    },
+    "蛋": {
+      "en": "Eggs",
+      "id": "Telur"
+    },
+    "生粉": {
+      "en": "Cornstarch",
+      "id": "Tepung maizena"
+    },
+    "糖": {
+      "en": "Sugar",
+      "id": "Gula"
+    },
+    "鹽": {
+      "en": "Salt",
+      "id": "Garam"
+    },
+    "生抽": {
+      "en": "Light soy sauce",
+      "id": "Kecap asin"
+    },
+    "蒸魚豉油": {
+      "en": "Steamed-fish soy sauce",
+      "id": "Kecap untuk ikan kukus"
+    },
+    "蠔油": {
+      "en": "Oyster sauce",
+      "id": "Saus tiram"
+    },
+    "豉油": {
+      "en": "Soy sauce",
+      "id": "Kecap"
+    },
+    "頭抽": {
+      "en": "First-draw soy sauce",
+      "id": "Kecap tarikan pertama"
+    },
+    "口罩": {
+      "en": "Face masks",
+      "id": "Masker"
+    },
+    "止汗": {
+      "en": "Antiperspirant",
+      "id": "Antiperspiran"
+    },
+    "沐浴": {
+      "en": "Bath and shower",
+      "id": "Sabun mandi"
+    },
+    "洗髮護髮": {
+      "en": "Shampoo and conditioner",
+      "id": "Sampo dan kondisioner"
+    },
+    "口腔護理": {
+      "en": "Oral care",
+      "id": "Perawatan mulut"
+    },
+    "潤膚": {
+      "en": "Moisturizer",
+      "id": "Pelembap"
+    },
+    "外用藥品": {
+      "en": "Topical medicine",
+      "id": "Obat oles"
+    },
+    "保健食品": {
+      "en": "Health supplements",
+      "id": "Suplemen kesehatan"
+    },
+    "眼部護理": {
+      "en": "Eye care",
+      "id": "Perawatan mata"
+    },
+    "女性護理": {
+      "en": "Feminine care",
+      "id": "Perawatan wanita"
+    },
+    "防曬": {
+      "en": "Sunscreen",
+      "id": "Tabir surya"
+    }
+  },
+  "name": {
+    "嬰幼兒濕廁紙": {
+      "en": "Baby wet toilet paper",
+      "id": "Tisu toilet basah bayi"
+    },
+    "密實袋／保鮮紙": {
+      "en": "Zip bags / cling film",
+      "id": "Kantong ziplock / plastik wrap"
+    },
+    "廁紙": {
+      "en": "Toilet paper",
+      "id": "Tisu toilet"
+    },
+    "廚紙": {
+      "en": "Kitchen paper",
+      "id": "Tisu dapur"
+    },
+    "懸掛式面紙": {
+      "en": "Hanging facial tissues",
+      "id": "Tisu wajah gantung"
+    },
+    "抽取式面紙": {
+      "en": "Pop-up facial tissues",
+      "id": "Tisu wajah tarik"
+    },
+    "紙手巾": {
+      "en": "Paper hand towels",
+      "id": "Tisu tangan"
+    },
+    "嬰兒洗衣液": {
+      "en": "Baby laundry detergent",
+      "id": "Detergen bayi"
+    },
+    "嬰兒衣物柔順劑": {
+      "en": "Baby fabric softener",
+      "id": "Pelembut pakaian bayi"
+    },
+    "家居除霉／清潔噴劑": {
+      "en": "Mold remover / cleaning spray",
+      "id": "Semprotan anti jamur / pembersih"
+    },
+    "洗潔精": {
+      "en": "Dish soap",
+      "id": "Sabun cuci piring"
+    },
+    "洗衣液（一般）": {
+      "en": "Laundry detergent (regular)",
+      "id": "Detergen cair (biasa)"
+    },
+    "潔廁液": {
+      "en": "Toilet cleaner",
+      "id": "Pembersih toilet"
+    },
+    "百潔布": {
+      "en": "Scouring pad",
+      "id": "Spons cuci"
+    },
+    "奶瓶清洗劑": {
+      "en": "Baby bottle cleaner",
+      "id": "Pembersih botol bayi"
+    },
+    "嬰兒圍兜": {
+      "en": "Baby bib",
+      "id": "Celemek bayi"
+    },
+    "嬰兒潤膚露": {
+      "en": "Baby lotion",
+      "id": "Losion bayi"
+    },
+    "嬰兒濕紙巾": {
+      "en": "Baby wet wipes",
+      "id": "Tisu basah bayi"
+    },
+    "嬰幼兒意粉": {
+      "en": "Baby pasta",
+      "id": "Pasta bayi"
+    },
+    "嬰幼兒果汁": {
+      "en": "Baby juice",
+      "id": "Jus bayi"
+    },
+    "嬰幼兒牙刷": {
+      "en": "Baby toothbrush",
+      "id": "Sikat gigi bayi"
+    },
+    "嬰幼兒米糊": {
+      "en": "Baby rice cereal",
+      "id": "Bubur beras bayi"
+    },
+    "嬰幼兒維他命 D": {
+      "en": "Baby vitamin D",
+      "id": "Vitamin D bayi"
+    },
+    "學習褲／拉拉褲": {
+      "en": "Training pants / pull-ups",
+      "id": "Celana latihan / popok tarik"
+    },
+    "幼兒動物餅": {
+      "en": "Toddler animal biscuits",
+      "id": "Biskuit hewan balita"
+    },
+    "幼兒奶粉（3 號）": {
+      "en": "Toddler formula (stage 3)",
+      "id": "Susu formula balita (tahap 3)"
+    },
+    "幼兒小食（椰子卷／手指餅等）": {
+      "en": "Toddler snacks (coconut rolls / finger biscuits, etc.)",
+      "id": "Camilan balita (roll kelapa / biskuit jari, dll.)"
+    },
+    "幼兒小食／補充": {
+      "en": "Toddler snacks / supplements",
+      "id": "Camilan / suplemen balita"
+    },
+    "即溶／罐裝咖啡": {
+      "en": "Instant / canned coffee",
+      "id": "Kopi instan / kopi kaleng"
+    },
+    "盒裝牛奶": {
+      "en": "Carton milk",
+      "id": "Susu kotak"
+    },
+    "膠樽裝飲品": {
+      "en": "Bottled drinks",
+      "id": "Minuman botol"
+    },
+    "乾意粉／義大利麵（成人）": {
+      "en": "Dried pasta / spaghetti (adult)",
+      "id": "Pasta kering / spageti (dewasa)"
+    },
+    "即食麵／米粉（需煮）": {
+      "en": "Instant noodles / rice noodles (to be cooked)",
+      "id": "Mi instan / bihun (perlu dimasak)"
+    },
+    "杯麵／杯米（只加熱水）": {
+      "en": "Cup noodles / cup rice (hot water only)",
+      "id": "Mi gelas / nasi gelas (cukup air panas)"
+    },
+    "清雞湯（紙盒）": {
+      "en": "Clear chicken broth (carton)",
+      "id": "Kaldu ayam bening (karton)"
+    },
+    "植物牛油": {
+      "en": "Margarine",
+      "id": "Margarin"
+    },
+    "燕麥片": {
+      "en": "Oats",
+      "id": "Oatmeal"
+    },
+    "麵包／吐司": {
+      "en": "Bread / toast",
+      "id": "Roti / roti tawar"
+    },
+    "米": {
+      "en": "Rice",
+      "id": "Beras"
+    },
+    "食油（米糠油等）": {
+      "en": "Cooking oil (rice bran oil, etc.)",
+      "id": "Minyak goreng (minyak bekatul, dll.)"
+    },
+    "乾百合": {
+      "en": "Dried lily bulb",
+      "id": "Umbi lily kering"
+    },
+    "粟米罐頭": {
+      "en": "Canned corn",
+      "id": "Jagung kaleng"
+    },
+    "堅果": {
+      "en": "Nuts",
+      "id": "Kacang-kacangan"
+    },
+    "梳打餅": {
+      "en": "Soda crackers",
+      "id": "Biskuit soda"
+    },
+    "清酒／酒類": {
+      "en": "Sake / alcoholic drinks",
+      "id": "Sake / minuman beralkohol"
+    },
+    "奇異果": {
+      "en": "Kiwi",
+      "id": "Buah kiwi"
+    },
+    "柚／文旦": {
+      "en": "Pomelo",
+      "id": "Jeruk bali"
+    },
+    "梨": {
+      "en": "Pear",
+      "id": "Pir"
+    },
+    "檸檬": {
+      "en": "Lemon",
+      "id": "Lemon"
+    },
+    "火龍果": {
+      "en": "Dragon fruit",
+      "id": "Buah naga"
+    },
+    "牛油果": {
+      "en": "Avocado",
+      "id": "Alpukat"
+    },
+    "藍莓": {
+      "en": "Blueberry",
+      "id": "Bluberi"
+    },
+    "蘋果": {
+      "en": "Apple",
+      "id": "Apel"
+    },
+    "蜜瓜": {
+      "en": "Melon",
+      "id": "Melon"
+    },
+    "鮮橙": {
+      "en": "Orange",
+      "id": "Jeruk"
+    },
+    "油麥菜": {
+      "en": "Romaine lettuce",
+      "id": "Selada romaine"
+    },
+    "菜心": {
+      "en": "Choy sum",
+      "id": "Sawi bunga"
+    },
+    "菠菜／葉菜": {
+      "en": "Spinach / leafy greens",
+      "id": "Bayam / sayur daun"
+    },
+    "蕃茄": {
+      "en": "Tomato",
+      "id": "Tomat"
+    },
+    "薯仔": {
+      "en": "Potato",
+      "id": "Kentang"
+    },
+    "蘆筍": {
+      "en": "Asparagus",
+      "id": "Asparagus"
+    },
+    "西芹": {
+      "en": "Celery",
+      "id": "Seledri"
+    },
+    "西蘭花": {
+      "en": "Broccoli",
+      "id": "Brokoli"
+    },
+    "青瓜": {
+      "en": "Cucumber",
+      "id": "Timun"
+    },
+    "三文魚扒": {
+      "en": "Salmon steak",
+      "id": "Steak salmon"
+    },
+    "三文魚柳": {
+      "en": "Salmon fillet",
+      "id": "Filet salmon"
+    },
+    "免治肉（豬／牛／雞）": {
+      "en": "Minced meat (pork / beef / chicken)",
+      "id": "Daging giling (babi / sapi / ayam)"
+    },
+    "公魚乾": {
+      "en": "Dried smelt",
+      "id": "Ikan smelt kering"
+    },
+    "其他牛肉（非免治）": {
+      "en": "Other beef (not minced)",
+      "id": "Daging sapi lain (bukan giling)"
+    },
+    "墨魚": {
+      "en": "Cuttlefish",
+      "id": "Sotong"
+    },
+    "多春魚／公魚": {
+      "en": "Capelin / smelt",
+      "id": "Capelin / ikan smelt"
+    },
+    "帶子／帆立貝": {
+      "en": "Scallops",
+      "id": "Kerang simping"
+    },
+    "急凍白蝦肉": {
+      "en": "Frozen shrimp meat",
+      "id": "Daging udang beku"
+    },
+    "蒲燒鰻": {
+      "en": "Grilled eel",
+      "id": "Belut bakar"
+    },
+    "豆腐": {
+      "en": "Tofu",
+      "id": "Tahu"
+    },
+    "輪換急凍魚（銀鱈／紅魚／比目等）": {
+      "en": "Rotating frozen fish (cod / red fish / flounder, etc.)",
+      "id": "Ikan beku bergilir (kod / ikan merah / flounder, dll.)"
+    },
+    "雞扒／其他雞肉（非翼／非免治）": {
+      "en": "Chicken steak / other chicken (not wings / not minced)",
+      "id": "Steak ayam / daging ayam lain (bukan sayap / bukan giling)"
+    },
+    "雞翼": {
+      "en": "Chicken wings",
+      "id": "Sayap ayam"
+    },
+    "雞蛋": {
+      "en": "Eggs",
+      "id": "Telur"
+    },
+    "鯖魚": {
+      "en": "Mackerel",
+      "id": "Ikan makerel"
+    },
+    "鴨胸／寵物肉": {
+      "en": "Duck breast / pet meat",
+      "id": "Dada bebek / daging hewan"
+    },
+    "生粉": {
+      "en": "Cornstarch",
+      "id": "Tepung maizena"
+    },
+    "糖": {
+      "en": "Sugar",
+      "id": "Gula"
+    },
+    "鹽": {
+      "en": "Salt",
+      "id": "Garam"
+    },
+    "生抽": {
+      "en": "Light soy sauce",
+      "id": "Kecap asin"
+    },
+    "蒸魚豉油": {
+      "en": "Steamed-fish soy sauce",
+      "id": "Kecap untuk ikan kukus"
+    },
+    "蠔油": {
+      "en": "Oyster sauce",
+      "id": "Saus tiram"
+    },
+    "豉油": {
+      "en": "Soy sauce",
+      "id": "Kecap"
+    },
+    "頭抽": {
+      "en": "First-draw soy sauce",
+      "id": "Kecap tarikan pertama"
+    },
+    "口罩（女士／成人口罩）": {
+      "en": "Masks (women's / adult)",
+      "id": "Masker (wanita / dewasa)"
+    },
+    "止汗噴霧": {
+      "en": "Antiperspirant spray",
+      "id": "Semprotan antiperspiran"
+    },
+    "沐浴露": {
+      "en": "Body wash",
+      "id": "Sabun mandi"
+    },
+    "洗頭水／護髮": {
+      "en": "Shampoo / conditioner",
+      "id": "Sampo / kondisioner"
+    },
+    "漱口水": {
+      "en": "Mouthwash",
+      "id": "Obat kumur"
+    },
+    "潤膚乳（一般／乳酸菌類）": {
+      "en": "Body lotion (regular / lactic-acid type)",
+      "id": "Losion tubuh (biasa / jenis asam laktat)"
+    },
+    "潤膚膏／保濕霜（厚霜）": {
+      "en": "Balm / moisturizer (thick cream)",
+      "id": "Salep / krim pelembap (krim kental)"
+    },
+    "牙膏": {
+      "en": "Toothpaste",
+      "id": "Pasta gigi"
+    },
+    "精油／外用貼布": {
+      "en": "Essential oil / topical patches",
+      "id": "Minyak esensial / plester tempel"
+    },
+    "腦活素／類似保健丸": {
+      "en": "Brain supplement / similar health pills",
+      "id": "Suplemen otak / pil kesehatan sejenis"
+    },
+    "蒸氣眼膜": {
+      "en": "Steam eye mask",
+      "id": "Masker mata uap"
+    },
+    "衛生巾": {
+      "en": "Sanitary pads",
+      "id": "Pembalut"
+    },
+    "袪疤膏": {
+      "en": "Scar cream",
+      "id": "Krim bekas luka"
+    },
+    "鈣片": {
+      "en": "Calcium tablets",
+      "id": "Tablet kalsium"
+    },
+    "防曬（含嬰兒）": {
+      "en": "Sunscreen (including baby)",
+      "id": "Tabir surya (termasuk bayi)"
+    }
+  }
+}
