@@ -8,10 +8,19 @@
 |------|------|
 | `index.html` | 頁面結構 |
 | `styles.css` | 樣式（mobile-first） |
-| `app.js` | 讀 `data.json`、搜尋／篩選、按類型同牌子摺疊、呼叫剔除同手動暫緩 |
+| `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組、牌子摺疊、呼叫剔除同手動暫緩 |
 | `config.js` | Sheet Web App 網址（預設留空；剔除同暫緩共用） |
 | `gas/Code.gs` | Apps Script：讀寫 Google Sheet |
 | `data.json` | 建議資料（前端只顯示 `suggest`，唔重算；唔存剔除或暫緩） |
+
+## 分組
+
+工具列可以切「建議優先」同「類型優先」。
+
+- **建議優先**（預設）：先按建議（優先／暫緩／在途；手動暫緩會計入暫緩），再按類型。
+- **類型優先**：先按類型，再按建議。
+
+兩層都可以獨立展開同摺疊。選擇記喺瀏覽器 `grocery-restock-group-mode`（`suggest-type` 或 `type-suggest`）。
 
 ## GitHub Pages
 
