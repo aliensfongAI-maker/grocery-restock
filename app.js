@@ -23,9 +23,12 @@
     type: "all",
     view: "main",
     openTypes: new Set(),
+    openProducts: new Set(),
     exclusions: [],
+    holds: [],
     apiUrl: "",
     pendingKey: "",
+    pendingAction: "",
     baseNotice: "",
     baseLevel: "",
     flashNotice: "",
@@ -54,6 +57,11 @@
     excludeDialogItem: document.getElementById("excludeDialogItem"),
     excludeNote: document.getElementById("excludeNote"),
     excludeCancel: document.getElementById("excludeCancel"),
+    holdDialog: document.getElementById("holdDialog"),
+    holdForm: document.getElementById("holdForm"),
+    holdDialogItem: document.getElementById("holdDialogItem"),
+    holdNote: document.getElementById("holdNote"),
+    holdCancel: document.getElementById("holdCancel"),
   };
 
   function escapeHtml(str) {
@@ -169,7 +177,7 @@
       out.push({
         type: type,
         name: name,
-        excludedAt: String(raw.excludedAt || ""),
+        excludedAt: String(raw.at || raw.excludedAt || ""),
         note: String(raw.note || ""),
         status: "excluded",
       });
@@ -177,12 +185,42 @@
     return out;
   }
 
-  function applyFromSheet(items) {
+  /** Sheet payload only. Does not invent a suggest. */
+  function normalizeHolds(items) {
+    if (!Array.isArray(items)) return [];
+    const out = [];
+    const seen = new Set();
+    for (const raw of items) {
+      if (!raw || typeof raw !== "object") continue;
+      const type = String(raw.type || "").trim();
+      const name = String(raw.name || "").trim();
+      if (!type || !name) continue;
+      if (raw.status && raw.status !== "held") continue;
+      const key = exclusionKey(type, name);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({
+        type: type,
+        name: name,
+        at: String(raw.at || ""),
+        note: String(raw.note || ""),
+        status: "held",
+      });
+    }
+    return out;
+  }
+
+  function applyFromSheet(items, held) {
     state.exclusions = normalizeExclusions(items);
+    if (Array.isArray(held)) state.holds = normalizeHolds(held);
     try {
       localStorage.setItem(
         CACHE_KEY,
-        JSON.stringify({ items: state.exclusions, savedAt: new Date().toISOString() })
+        JSON.stringify({
+          items: state.exclusions,
+          held: state.holds,
+          savedAt: new Date().toISOString(),
+        })
       );
     } catch (_) {
       /* private mode or quota; Sheet remains source of truth on next load */
@@ -195,10 +233,66 @@
       if (!raw) return null;
       const parsed = JSON.parse(raw);
       if (!parsed || !Array.isArray(parsed.items)) return null;
-      return normalizeExclusions(parsed.items);
+      return {
+        items: normalizeExclusions(parsed.items),
+        held: normalizeHolds(parsed.held),
+      };
     } catch (_) {
       return null;
     }
+  }
+
+  function hktYmd(date) {
+    try {
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Hong_Kong",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(date);
+    } catch (_) {
+      return "";
+    }
+  }
+
+  /** Calendar days from heldAt in HKT. Hold day is 0. */
+  function daysFromHeldAt(at) {
+    const parsed = new Date(at);
+    if (!at || Number.isNaN(parsed.getTime())) return null;
+    const heldDay = hktYmd(parsed);
+    const today = hktYmd(new Date());
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(heldDay) || !/^\d{4}-\d{2}-\d{2}$/.test(today)) return null;
+    const start = Date.UTC(+heldDay.slice(0, 4), +heldDay.slice(5, 7) - 1, +heldDay.slice(8, 10));
+    const end = Date.UTC(+today.slice(0, 4), +today.slice(5, 7) - 1, +today.slice(8, 10));
+    const diff = Math.round((end - start) / 86400000);
+    return diff < 0 ? 0 : diff;
+  }
+
+  function holdRecord(type, name) {
+    const key = exclusionKey(type, name);
+    for (const row of state.holds) {
+      if (exclusionKey(row.type, row.name) === key) return row;
+    }
+    return null;
+  }
+
+  /**
+   * Display overlay only. data.json suggest and dates stay untouched.
+   * A hold forces the badge to 暫緩 and counts days from heldAt in HKT.
+   */
+  function applyHoldOverlay(item) {
+    const hold = holdRecord(item.type, item.name);
+    if (!hold) return item;
+    const heldDay = hktYmd(new Date(hold.at));
+    const days = daysFromHeldAt(hold.at);
+    return Object.assign({}, item, {
+      suggest: "暫緩",
+      lastPurchased: heldDay || item.lastPurchased,
+      daysSince: days == null ? item.daysSince : days,
+      manualHold: true,
+      holdNote: hold.note || "",
+      heldAt: hold.at || "",
+    });
   }
 
   function excludedDisplayItems() {
@@ -213,8 +307,8 @@
             daysSince: base.daysSince,
             suggest: base.suggest,
             note: base.note,
-            image: base.image,
-            imageAlt: base.imageAlt,
+            pack: base.pack,
+            brands: Array.isArray(base.brands) ? base.brands : [],
           }
         : {
             type: ex.type,
@@ -223,8 +317,8 @@
             daysSince: null,
             suggest: "",
             note: "",
-            image: null,
-            imageAlt: null,
+            pack: "",
+            brands: [],
           };
       return Object.assign(grocery, {
         exclusionNote: ex.note || "",
@@ -234,25 +328,31 @@
   }
 
   function sourceItems() {
-    if (state.view === "excluded") return excludedDisplayItems();
+    if (state.view === "excluded") return excludedDisplayItems().map(applyHoldOverlay);
     const hidden = new Set(state.exclusions.map((ex) => exclusionKey(ex.type, ex.name)));
-    return state.items.filter((item) => !hidden.has(keyOf(item)));
+    return state.items.filter((item) => !hidden.has(keyOf(item))).map(applyHoldOverlay);
   }
 
   function filterItems() {
     const q = state.search.trim().toLowerCase();
     return sourceItems().filter((item) => {
-      // Display the stored suggest only — never recalculate it.
+      // data.json suggest is display-only. A manual hold may overlay 暫緩.
       if (state.suggest !== "all" && item.suggest !== state.suggest) return false;
       if (state.type !== "all" && item.type !== state.type) return false;
       if (!q) return true;
+      const brandBits = brandsOf(item).map((entry) =>
+        [entry.brand || "", entry.title || "", entry.pack || "", entry.note || ""].join(" ")
+      );
       const hay = [
         item.name,
         item.type,
         item.note || "",
         item.suggest || "",
         item.exclusionNote || "",
+        item.holdNote || "",
+        item.pack || "",
       ]
+        .concat(brandBits)
         .join(" ")
         .toLowerCase();
       return hay.includes(q);
@@ -295,15 +395,14 @@
     return '<span class="' + cls + '">' + s + "</span>";
   }
 
-  function actionButtonHtml(item) {
-    const restore = state.view === "excluded";
-    const action = restore ? "restore" : "exclude";
-    const pending = state.pendingKey === keyOf(item);
-    const label = pending ? "處理緊…" : restore ? "回復" : "暫不考慮";
-    const enabled = exclusionsEnabled() && !pending;
+  function sheetButtonHtml(item, action, label, className) {
+    const busy = state.pendingKey === keyOf(item);
+    const pending = busy && state.pendingAction === action;
+    const shown = pending ? "處理緊…" : label;
+    const enabled = exclusionsEnabled() && !busy;
     return (
       '<button type="button" class="action-btn ' +
-      (restore ? "action-restore" : "action-exclude") +
+      className +
       '" data-action="' +
       action +
       '" data-type="' +
@@ -314,11 +413,38 @@
       (enabled ? "" : " disabled") +
       (exclusionsEnabled() ? "" : ' title="未設定 Web App 網址"') +
       ' aria-label="' +
-      escapeHtml(label + "：" + item.name) +
+      escapeHtml(shown + "：" + item.name) +
       '">' +
-      escapeHtml(label) +
+      escapeHtml(shown) +
       "</button>"
     );
+  }
+
+  function actionButtonsHtml(item) {
+    const exclude = sheetButtonHtml(
+      item,
+      state.view === "excluded" ? "restore" : "exclude",
+      state.view === "excluded" ? "回復" : "暫不考慮",
+      state.view === "excluded" ? "action-restore" : "action-exclude"
+    );
+    if (state.view === "excluded") {
+      const unhold = item.manualHold
+        ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold")
+        : "";
+      return unhold + exclude;
+    }
+    const hold = item.manualHold
+      ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold")
+      : sheetButtonHtml(item, "hold", "手動暫緩", "action-hold");
+    return hold + exclude;
+  }
+
+  function holdMetaHtml(item) {
+    if (!item.manualHold) return "";
+    const note = item.holdNote
+      ? '<p class="item-note">暫緩備註：' + escapeHtml(item.holdNote) + "</p>"
+      : "";
+    return '<p class="hold-flag">手動暫緩 · 日子由暫緩當日計，原本建議未改</p>' + note;
   }
 
   function exclusionMetaHtml(item) {
@@ -334,22 +460,135 @@
     );
   }
 
+  function brandsOf(item) {
+    return Array.isArray(item.brands) ? item.brands : [];
+  }
+
+  function domId(prefix, key) {
+    return prefix + "-" + encodeURIComponent(key).replace(/%/g, "");
+  }
+
+  /** Public product links only. Rejects javascript: and other schemes. */
+  function safeLink(url) {
+    if (url == null) return "";
+    const text = String(url).trim();
+    if (!text) return "";
+    try {
+      const parsed = new URL(text);
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
+      return parsed.href;
+    } catch (_) {
+      return "";
+    }
+  }
+
+  function packHtml(pack, className) {
+    if (pack == null || String(pack).trim() === "") return "";
+    return '<span class="' + className + '">' + escapeHtml(String(pack).trim()) + "</span>";
+  }
+
+  /**
+   * brand if present; title stands in when brand is null.
+   * When both exist, title is the second line.
+   */
+  function brandLabelParts(entry) {
+    const brand = entry && entry.brand != null ? String(entry.brand).trim() : "";
+    const title = entry && entry.title != null ? String(entry.title).trim() : "";
+    if (brand && title) return { primary: brand, secondary: title };
+    if (brand) return { primary: brand, secondary: "" };
+    if (title) return { primary: title, secondary: "" };
+    return { primary: "未有牌子", secondary: "" };
+  }
+
+  function brandHtml(entry) {
+    const labels = brandLabelParts(entry);
+    const secondary = labels.secondary
+      ? '<p class="brand-title">' + escapeHtml(labels.secondary) + "</p>"
+      : "";
+    const note =
+      entry.note && String(entry.note).trim()
+        ? '<p class="item-note">' + escapeHtml(entry.note) + "</p>"
+        : "";
+    const href = safeLink(entry.link);
+    const link = href
+      ? '<a class="public-link" href="' +
+        escapeHtml(href) +
+        '" target="_blank" rel="noopener noreferrer">公開連結</a>'
+      : "";
+    const imgSrc = safeLink(entry.image);
+    const img = imgSrc
+      ? thumbHtml(
+          { image: imgSrc, imageAlt: entry.imageAlt || labels.primary, name: labels.primary },
+          "brand-thumb"
+        )
+      : "";
+    return (
+      '<li class="brand-card">' +
+      img +
+      '<div class="brand-main">' +
+      '<p class="brand-name">' +
+      escapeHtml(labels.primary) +
+      packHtml(entry.pack, "brand-pack") +
+      "</p>" +
+      secondary +
+      '<div class="item-meta brand-meta">' +
+      '<div><span class="meta-label">上次購買</span><span class="meta-value">' +
+      escapeHtml(formatDate(entry.lastPurchased)) +
+      "</span></div>" +
+      '<div><span class="meta-label">距今天數</span><span class="meta-value">' +
+      escapeHtml(formatDaysSince(entry.daysSince)) +
+      "</span></div>" +
+      "</div>" +
+      note +
+      link +
+      "</div></li>"
+    );
+  }
+
   function cardHtml(item) {
-    const hasImg = !!item.image;
-    const thumb = hasImg
-      ? thumbHtml(item, "item-thumb")
-      : '<span class="item-thumb-placeholder" aria-hidden="true"></span>';
+    const brands = brandsOf(item);
+    const canExpand = brands.length > 0;
+    const key = keyOf(item);
+    const isOpen = canExpand && state.openProducts.has(key);
+    const panelId = domId("brands", key);
     const note = item.note
       ? '<p class="item-note">' + escapeHtml(item.note) + "</p>"
       : "";
-    return (
-      '<li class="item-card">' +
-      thumb +
-      '<div class="item-main">' +
-      '<div class="item-name-row">' +
-      '<p class="item-name">' +
+    const nameAndPack =
+      '<span class="item-title"><span class="item-name">' +
       escapeHtml(item.name) +
-      "</p>" +
+      "</span>" +
+      packHtml(item.pack, "item-pack") +
+      "</span>";
+    const title = canExpand
+      ? '<button type="button" class="product-toggle" aria-expanded="' +
+        (isOpen ? "true" : "false") +
+        '" aria-controls="' +
+        panelId +
+        '">' +
+        '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
+        nameAndPack +
+        "</button>"
+      : '<div class="product-title-static">' + nameAndPack + "</div>";
+    const empty = canExpand ? "" : '<p class="brand-empty">未有牌子明細</p>';
+    const brandList = canExpand
+      ? '<ul class="brand-list" id="' +
+        panelId +
+        '"' +
+        (isOpen ? "" : " hidden") +
+        ">" +
+        brands.map(brandHtml).join("") +
+        "</ul>"
+      : "";
+    return (
+      '<li class="item-card' +
+      (isOpen ? " is-open" : "") +
+      (item.manualHold ? " is-held" : "") +
+      '" data-key="' +
+      escapeHtml(key) +
+      '">' +
+      '<div class="product-head">' +
+      title +
       badgeHtml(item.suggest) +
       "</div>" +
       '<div class="item-meta">' +
@@ -359,71 +598,16 @@
       "<div><span class=\"meta-label\">距今天數</span><span class=\"meta-value\">" +
       escapeHtml(formatDaysSince(item.daysSince)) +
       "</span></div>" +
-      "<div><span class=\"meta-label\">類型</span><span class=\"meta-value\">" +
-      escapeHtml(item.type) +
-      "</span></div>" +
       "</div>" +
       note +
+      holdMetaHtml(item) +
       exclusionMetaHtml(item) +
       '<div class="item-actions">' +
-      actionButtonHtml(item) +
+      actionButtonsHtml(item) +
       "</div>" +
-      "</div>" +
+      empty +
+      brandList +
       "</li>"
-    );
-  }
-
-  function tableRowHtml(item) {
-    const imgCell = item.image
-      ? '<td class="col-img">' + thumbHtml(item, "thumb-sm") + "</td>"
-      : '<td class="col-img"></td>';
-    const excludedCells =
-      state.view === "excluded"
-        ? "<td>" +
-          escapeHtml(formatExcludedAt(item.excludedAt)) +
-          "</td><td>" +
-          escapeHtml(item.exclusionNote || "") +
-          "</td>"
-        : "";
-    return (
-      "<tr>" +
-      imgCell +
-      '<td class="name-cell">' +
-      escapeHtml(item.name) +
-      "</td>" +
-      "<td>" +
-      escapeHtml(item.type) +
-      "</td>" +
-      "<td>" +
-      escapeHtml(formatDate(item.lastPurchased)) +
-      "</td>" +
-      "<td>" +
-      escapeHtml(formatDaysSince(item.daysSince)) +
-      "</td>" +
-      "<td>" +
-      badgeHtml(item.suggest) +
-      "</td>" +
-      '<td class="note-cell">' +
-      escapeHtml(item.note || "") +
-      "</td>" +
-      excludedCells +
-      '<td class="action-cell">' +
-      actionButtonHtml(item) +
-      "</td>" +
-      "</tr>"
-    );
-  }
-
-  function tableHeadHtml() {
-    const extra =
-      state.view === "excluded" ? "<th>剔除時間</th><th>剔除備註</th>" : "";
-    return (
-      "<thead><tr>" +
-      '<th class="col-img"></th>' +
-      "<th>品名</th><th>類型</th><th>上次購買</th><th>距今天數</th><th>建議</th><th>短備註</th>" +
-      extra +
-      "<th>操作</th>" +
-      "</tr></thead>"
     );
   }
 
@@ -433,7 +617,6 @@
     const expanded = isOpen ? "true" : "false";
     const panelId = "panel-" + encodeURIComponent(group.type).replace(/%/g, "");
     const cards = group.items.map(cardHtml).join("");
-    const rows = group.items.map(tableRowHtml).join("");
     return (
       '<section class="category' +
       openClass +
@@ -461,12 +644,6 @@
       '<ul class="item-list">' +
       cards +
       "</ul>" +
-      '<div class="table-wrap">' +
-      '<table class="data-table">' +
-      tableHeadHtml() +
-      "<tbody>" +
-      rows +
-      "</tbody></table></div>" +
       "</div></section>"
     );
   }
@@ -577,6 +754,17 @@
     render();
   }
 
+  function toggleProduct(key) {
+    if (state.openProducts.has(key)) state.openProducts.delete(key);
+    else state.openProducts.add(key);
+    render();
+    const escaped = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(key) : key;
+    const btn = els.sections.querySelector(
+      '.item-card[data-key="' + escaped + '"] .product-toggle'
+    );
+    if (btn) btn.focus();
+  }
+
   function expandAllVisible() {
     const filtered = filterItems();
     for (const item of filtered) state.openTypes.add(item.type);
@@ -590,13 +778,25 @@
 
   function openExcludeDialog(type, name, trigger) {
     if (!exclusionsEnabled() || state.pendingKey) return;
-    state.dialogItem = { type: type, name: name };
+    state.dialogItem = { type: type, name: name, kind: "exclude" };
     state.dialogTrigger = trigger || null;
     els.excludeDialogItem.textContent = type + " · " + name;
     els.excludeNote.value = "";
     if (typeof els.excludeDialog.showModal === "function") {
       els.excludeDialog.showModal();
       els.excludeNote.focus();
+    }
+  }
+
+  function openHoldDialog(type, name, trigger) {
+    if (!exclusionsEnabled() || state.pendingKey) return;
+    state.dialogItem = { type: type, name: name, kind: "hold" };
+    state.dialogTrigger = trigger || null;
+    els.holdDialogItem.textContent = type + " · " + name;
+    els.holdNote.value = "";
+    if (typeof els.holdDialog.showModal === "function") {
+      els.holdDialog.showModal();
+      els.holdNote.focus();
     }
   }
 
@@ -641,35 +841,47 @@
     const key = exclusionKey(type, name);
     if (state.pendingKey) return;
     state.pendingKey = key;
+    state.pendingAction = action;
     state.flashNotice = "";
     state.flashLevel = "";
     render();
     try {
       const payload = { action: action, type: type, name: name };
-      if (action === "exclude") payload.note = String(note || "").trim();
-      // text/plain keeps the browser from sending a CORS preflight, which Apps Script does not answer.
+      if (action === "exclude" || action === "hold") payload.note = String(note || "").trim();
+      // POST stays a simple request: text/plain JSON body, no preflight.
+      // Apps Script does not answer CORS preflight OPTIONS.
       const data = await fetchJson(state.apiUrl, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
       });
       if (Array.isArray(data.items)) {
-        applyFromSheet(data.items);
+        applyFromSheet(data.items, Array.isArray(data.held) ? data.held : undefined);
         state.baseNotice = "";
         state.baseLevel = "";
       }
       if (data.error) throw new Error(data.error);
-      state.flashNotice =
-        action === "exclude" ? "已暫不考慮「" + name + "」。" : "已回復「" + name + "」。";
+      const done = {
+        exclude: "已暫不考慮「" + name + "」。呢項會喺主清單隱藏。",
+        restore: "已回復「" + name + "」到補貨清單。",
+        hold: "已手動暫緩「" + name + "」。仍然留喺補貨清單。",
+        unhold: "已回復「" + name + "」嘅日子同建議。",
+      };
+      state.flashNotice = done[action] || "已更新。";
       state.flashLevel = "ok";
       if (action === "exclude" && state.view === "excluded") state.openTypes.add(type);
     } catch (err) {
-      state.flashNotice =
-        (action === "exclude" ? "剔除失敗：" : "回復失敗：") +
-        (err && err.message ? err.message : "請再試");
+      const failed = {
+        exclude: "剔除失敗：",
+        restore: "回復失敗：",
+        hold: "手動暫緩失敗：",
+        unhold: "回復日子失敗：",
+      };
+      state.flashNotice = (failed[action] || "更新失敗：") + (err && err.message ? err.message : "請再試");
       state.flashLevel = "error";
     } finally {
       state.pendingKey = "";
+      state.pendingAction = "";
       refreshTypeFilter();
       render();
     }
@@ -711,6 +923,15 @@
         const action = actionBtn.getAttribute("data-action");
         if (action === "exclude") openExcludeDialog(type, name, actionBtn);
         if (action === "restore") postExclusion("restore", type, name);
+        if (action === "hold") openHoldDialog(type, name, actionBtn);
+        if (action === "unhold") postExclusion("unhold", type, name);
+        return;
+      }
+      const productBtn = e.target.closest(".product-toggle");
+      if (productBtn) {
+        const card = productBtn.closest(".item-card");
+        const key = card && card.getAttribute("data-key");
+        if (key) toggleProduct(key);
         return;
       }
       const btn = e.target.closest(".category-toggle");
@@ -748,6 +969,155 @@
         els.excludeDialog.close();
       }
     });
+
+    els.holdCancel.addEventListener("click", () => {
+      state.dialogItem = null;
+      els.holdDialog.close();
+    });
+
+    els.holdForm.addEventListener("submit", () => {
+      const item = state.dialogItem;
+      const note = els.holdNote.value;
+      state.dialogItem = null;
+      if (!item || item.kind !== "hold") return;
+      postExclusion("hold", item.type, item.name, note);
+    });
+
+    els.holdDialog.addEventListener("close", () => {
+      const trigger = state.dialogTrigger;
+      state.dialogTrigger = null;
+      if (trigger && typeof trigger.focus === "function") trigger.focus();
+    });
+
+    els.holdDialog.addEventListener("click", (e) => {
+      if (e.target === els.holdDialog) {
+        state.dialogItem = null;
+        els.holdDialog.close();
+      }
+    });
+  }
+
+  function shortReason(err) {
+    const msg = err && err.message ? String(err.message).replace(/\s+/g, " ").trim() : "";
+    if (!msg) return "未知錯誤";
+    return msg.length > 140 ? msg.slice(0, 140) + "…" : msg;
+  }
+
+  function noticeWithReason(sentence, err, extraErr) {
+    const bits = [];
+    const primary = shortReason(err);
+    if (primary) bits.push(primary);
+    if (extraErr) {
+      const extra = shortReason(extraErr);
+      if (extra && extra !== primary) bits.push("JSONP：" + extra);
+    }
+    if (!bits.length) return sentence;
+    return sentence + "（" + bits.join("；") + "）";
+  }
+
+  function acceptExclusionPayload(data) {
+    if (!data || typeof data !== "object") throw new Error("回應格式唔啱");
+    if (data.error && !Array.isArray(data.items)) throw new Error(data.error);
+    const hasHeld = Array.isArray(data.held);
+    applyFromSheet(Array.isArray(data.items) ? data.items : [], hasHeld ? data.held : undefined);
+    if (data.error) {
+      state.baseNotice = data.error;
+      state.baseLevel = "error";
+      return;
+    }
+    if (!hasHeld) {
+      state.baseNotice = "讀到剔除清單，但呢個部署未支援「手動暫緩」。請喺 Apps Script 建立新版本。";
+      state.baseLevel = "warn";
+      return;
+    }
+    state.baseNotice = "";
+    state.baseLevel = "";
+  }
+
+  function withCallbackParam(url, callbackName) {
+    const parsed = new URL(url);
+    parsed.searchParams.set("callback", callbackName);
+    return parsed.href;
+  }
+
+  /**
+   * <script> JSONP. GAS redirects script.google.com → script.googleusercontent.com;
+   * a script tag follows that redirect without a CORS check. fetch often does not.
+   */
+  function loadScriptJsonp(url) {
+    return new Promise((resolve, reject) => {
+      const callbackName =
+        "groceryExclusionsCb_" +
+        Date.now().toString(36) +
+        "_" +
+        Math.floor(Math.random() * 1e9).toString(36);
+      let settled = false;
+      const script = document.createElement("script");
+      const timer = setTimeout(() => finish(new Error("JSONP 逾時")), EXCLUSION_TIMEOUT_MS);
+
+      function cleanup() {
+        clearTimeout(timer);
+        try {
+          delete window[callbackName];
+        } catch (_) {
+          window[callbackName] = undefined;
+        }
+        script.onload = null;
+        script.onerror = null;
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+
+      function finish(err, data) {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        if (err) reject(err);
+        else resolve(data);
+      }
+
+      window[callbackName] = function (data) {
+        finish(null, data);
+      };
+
+      script.async = true;
+      script.referrerPolicy = "no-referrer";
+      try {
+        script.src = withCallbackParam(url, callbackName);
+      } catch (err) {
+        finish(err instanceof Error ? err : new Error("JSONP 網址唔啱"));
+        return;
+      }
+      script.onerror = function () {
+        finish(new Error("JSONP 載入失敗"));
+      };
+      script.onload = function () {
+        if (!settled) finish(new Error("JSONP 回應冇呼叫 callback"));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  function failExclusions(err, jsonpErr) {
+    const cached = readCache();
+    if (cached) {
+      state.exclusions = cached.items;
+      state.holds = cached.held;
+      state.baseNotice = noticeWithReason(
+        "讀唔到 Google Sheet，暫時用本機暫存。連到試算表之後會以 Sheet 為準。",
+        err,
+        jsonpErr
+      );
+      state.baseLevel = "warn";
+      return;
+    }
+    state.exclusions = [];
+    state.holds = [];
+    state.baseNotice = noticeWithReason(
+      "讀唔到剔除清單。補貨清單照常顯示，剔除暫時用唔到。",
+      err,
+      jsonpErr
+    );
+    state.baseLevel = "error";
   }
 
   async function loadExclusions() {
@@ -757,7 +1127,9 @@
     state.apiUrl = url;
     if (!url) {
       state.exclusions = [];
-      state.baseNotice = "未設定剔除清單網址。請喺 config.js 貼上 Web App 網址，先用到「暫不考慮」。";
+      state.holds = [];
+      state.baseNotice =
+        "未設定剔除清單網址。請喺 config.js 貼上 Web App 網址，先用到「暫不考慮」同「手動暫緩」。";
       state.baseLevel = "warn";
       state.loadingExclusions = false;
       return;
@@ -769,20 +1141,15 @@
     render();
     try {
       const data = await withTimeout(fetchJson(url, { method: "GET" }), EXCLUSION_TIMEOUT_MS);
-      if (data.error && !Array.isArray(data.items)) throw new Error(data.error);
-      applyFromSheet(Array.isArray(data.items) ? data.items : []);
-      state.baseNotice = data.error ? data.error : "";
-      state.baseLevel = data.error ? "error" : "";
+      acceptExclusionPayload(data);
     } catch (err) {
-      const cached = readCache();
-      if (cached) {
-        state.exclusions = cached;
-        state.baseNotice = "讀唔到 Google Sheet，暫時用本機暫存。連到試算表之後會以 Sheet 為準。";
-        state.baseLevel = "warn";
-      } else {
-        state.exclusions = [];
-        state.baseNotice = "讀唔到剔除清單。補貨清單照常顯示，剔除暫時用唔到。";
-        state.baseLevel = "error";
+      console.error(err);
+      try {
+        const data = await loadScriptJsonp(url);
+        acceptExclusionPayload(data);
+      } catch (jsonpErr) {
+        console.error(jsonpErr);
+        failExclusions(err, jsonpErr);
       }
     } finally {
       state.loadingExclusions = false;
