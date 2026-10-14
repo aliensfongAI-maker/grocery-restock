@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T14:00:00+08:00",
+  "updatedAt": "2026-10-14T15:20:17+08:00",
   "items": [
     {
       "type": "用紙／清潔",
@@ -544,20 +544,20 @@
     {
       "type": "急凍蛋白",
       "name": "豆腐",
-      "lastPurchased": "2026-10-12",
-      "daysSince": 2,
-      "suggest": "在途",
-      "note": "康怡待取",
+      "lastPurchased": "2026-10-13",
+      "daysSince": 1,
+      "suggest": "暫緩",
+      "note": "康怡已簽收 13/10",
       "image": null,
       "imageAlt": null
     },
     {
       "type": "急凍蛋白",
       "name": "多春魚／公魚",
-      "lastPurchased": "2026-10-12",
-      "daysSince": 2,
-      "suggest": "在途",
-      "note": "康怡待取",
+      "lastPurchased": "2026-10-13",
+      "daysSince": 1,
+      "suggest": "暫緩",
+      "note": "康怡已簽收 13/10",
       "image": null,
       "imageAlt": null
     },
@@ -844,10 +844,10 @@
     {
       "type": "個人護理",
       "name": "鈣片",
-      "lastPurchased": "2026-10-12",
-      "daysSince": 2,
-      "suggest": "在途",
-      "note": "康怡待取",
+      "lastPurchased": "2026-10-13",
+      "daysSince": 1,
+      "suggest": "暫緩",
+      "note": "康怡已簽收 13/10",
       "image": null,
       "imageAlt": null
     },
