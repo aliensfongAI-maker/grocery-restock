@@ -1,10 +1,10 @@
 (function () {
   "use strict";
 
-  const SUGGEST_ORDER = { 優先: 0, 在途: 1, 暫緩: 2 };
+  const SUGGEST_ORDER = { 在途: 0, 優先: 1, 暫緩: 2 };
   /** Purchase history only. Exact `type` match; 鮮果蔬 stays a normal suggestion type. */
   const HISTORY_ONLY_TYPES = new Set(["水果", "蔬菜"]);
-  /** Sits after 優先 / 在途 / 暫緩 and before an empty 「未有建議」 bucket. */
+  /** Sits after 在途 / 優先 / 暫緩 and before an empty 「未有建議」 bucket. */
   const HISTORY_GROUP_RANK = 3;
   const TYPE_ORDER = [
     "用紙／清潔",
