@@ -15,6 +15,7 @@
   const CACHE_KEY = "grocery-exclusions-v1";
   const GROUP_MODE_KEY = "grocery-restock-group-mode";
   const EXCLUSION_TIMEOUT_MS = 12000;
+  const HOLD_NOTE_DEFAULT = "已從非網購渠道補貨";
 
   const state = {
     items: [],
@@ -973,10 +974,14 @@
     state.dialogItem = { type: type, name: name, kind: "hold" };
     state.dialogTrigger = trigger || null;
     els.holdDialogItem.textContent = type + " · " + name;
-    els.holdNote.value = "";
+    els.holdNote.value = HOLD_NOTE_DEFAULT;
     if (typeof els.holdDialog.showModal === "function") {
       els.holdDialog.showModal();
       els.holdNote.focus();
+      const end = els.holdNote.value.length;
+      if (typeof els.holdNote.setSelectionRange === "function") {
+        els.holdNote.setSelectionRange(end, end);
+      }
     }
   }
 
