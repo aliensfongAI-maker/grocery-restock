@@ -70,8 +70,8 @@
           <div class="chip-row" role="group" aria-labelledby="suggestLabel" id="suggestFilters">
             <button type="button" class="chip is-active" data-suggest="all" aria-pressed="true" data-i18n="suggestAll">全部</button>
             <button type="button" class="chip chip-priority" data-suggest="優先" aria-pressed="false" data-i18n="suggestPriority">優先</button>
-            <button type="button" class="chip chip-hold" data-suggest="暫緩" aria-pressed="false" data-i18n="suggestHold">暫緩</button>
-            <button type="button" class="chip chip-transit" data-suggest="在途" aria-pressed="false" data-i18n="suggestTransit">在途</button>
+            <button type="button" class="chip chip-hold" data-suggest="暫緩" aria-pressed="false" data-i18n="suggestHold">未使買住</button>
+            <button type="button" class="chip chip-transit" data-suggest="在途" aria-pressed="false" data-i18n="suggestTransit">已下單</button>
           </div>
         </div>
         <div class="filter-group">
@@ -101,7 +101,7 @@
     <form id="excludeForm" method="dialog">
       <h2 id="excludeDialogTitle" data-i18n="skip">暫不考慮</h2>
       <p id="excludeDialogItem" class="exclude-dialog-item" translate="no"></p>
-      <p class="exclude-dialog-help" data-i18n="excludeHelp">呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：暫緩會留喺主清單。建議維持原樣，唔改 data.json。</p>
+      <p class="exclude-dialog-help" data-i18n="excludeHelp">呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：未使買住會留喺主清單。建議維持原樣，唔改 data.json。</p>
       <label for="excludeNote" data-i18n="noteLabel">備註（可留空）</label>
       <textarea id="excludeNote" name="note" maxlength="200" rows="3" placeholder="例如：屋企仲有" data-i18n-placeholder="excludePlaceholder" autocomplete="off"></textarea>
       <div class="dialog-actions">
@@ -115,7 +115,7 @@
     <form id="holdForm" method="dialog">
       <h2 id="holdDialogTitle" data-i18n="hold">手動暫緩</h2>
       <p id="holdDialogItem" class="exclude-dialog-item" translate="no"></p>
-      <p class="exclude-dialog-help" data-i18n="holdHelp">用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「暫緩」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。</p>
+      <p class="exclude-dialog-help" data-i18n="holdHelp">用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「未使買住」，上次購買同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。</p>
       <label for="holdNote" data-i18n="noteLabel">備註（可留空）</label>
       <textarea id="holdNote" name="note" maxlength="200" rows="3" placeholder="例如：今日超市買咗" data-i18n-placeholder="holdPlaceholder" autocomplete="off"></textarea>
       <div class="dialog-actions">

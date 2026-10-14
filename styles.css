@@ -1238,4 +1238,9 @@ body {
     grid-column: 1 / -1;
     margin: 0.35rem 0 0.15rem;
   }
+
+  /* 水果 / 蔬菜: name + days only. No suggest or action column. */
+  .item-list.is-history {
+    --wide-cols: minmax(0, 1fr) 7rem;
+  }
 }
