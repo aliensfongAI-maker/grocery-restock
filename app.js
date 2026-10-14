@@ -471,7 +471,7 @@
     return '<span class="' + cls + '">' + s + "</span>";
   }
 
-  function sheetButtonHtml(item, action, label, className) {
+  function sheetButtonHtml(item, action, label, className, asMenuItem) {
     const busy = state.pendingKey === keyOf(item);
     const pending = busy && state.pendingAction === action;
     const shown = pending ? "處理緊…" : label;
@@ -488,7 +488,8 @@
       '"' +
       (enabled ? "" : " disabled") +
       (exclusionsEnabled() ? "" : ' title="未設定 Web App 網址"') +
-      ' role="menuitem" aria-label="' +
+      (asMenuItem ? ' role="menuitem"' : "") +
+      ' aria-label="' +
       escapeHtml(shown + "：" + item.name) +
       '">' +
       escapeHtml(shown) +
@@ -516,8 +517,19 @@
       '" role="menu" hidden aria-label="' +
       escapeHtml("操作：" + item.name) +
       '">' +
-      actionButtonsHtml(item) +
+      actionButtonsHtml(item, true) +
       "</div></div>"
+    );
+  }
+
+  /** Inline actions for wide screens. Hidden with CSS below 900px. */
+  function rowActionsHtml(item) {
+    return (
+      '<div class="row-actions" role="group" aria-label="' +
+      escapeHtml("操作：" + item.name) +
+      '">' +
+      actionButtonsHtml(item, false) +
+      "</div>"
     );
   }
 
@@ -531,22 +543,23 @@
     );
   }
 
-  function actionButtonsHtml(item) {
+  function actionButtonsHtml(item, asMenuItem) {
     const exclude = sheetButtonHtml(
       item,
       state.view === "excluded" ? "restore" : "exclude",
       state.view === "excluded" ? "回復" : "暫不考慮",
-      state.view === "excluded" ? "action-restore" : "action-exclude"
+      state.view === "excluded" ? "action-restore" : "action-exclude",
+      asMenuItem
     );
     if (state.view === "excluded") {
       const unhold = item.manualHold
-        ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold")
+        ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold", asMenuItem)
         : "";
       return unhold + exclude;
     }
     const hold = item.manualHold
-      ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold")
-      : sheetButtonHtml(item, "hold", "手動暫緩", "action-hold");
+      ? sheetButtonHtml(item, "unhold", "回復日子", "action-unhold", asMenuItem)
+      : sheetButtonHtml(item, "hold", "手動暫緩", "action-hold", asMenuItem);
     return hold + exclude;
   }
 
@@ -708,8 +721,11 @@
       title +
       "</div>" +
       daysHtml(item.daysSince) +
+      '<span class="item-suggest">' +
       badgeHtml(item.suggest) +
+      "</span>" +
       rowMenuHtml(item) +
+      rowActionsHtml(item) +
       "</div>" +
       when +
       note +
@@ -762,16 +778,23 @@
     );
   }
 
+  function itemListHtml(items) {
+    return (
+      '<ul class="item-list">' +
+      '<li class="item-columns" aria-hidden="true">' +
+      "<span>品名</span><span>距今</span><span>建議</span><span>操作</span>" +
+      "</li>" +
+      items.map(cardHtml).join("") +
+      "</ul>"
+    );
+  }
+
   function nestedHtml(outers) {
     return outers
       .map((outer) => {
         const inners = outer.groups
           .map((group) =>
-            accordionHtml(
-              group,
-              '<ul class="item-list">' + group.items.map(cardHtml).join("") + "</ul>",
-              "category-inner"
-            )
+            accordionHtml(group, itemListHtml(group.items), "category-inner")
           )
           .join("");
         return accordionHtml(outer, inners, "");
@@ -1179,6 +1202,18 @@
     }
   }
 
+  function runRowAction(actionBtn, focusEl) {
+    if (!actionBtn || actionBtn.disabled) return;
+    const type = actionBtn.getAttribute("data-type");
+    const name = actionBtn.getAttribute("data-name");
+    const action = actionBtn.getAttribute("data-action");
+    const focus = focusEl || actionBtn;
+    if (action === "exclude") openExcludeDialog(type, name, focus);
+    if (action === "restore") postExclusion("restore", type, name);
+    if (action === "hold") openHoldDialog(type, name, focus);
+    if (action === "unhold") postExclusion("unhold", type, name);
+  }
+
   function bindEvents() {
     let searchTimer = null;
     els.searchInput.addEventListener("input", () => {
@@ -1217,18 +1252,17 @@
         }
         const actionBtn = e.target.closest("[data-action]");
         if (actionBtn) {
-          if (actionBtn.disabled) return;
           const menuTrigger = inMenu.querySelector(".row-menu-trigger");
-          const type = actionBtn.getAttribute("data-type");
-          const name = actionBtn.getAttribute("data-name");
-          const action = actionBtn.getAttribute("data-action");
           closeRowMenu(inMenu, false);
-          if (action === "exclude") openExcludeDialog(type, name, menuTrigger || actionBtn);
-          if (action === "restore") postExclusion("restore", type, name);
-          if (action === "hold") openHoldDialog(type, name, menuTrigger || actionBtn);
-          if (action === "unhold") postExclusion("unhold", type, name);
+          runRowAction(actionBtn, menuTrigger || actionBtn);
           return;
         }
+        return;
+      }
+      const inlineAction = e.target.closest(".row-actions [data-action]");
+      if (inlineAction) {
+        closeRowMenus(false);
+        runRowAction(inlineAction, inlineAction);
         return;
       }
       closeRowMenus(false);
@@ -1328,6 +1362,18 @@
       const open = els.sections.querySelector(".row-menu.is-open");
       if (open) placeRowMenu(open);
     });
+
+    // Keep in step with the 900px layout in styles.css. Wide screens show
+    // inline actions, so an open 「⋯」 menu should not stay expanded.
+    const wideLayout = window.matchMedia("(min-width: 900px)");
+    const onWideLayout = (event) => {
+      if (event.matches) closeRowMenus(false);
+    };
+    if (typeof wideLayout.addEventListener === "function") {
+      wideLayout.addEventListener("change", onWideLayout);
+    } else if (typeof wideLayout.addListener === "function") {
+      wideLayout.addListener(onWideLayout);
+    }
 
     window.addEventListener(
       "scroll",
