@@ -14,6 +14,10 @@
  * 主鍵係 type|name。回復只改 status，保留該列做審計，唔刪行。
  * 瀏覽器用簡單請求：GET，或 POST 且 Content-Type 為 text/plain
  * （Apps Script 唔會回應 CORS preflight OPTIONS；Web App「任何人」會加 Access-Control-Allow-Origin）。
+ * GET 可加 callback（只接受 JS 識別字）。有 callback 就回傳 callback({...})，MIME 為 JavaScript，
+ * 畀 <script> JSONP 用；冇 callback 就照舊回 JSON。
+ * POST 主體維持 text/plain JSON，唔加 callback。
+ * 改完呢個檔之後，必須喺「管理部署」建立新版本，舊部署唔會自動更新。
  */
 
 var HEADERS = ["type", "name", "excludedAt", "note", "status"];
@@ -22,10 +26,11 @@ var MAX_NAME = 120;
 var MAX_NOTE = 200;
 
 function doGet(e) {
+  var callback = callbackName_(e);
   return withLock_(function () {
     var data = readAll_();
-    return json_({ items: excludedOnly_(data.rows) });
-  });
+    return respond_({ items: excludedOnly_(data.rows) }, callback);
+  }, callback);
 }
 
 function doPost(e) {
@@ -79,28 +84,55 @@ function doPost(e) {
   });
 }
 
-function withLock_(fn) {
+function withLock_(fn, callback) {
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(20000);
   } catch (err) {
-    return json_({ items: [], error: "系統忙，請再試" });
+    return respond_({ items: [], error: "系統忙，請再試" }, callback);
   }
   try {
     return fn();
   } catch (err) {
     var message = err && err.message ? String(err.message) : "讀寫失敗";
     if (message.length > 160 || message.indexOf("\n") !== -1) message = "讀寫失敗";
-    return json_({ items: [], error: message });
+    return respond_({ items: [], error: message }, callback);
   } finally {
     lock.releaseLock();
   }
 }
 
+function callbackName_(e) {
+  var raw = "";
+  if (e && e.parameter && e.parameter.callback != null) raw = String(e.parameter.callback);
+  raw = raw.replace(/^\s+|\s+$/g, "");
+  if (!raw) return "";
+  if (!/^[A-Za-z_$][A-Za-z0-9_$]{0,63}$/.test(raw)) return "";
+  return raw;
+}
+
+function jsonText_(obj) {
+  return JSON.stringify(obj)
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029")
+    .replace(/</g, "\\u003c");
+}
+
 function json_(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(
+  return ContentService.createTextOutput(jsonText_(obj)).setMimeType(
     ContentService.MimeType.JSON
   );
+}
+
+function jsonp_(callback, obj) {
+  return ContentService.createTextOutput(callback + "(" + jsonText_(obj) + ");").setMimeType(
+    ContentService.MimeType.JAVASCRIPT
+  );
+}
+
+function respond_(obj, callback) {
+  if (callback) return jsonp_(callback, obj);
+  return json_(obj);
 }
 
 function parseBody_(e) {
