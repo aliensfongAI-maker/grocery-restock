@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T19:47:03+08:00",
+  "updatedAt": "2026-10-14T20:09:13+08:00",
   "items": [
     {
       "type": "用紙／清潔",
@@ -182,7 +182,7 @@
       "lastPurchased": "2026-05-19",
       "daysSince": 148,
       "suggest": "優先",
-      "note": "約每 167 日一件 · 預計 18 日要補貨",
+      "note": "約每 159 日一件 · 預計 11 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -236,7 +236,7 @@
       "lastPurchased": "2026-05-26",
       "daysSince": 141,
       "suggest": "優先",
-      "note": "約每 96 日一包 · 預計 146 日要補貨",
+      "note": "約每 97 日一包 · 預計 151 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -334,7 +334,7 @@
       "lastPurchased": "2026-08-10",
       "daysSince": 65,
       "suggest": "優先",
-      "note": "約每 51 日一件 · 預計已到期",
+      "note": "約每 33 日一件 · 預計今日要補",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -419,7 +419,7 @@
       "lastPurchased": "2026-09-19",
       "daysSince": 25,
       "suggest": "優先",
-      "note": "約每 39 日一件 · 預計 52 日要補貨",
+      "note": "約每 22 日一件 · 預計 18 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1180,7 +1180,7 @@
       "lastPurchased": "2026-08-03",
       "daysSince": 72,
       "suggest": "優先",
-      "note": "約每 55 日一件 · 預計 37 日要補貨",
+      "note": "約每 54 日一件 · 預計 198 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1651,8 +1651,8 @@
       "name": "嬰兒濕紙巾",
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
-      "suggest": "暫緩",
-      "note": "約每 25 日一包 · 預計 16 日要補貨",
+      "suggest": "優先",
+      "note": "約每 20 日一包 · 預計 11 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1793,7 +1793,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "約每 22 日一件 · 預計 44 日要補貨；紙盒／利樂；唔歸入膠樽裝",
+      "note": "約每 15 日一件 · 預計 61 日要補貨；紙盒／利樂；唔歸入膠樽裝",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -1930,7 +1930,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "約每 13 日一件 · 預計 13 日要補貨；含 C.C.Lemon；含薏米露／蘋果茶；家居送貨",
+      "note": "約每 6 日一件 · 預計 20 日要補貨；含 C.C.Lemon；含薏米露／蘋果茶；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2074,7 +2074,7 @@
       "lastPurchased": "2026-05-26",
       "daysSince": 141,
       "suggest": "優先",
-      "note": "約每 110 日一件 · 預計 299 日要補貨；碗／杯裝只加熱水",
+      "note": "約每 22 日一件 · 預計已到期；碗／杯裝只加熱水",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2152,7 +2152,7 @@
       "lastPurchased": "2026-07-16",
       "daysSince": 90,
       "suggest": "優先",
-      "note": "約每 155 日一件 · 預計 65 日要補貨",
+      "note": "約每 150 日一件 · 預計 60 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2195,7 +2195,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
       "suggest": "暫緩",
-      "note": "約每 34 日一包 · 預計 81 日要補貨；袋裝／需煮熟類",
+      "note": "約每 26 日一包 · 預計 58 日要補貨；袋裝／需煮熟類",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2333,7 +2333,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
       "suggest": "暫緩",
-      "note": "約每 232 日一件 · 預計 908 日要補貨；唔歸入膠樽裝",
+      "note": "約每 217 日一件 · 預計 847 日要補貨；唔歸入膠樽裝",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2384,372 +2384,34 @@
       "pack": "250毫升"
     },
     {
-      "type": "鮮果蔬",
-      "name": "藍莓",
-      "lastPurchased": "2026-05-05",
-      "daysSince": 162,
-      "suggest": "優先",
-      "note": "睇雪櫃",
+      "type": "水果",
+      "name": "奇異果",
+      "lastPurchased": "2026-10-08",
+      "daysSince": 6,
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
         {
-          "brand": null,
-          "lastPurchased": "2026-05-05",
-          "daysSince": 162,
+          "brand": "ZESPRI",
+          "lastPurchased": "2026-10-08",
+          "daysSince": 6,
           "image": null,
           "imageAlt": null,
-          "link": "https://www.pns.hk/筒裝藍莓１５０克-新舊包裝隨機發貨/p/BP_37376",
+          "link": "https://www.pns.hk/奇異果（新西蘭）/p/BP_33082",
           "note": "",
-          "title": "筒裝藍莓１５０克 (新舊包裝隨機發貨) +$10換購筒裝藍莓"
-        }
-      ],
-      "pack": "150克"
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "西蘭花",
-      "lastPurchased": "2026-05-12",
-      "daysSince": 155,
-      "suggest": "優先",
-      "note": "約每 31 日一件 · 預計已到期；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-05-12",
-          "daysSince": 155,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/西蘭花-每個/p/BP_45554",
-          "note": "",
-          "title": "西蘭花(每個) 26PAM2 comeback:$1000-$500 VIPDAY:92折 買2慳$1.9"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-04-11",
-          "daysSince": 186,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00007",
-          "note": "",
-          "title": "西蘭花 (1個) - 8-10両"
+          "title": "奇異果（新西蘭） VIP26:$400-$30 買5慳$9.5"
         }
       ]
     },
     {
-      "type": "鮮果蔬",
-      "name": "牛油果",
-      "lastPurchased": "2026-06-23",
-      "daysSince": 113,
-      "suggest": "優先",
-      "note": "約每 3 日一件 · 預計已到期；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-06-23",
-          "daysSince": 113,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00028",
-          "note": "",
-          "title": "牛油果 - 1個"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-06-12",
-          "daysSince": 124,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00050",
-          "note": "",
-          "title": "珍寶牛油果 - 1個 (牌子LOGO會有不同)"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-05-26",
-          "daysSince": 141,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/牛油果/p/BP_75516",
-          "note": "",
-          "title": "牛油果 買3慳$3.2 VIPDAY:92折 26PAM2 comeback:$1000-$500"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-05-12",
-          "daysSince": 155,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/牛油果/p/BP_75516",
-          "note": "",
-          "title": "牛油果 26PAM2 comeback:$1000-$500 VIPDAY:92折 買4慳$14.5"
-        }
-      ]
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "菠菜／葉菜",
-      "lastPurchased": "2026-02-21",
-      "daysSince": 235,
-      "suggest": "優先",
-      "note": "約每 37 日一件 · 預計已到期；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-02-21",
-          "daysSince": 235,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/S2232001_S_PIG34651",
-          "note": "",
-          "title": "嬰兒小松菜菠菜高鈣圓圈餅 40g (20g×2袋) (平行進口貨) 9",
-          "pack": "40g"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-12-21",
-          "daysSince": 297,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00085",
-          "note": "",
-          "title": "【半斤裝】菠菜苗 - 1份"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-08-21",
-          "daysSince": 419,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00006",
-          "note": "",
-          "title": "唐生菜 - 1斤"
-        }
-      ],
-      "pack": "40g"
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "青瓜",
-      "lastPurchased": "2026-07-16",
-      "daysSince": 90,
-      "suggest": "優先",
-      "note": "約每 94 日一件 · 預計 4 日要補貨；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-16",
-          "daysSince": 90,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00015",
-          "note": "",
-          "title": "溫室青瓜仔 (3-5條) - 共10-11両"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-01-09",
-          "daysSince": 278,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00015",
-          "note": "",
-          "title": "溫室青瓜仔 (4-5條) - 共10-11両"
-        }
-      ],
-      "pack": "5條"
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "蘆筍",
-      "lastPurchased": "2026-07-16",
-      "daysSince": 90,
-      "suggest": "優先",
-      "note": "約每 371 日一件 · 預計 281 日要補貨；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-16",
-          "daysSince": 90,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00456",
-          "note": "",
-          "title": "蘆筍苗 (180-200g) - 1份",
-          "pack": "200g"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-07-10",
-          "daysSince": 461,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/S3014001_S_FF-034",
-          "note": "",
-          "title": "無公害種植新鮮直送蘆筍苗(300-400g)",
-          "pack": "400g"
-        }
-      ],
-      "pack": "200g"
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "西芹",
-      "lastPurchased": "2026-06-23",
-      "daysSince": 113,
-      "suggest": "優先",
-      "note": "約每 21 日一件 · 預計已到期；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-06-23",
-          "daysSince": 113,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00041",
-          "note": "",
-          "title": "西芹 (1斤-1.2斤) (1-2件) - 1包"
-        },
-        {
-          "brand": "蔬菜先生",
-          "lastPurchased": "2026-05-12",
-          "daysSince": 155,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/西芹/p/BP_25363",
-          "note": "",
-          "title": "西芹 26PAM2 comeback:$1000-$500 VIPDAY:92折"
-        }
-      ],
-      "pack": "2件"
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "油麥菜",
-      "lastPurchased": "2025-10-30",
-      "daysSince": 349,
-      "suggest": "優先",
-      "note": "睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2025-10-30",
-          "daysSince": 349,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00120",
-          "note": "",
-          "title": "油麥菜苗 - 半斤"
-        }
-      ]
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "菜心",
-      "lastPurchased": "2026-07-21",
-      "daysSince": 85,
-      "suggest": "優先",
-      "note": "約每 30 日一件 · 預計已到期；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-21",
-          "daysSince": 85,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00343",
-          "note": "",
-          "title": "軟尖葉菜心苗(帶少少泥巴，較乾身，建議收貨後或食用前泡水醒菜) - 半"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-16",
-          "daysSince": 90,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00002",
-          "note": "",
-          "title": "菜心苗 - 1斤 #新鮮"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-03-12",
-          "daysSince": 216,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00343",
-          "note": "",
-          "title": "【新貨試食價】軟尖葉菜心苗(帶少少泥巴，較乾身，建議收貨後或食用前泡水"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-12-21",
-          "daysSince": 297,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00002",
-          "note": "",
-          "title": "菜心苗 - 1斤"
-        }
-      ]
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "鮮橙",
-      "lastPurchased": "2026-09-05",
-      "daysSince": 39,
-      "suggest": "優先",
-      "note": "約每 239 日一件 · 預計 200 日要補貨；睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": "SELECT佳之選",
-          "lastPurchased": "2026-09-05",
-          "daysSince": 39,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/鮮橙５個裝-南非/p/BP_75126",
-          "note": "",
-          "title": "鮮橙５個裝 [南非] MAF26:享92折優惠 +$16.5換購SELECT佳之選鮮橙"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-01-09",
-          "daysSince": 278,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H7606001_S_SD2020113265A",
-          "note": "",
-          "title": "柑橘烤香料雞味薯片150g (1包) Chargrilled Spic",
-          "pack": "150g"
-        }
-      ],
-      "pack": "150g"
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "薯仔",
+      "type": "水果",
+      "name": "柚／文旦",
       "lastPurchased": "2026-09-23",
       "daysSince": 21,
-      "suggest": "優先",
-      "note": "約每 139 日一件 · 預計 118 日要補貨；睇雪櫃",
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2759,50 +2421,52 @@
           "daysSince": 21,
           "image": null,
           "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00004",
+          "link": "https://www.hktvmall.com/p/B1660002_S_V-17",
           "note": "",
-          "title": "薯仔 (2-4個) - 1磅 #馬鈴薯#土豆"
+          "title": "台灣頂級紅文旦柚(1個)"
         },
         {
           "brand": null,
-          "lastPurchased": "2025-10-10",
-          "daysSince": 369,
+          "lastPurchased": "2026-09-18",
+          "daysSince": 26,
           "image": null,
           "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00004",
+          "link": "https://www.hktvmall.com/p/B0812001_S_00106",
           "note": "",
-          "title": "薯仔 (3-4個) - 約1磅"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-08-16",
-          "daysSince": 424,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10012456A",
-          "note": "",
-          "title": "薯仔麵(四包裝) x 2"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-08-02",
-          "daysSince": 438,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00004",
-          "note": "",
-          "title": "薯仔 (3個) - 約1磅"
+          "title": "台灣文旦柚 - 1個 #中秋節送禮精選"
         }
-      ],
-      "pack": "1磅"
+      ]
     },
     {
-      "type": "鮮果蔬",
+      "type": "水果",
+      "name": "梨",
+      "lastPurchased": "2026-10-06",
+      "daysSince": 8,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-06",
+          "daysSince": 8,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_10297",
+          "note": "",
+          "title": "二十世紀梨(兩粒裝) - 1盒 #水晶梨"
+        }
+      ],
+      "pack": "1盒"
+    },
+    {
+      "type": "水果",
       "name": "檸檬",
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
-      "suggest": "優先",
-      "note": "約每 69 日一件 · 預計 198 日要補貨；睇雪櫃",
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2871,35 +2535,109 @@
       "pack": "155ml"
     },
     {
-      "type": "鮮果蔬",
-      "name": "梨",
-      "lastPurchased": "2026-10-06",
-      "daysSince": 8,
-      "suggest": "優先",
-      "note": "睇雪櫃",
+      "type": "水果",
+      "name": "火龍果",
+      "lastPurchased": "2026-10-08",
+      "daysSince": 6,
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
         {
           "brand": null,
-          "lastPurchased": "2026-10-06",
-          "daysSince": 8,
+          "lastPurchased": "2026-10-08",
+          "daysSince": 6,
           "image": null,
           "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_10297",
+          "link": "https://www.pns.hk/大裝紅肉火龍果/p/BP_69930",
           "note": "",
-          "title": "二十世紀梨(兩粒裝) - 1盒 #水晶梨"
+          "title": "大裝紅肉火龍果 買3慳$6 VIP26:$400-$30"
         }
-      ],
-      "pack": "1盒"
+      ]
     },
     {
-      "type": "鮮果蔬",
+      "type": "水果",
+      "name": "牛油果",
+      "lastPurchased": "2026-06-23",
+      "daysSince": 113,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-06-23",
+          "daysSince": 113,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00028",
+          "note": "",
+          "title": "牛油果 - 1個"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-06-12",
+          "daysSince": 124,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00050",
+          "note": "",
+          "title": "珍寶牛油果 - 1個 (牌子LOGO會有不同)"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-05-26",
+          "daysSince": 141,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/牛油果/p/BP_75516",
+          "note": "",
+          "title": "牛油果 買3慳$3.2 VIPDAY:92折 26PAM2 comeback:$1000-$500"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-05-12",
+          "daysSince": 155,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/牛油果/p/BP_75516",
+          "note": "",
+          "title": "牛油果 26PAM2 comeback:$1000-$500 VIPDAY:92折 買4慳$14.5"
+        }
+      ]
+    },
+    {
+      "type": "水果",
+      "name": "藍莓",
+      "lastPurchased": "2026-05-05",
+      "daysSince": 162,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-05-05",
+          "daysSince": 162,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/筒裝藍莓１５０克-新舊包裝隨機發貨/p/BP_37376",
+          "note": "",
+          "title": "筒裝藍莓１５０克 (新舊包裝隨機發貨) +$10換購筒裝藍莓"
+        }
+      ],
+      "pack": "150克"
+    },
+    {
+      "type": "水果",
       "name": "蘋果",
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
-      "suggest": "優先",
-      "note": "約每 30 日一件 · 預計 23 日要補貨；睇雪櫃；消耗快",
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -2989,56 +2727,187 @@
       "pack": "450ML"
     },
     {
-      "type": "鮮果蔬",
-      "name": "奇異果",
-      "lastPurchased": "2026-10-08",
-      "daysSince": 6,
-      "suggest": "優先",
-      "note": "睇雪櫃",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": "ZESPRI",
-          "lastPurchased": "2026-10-08",
-          "daysSince": 6,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/奇異果（新西蘭）/p/BP_33082",
-          "note": "",
-          "title": "奇異果（新西蘭） VIP26:$400-$30 買5慳$9.5"
-        }
-      ]
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "火龍果",
-      "lastPurchased": "2026-10-08",
-      "daysSince": 6,
-      "suggest": "優先",
-      "note": "睇雪櫃",
+      "type": "水果",
+      "name": "蜜瓜",
+      "lastPurchased": "2026-09-16",
+      "daysSince": 28,
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
         {
           "brand": null,
-          "lastPurchased": "2026-10-08",
-          "daysSince": 6,
+          "lastPurchased": "2026-09-16",
+          "daysSince": 28,
           "image": null,
           "imageAlt": null,
-          "link": "https://www.pns.hk/大裝紅肉火龍果/p/BP_69930",
+          "link": "https://www.hktvmall.com/p/B0812001_S_00077",
           "note": "",
-          "title": "大裝紅肉火龍果 買3慳$6 VIP26:$400-$30"
+          "title": "日本北海道赤肉蜜瓜 (約1.3-1.5公斤) - 1個 #哈密瓜"
+        }
+      ],
+      "pack": "1.5公斤"
+    },
+    {
+      "type": "水果",
+      "name": "鮮橙",
+      "lastPurchased": "2026-09-05",
+      "daysSince": 39,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": "SELECT佳之選",
+          "lastPurchased": "2026-09-05",
+          "daysSince": 39,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/鮮橙５個裝-南非/p/BP_75126",
+          "note": "",
+          "title": "鮮橙５個裝 [南非] MAF26:享92折優惠 +$16.5換購SELECT佳之選鮮橙"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-01-09",
+          "daysSince": 278,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H7606001_S_SD2020113265A",
+          "note": "",
+          "title": "柑橘烤香料雞味薯片150g (1包) Chargrilled Spic",
+          "pack": "150g"
+        }
+      ],
+      "pack": "150g"
+    },
+    {
+      "type": "蔬菜",
+      "name": "油麥菜",
+      "lastPurchased": "2025-10-30",
+      "daysSince": 349,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2025-10-30",
+          "daysSince": 349,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00120",
+          "note": "",
+          "title": "油麥菜苗 - 半斤"
         }
       ]
     },
     {
-      "type": "鮮果蔬",
+      "type": "蔬菜",
+      "name": "菜心",
+      "lastPurchased": "2026-07-21",
+      "daysSince": 85,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-07-21",
+          "daysSince": 85,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00343",
+          "note": "",
+          "title": "軟尖葉菜心苗(帶少少泥巴，較乾身，建議收貨後或食用前泡水醒菜) - 半"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-07-16",
+          "daysSince": 90,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00002",
+          "note": "",
+          "title": "菜心苗 - 1斤 #新鮮"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-03-12",
+          "daysSince": 216,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00343",
+          "note": "",
+          "title": "【新貨試食價】軟尖葉菜心苗(帶少少泥巴，較乾身，建議收貨後或食用前泡水"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-12-21",
+          "daysSince": 297,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00002",
+          "note": "",
+          "title": "菜心苗 - 1斤"
+        }
+      ]
+    },
+    {
+      "type": "蔬菜",
+      "name": "菠菜／葉菜",
+      "lastPurchased": "2026-02-21",
+      "daysSince": 235,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-02-21",
+          "daysSince": 235,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/S2232001_S_PIG34651",
+          "note": "",
+          "title": "嬰兒小松菜菠菜高鈣圓圈餅 40g (20g×2袋) (平行進口貨) 9",
+          "pack": "40g"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-12-21",
+          "daysSince": 297,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00085",
+          "note": "",
+          "title": "【半斤裝】菠菜苗 - 1份"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-08-21",
+          "daysSince": 419,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00006",
+          "note": "",
+          "title": "唐生菜 - 1斤"
+        }
+      ],
+      "pack": "40g"
+    },
+    {
+      "type": "蔬菜",
       "name": "蕃茄",
       "lastPurchased": "2026-10-08",
       "daysSince": 6,
-      "suggest": "優先",
-      "note": "約每 31 日一件 · 預計 25 日要補貨；睇雪櫃",
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3128,35 +2997,12 @@
       "pack": "300G"
     },
     {
-      "type": "鮮果蔬",
-      "name": "蜜瓜",
-      "lastPurchased": "2026-09-16",
-      "daysSince": 28,
-      "suggest": "優先",
-      "note": "",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-09-16",
-          "daysSince": 28,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00077",
-          "note": "",
-          "title": "日本北海道赤肉蜜瓜 (約1.3-1.5公斤) - 1個 #哈密瓜"
-        }
-      ],
-      "pack": "1.5公斤"
-    },
-    {
-      "type": "鮮果蔬",
-      "name": "柚／文旦",
+      "type": "蔬菜",
+      "name": "薯仔",
       "lastPurchased": "2026-09-23",
       "daysSince": 21,
-      "suggest": "優先",
-      "note": "約每 2 日一件 · 預計已到期",
+      "suggest": "",
+      "note": "",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3166,21 +3012,175 @@
           "daysSince": 21,
           "image": null,
           "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B1660002_S_V-17",
+          "link": "https://www.hktvmall.com/p/B0812001_S_00004",
           "note": "",
-          "title": "台灣頂級紅文旦柚(1個)"
+          "title": "薯仔 (2-4個) - 1磅 #馬鈴薯#土豆"
         },
         {
           "brand": null,
-          "lastPurchased": "2026-09-18",
-          "daysSince": 26,
+          "lastPurchased": "2025-10-10",
+          "daysSince": 369,
           "image": null,
           "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0812001_S_00106",
+          "link": "https://www.hktvmall.com/p/B0812001_S_00004",
           "note": "",
-          "title": "台灣文旦柚 - 1個 #中秋節送禮精選"
+          "title": "薯仔 (3-4個) - 約1磅"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-08-16",
+          "daysSince": 424,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10012456A",
+          "note": "",
+          "title": "薯仔麵(四包裝) x 2"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-08-02",
+          "daysSince": 438,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00004",
+          "note": "",
+          "title": "薯仔 (3個) - 約1磅"
+        }
+      ],
+      "pack": "1磅"
+    },
+    {
+      "type": "蔬菜",
+      "name": "蘆筍",
+      "lastPurchased": "2026-07-16",
+      "daysSince": 90,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-07-16",
+          "daysSince": 90,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00456",
+          "note": "",
+          "title": "蘆筍苗 (180-200g) - 1份",
+          "pack": "200g"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-07-10",
+          "daysSince": 461,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/S3014001_S_FF-034",
+          "note": "",
+          "title": "無公害種植新鮮直送蘆筍苗(300-400g)",
+          "pack": "400g"
+        }
+      ],
+      "pack": "200g"
+    },
+    {
+      "type": "蔬菜",
+      "name": "西芹",
+      "lastPurchased": "2026-06-23",
+      "daysSince": 113,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-06-23",
+          "daysSince": 113,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00041",
+          "note": "",
+          "title": "西芹 (1斤-1.2斤) (1-2件) - 1包"
+        },
+        {
+          "brand": "蔬菜先生",
+          "lastPurchased": "2026-05-12",
+          "daysSince": 155,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/西芹/p/BP_25363",
+          "note": "",
+          "title": "西芹 26PAM2 comeback:$1000-$500 VIPDAY:92折"
+        }
+      ],
+      "pack": "2件"
+    },
+    {
+      "type": "蔬菜",
+      "name": "西蘭花",
+      "lastPurchased": "2026-05-12",
+      "daysSince": 155,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-05-12",
+          "daysSince": 155,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/西蘭花-每個/p/BP_45554",
+          "note": "",
+          "title": "西蘭花(每個) 26PAM2 comeback:$1000-$500 VIPDAY:92折 買2慳$1.9"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-04-11",
+          "daysSince": 186,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00007",
+          "note": "",
+          "title": "西蘭花 (1個) - 8-10両"
         }
       ]
+    },
+    {
+      "type": "蔬菜",
+      "name": "青瓜",
+      "lastPurchased": "2026-07-16",
+      "daysSince": 90,
+      "suggest": "",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-07-16",
+          "daysSince": 90,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00015",
+          "note": "",
+          "title": "溫室青瓜仔 (3-5條) - 共10-11両"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-01-09",
+          "daysSince": 278,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00015",
+          "note": "",
+          "title": "溫室青瓜仔 (4-5條) - 共10-11両"
+        }
+      ],
+      "pack": "5條"
     },
     {
       "type": "急凍蛋白",
@@ -3188,7 +3188,7 @@
       "lastPurchased": "2026-10-12",
       "daysSince": 2,
       "suggest": "暫緩",
-      "note": "約每 41 日一件 · 預計 79 日要補貨；康怡已簽收 13/10",
+      "note": "約每 25 日一件 · 預計 47 日要補貨；康怡已簽收 13/10",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3305,7 +3305,7 @@
       "lastPurchased": "2026-10-12",
       "daysSince": 2,
       "suggest": "暫緩",
-      "note": "約每 148 日一件 · 預計 146 日要補貨；康怡已簽收 13/10",
+      "note": "約每 84 日一件 · 預計 167 日要補貨；康怡已簽收 13/10",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3580,7 +3580,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "約每 16 日一件 · 預計 17 日要補貨；與扒分開；家居＋康怡待取",
+      "note": "約每 12 日一件 · 預計 24 日要補貨；與扒分開；家居＋康怡待取",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3719,7 +3719,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "約每 27 日一件 · 預計 27 日要補貨；與柳分開；家居＋康怡待取",
+      "note": "約每 23 日一件 · 預計 24 日要補貨；與柳分開；家居＋康怡待取",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -3803,7 +3803,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "約每 24 日一件 · 預計 24 日要補貨；家居送貨",
+      "note": "約每 18 日一件 · 預計 19 日要補貨；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4028,7 +4028,7 @@
       "lastPurchased": "2025-10-16",
       "daysSince": 363,
       "suggest": "優先",
-      "note": "約每 42 日一件 · 預計已到期；上次喺 2025 年",
+      "note": "約每 35 日一件 · 預計已到期；上次喺 2025 年",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4117,7 +4117,7 @@
       "lastPurchased": "2026-07-28",
       "daysSince": 78,
       "suggest": "優先",
-      "note": "約每 21 日一件 · 預計已到期",
+      "note": "約每 17 日一件 · 預計已到期",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4435,7 +4435,7 @@
       "lastPurchased": "2026-09-05",
       "daysSince": 39,
       "suggest": "優先",
-      "note": "約每 20 日一件 · 預計 1 日要補貨；三文魚扒／柳本週已夠，可輪換",
+      "note": "約每 16 日一件 · 預計已到期；三文魚扒／柳本週已夠，可輪換",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4571,7 +4571,7 @@
       "lastPurchased": "2026-09-19",
       "daysSince": 25,
       "suggest": "優先",
-      "note": "約每 19 日一件 · 預計已到期",
+      "note": "約每 10 日一件 · 預計已到期",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4595,7 +4595,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 20,
       "suggest": "暫緩",
-      "note": "約每 40 日一件 · 預計 19 日要補貨",
+      "note": "約每 35 日一件 · 預計 15 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4664,6 +4664,381 @@
         }
       ],
       "pack": "250g"
+    },
+    {
+      "type": "鹽／糖／生粉",
+      "name": "生粉",
+      "lastPurchased": "2026-09-15",
+      "daysSince": 29,
+      "suggest": "優先",
+      "note": "約每 76 日一件 · 預計 122 日要補貨",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-09-15",
+          "daysSince": 29,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B1146001_S_AJ415",
+          "note": "",
+          "title": "【2包】泰國特級AB牌生粉 250g x2 #勾芡 #醃肉 #煎炸粉",
+          "pack": "250g"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-12-04",
+          "daysSince": 314,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10009072A",
+          "note": "",
+          "title": "鷹粟粉 420克"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-05-14",
+          "daysSince": 518,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10155240B",
+          "note": "",
+          "title": "生粉 x 3"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-25",
+          "daysSince": 568,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10009072",
+          "note": "",
+          "title": "鷹粟粉 420克"
+        }
+      ],
+      "pack": "2包"
+    },
+    {
+      "type": "鹽／糖／生粉",
+      "name": "糖",
+      "lastPurchased": "2025-05-08",
+      "daysSince": 524,
+      "suggest": "優先",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2025-05-08",
+          "daysSince": 524,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H9197001_S_4902882032055",
+          "note": "",
+          "title": "日本-三溫糖 1kg",
+          "pack": "1kg"
+        }
+      ],
+      "pack": "1kg"
+    },
+    {
+      "type": "鹽／糖／生粉",
+      "name": "鹽",
+      "lastPurchased": "2026-09-19",
+      "daysSince": 25,
+      "suggest": "優先",
+      "note": "約每 48 日一件 · 預計 72 日要補貨",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-09-19",
+          "daysSince": 25,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H6297001_S_WT0006",
+          "note": "",
+          "title": "100%天然喜馬拉雅山粉紅岩鹽 600g x 2包 (幼粒)[食用有效",
+          "pack": "600g"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-08-14",
+          "daysSince": 61,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H6297001_S_WT0006",
+          "note": "",
+          "title": "100%天然喜馬拉雅山粉紅岩鹽 600g x 2包 (幼粒)",
+          "pack": "600g"
+        }
+      ],
+      "pack": "600g"
+    },
+    {
+      "type": "豉油／生抽／頭抽／蒸魚豉油／蠔油",
+      "name": "生抽",
+      "lastPurchased": "2026-05-26",
+      "daysSince": 141,
+      "suggest": "優先",
+      "note": "約每 52 日一件 · 預計已到期",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": "李錦記",
+          "lastPurchased": "2026-05-26",
+          "daysSince": 141,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/頭道原釀生抽/p/BP_402979",
+          "note": "",
+          "title": "頭道原釀生抽 VIPDAY:92折 26PAM2 comeback:$1000-$500",
+          "pack": "500ML"
+        },
+        {
+          "brand": "李錦記",
+          "lastPurchased": "2026-05-12",
+          "daysSince": 155,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/減鹽生抽/p/BP_163808",
+          "note": "",
+          "title": "減鹽生抽 送李錦記減鹽頭抽",
+          "pack": "500ML"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-04-22",
+          "daysSince": 175,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10143996",
+          "note": "",
+          "title": "頭道原釀頭抽 #豉油 #生抽 #醬油 (新舊包裝隨機送出) 舊名:"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-03-19",
+          "daysSince": 209,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10009676",
+          "note": "",
+          "title": "高級生抽 (100%純釀造)"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-09-04",
+          "daysSince": 405,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H6646010_S_078895161441-1pc",
+          "note": "",
+          "title": "李錦記頭道原釀生抽500ML (新舊包裝隨機發貨)(頭道鮮抽 原釀醬香",
+          "pack": "500ML"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-20",
+          "daysSince": 573,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H8229001_S_5501257-2",
+          "note": "",
+          "title": "高級生抽(100% 純釀造) (2樽裝) 590毫升 x 2"
+        }
+      ],
+      "pack": "500ML"
+    },
+    {
+      "type": "豉油／生抽／頭抽／蒸魚豉油／蠔油",
+      "name": "蒸魚豉油",
+      "lastPurchased": "2026-10-08",
+      "daysSince": 6,
+      "suggest": "暫緩",
+      "note": "約每 99 日一件 · 預計 92 日要補貨",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": "淘大",
+          "lastPurchased": "2026-10-08",
+          "daysSince": 6,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/原釀-‧-蒸魚頭抽/p/BP_155601",
+          "note": "",
+          "title": "原釀 ‧ 蒸魚頭抽 VIP26:$400-$30",
+          "pack": "500ML"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-08-05",
+          "daysSince": 70,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10021342",
+          "note": "",
+          "title": "雙璜蒸魚頭抽 #豉油 #生抽 #醬油 #頭抽"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-06-03",
+          "daysSince": 133,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10000383",
+          "note": "",
+          "title": "蒸魚豉油 #香港製造 #豉油"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-02-21",
+          "daysSince": 235,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10016454",
+          "note": "",
+          "title": "高級蒸魚醬油"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-08-29",
+          "daysSince": 411,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10000383A",
+          "note": "",
+          "title": "蒸魚豉油 x 2 #香港製造 #豉油"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-05",
+          "daysSince": 588,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H8229001_S_5501211",
+          "note": "",
+          "title": "高級蒸魚醬油(100% 純釀造) 590毫升 (2樽裝)"
+        }
+      ],
+      "pack": "500ML"
+    },
+    {
+      "type": "豉油／生抽／頭抽／蒸魚豉油／蠔油",
+      "name": "蠔油",
+      "lastPurchased": "2025-11-28",
+      "daysSince": 320,
+      "suggest": "優先",
+      "note": "約每 160 日一件 · 預計今日要補",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2025-11-28",
+          "daysSince": 320,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10158008",
+          "note": "",
+          "title": "減鹽蠔油 x 2 & 頭道原釀頭抽"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2024-10-20",
+          "daysSince": 724,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0972014_S_Yu_Hing_OYSTER_KING_500ML_GOLD",
+          "note": "",
+          "title": "流浮山蠔油王 500ML （金蓋）",
+          "pack": "500ML"
+        }
+      ],
+      "pack": "500ML"
+    },
+    {
+      "type": "豉油／生抽／頭抽／蒸魚豉油／蠔油",
+      "name": "豉油",
+      "lastPurchased": "2025-11-28",
+      "daysSince": 320,
+      "suggest": "優先",
+      "note": "約每 87 日一件 · 預計已到期",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2025-11-28",
+          "daysSince": 320,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10009677",
+          "note": "",
+          "title": "高級老抽 (100%純釀造)"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-20",
+          "daysSince": 573,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H8229001_S_5501257-1",
+          "note": "",
+          "title": "高級老抽(100% 純釀造) 590毫升 (2樽裝)"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-05",
+          "daysSince": 588,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H8032002_S_SP-00238",
+          "note": "",
+          "title": "悅和醬油 添丁甜醋 500ml (支裝) #21080735 Yuet",
+          "pack": "500ml"
+        }
+      ],
+      "pack": "500ml"
+    },
+    {
+      "type": "豉油／生抽／頭抽／蒸魚豉油／蠔油",
+      "name": "頭抽",
+      "lastPurchased": "2026-10-08",
+      "daysSince": 6,
+      "suggest": "暫緩",
+      "note": "約每 447 日一件 · 預計 441 日要補貨",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": "淘大",
+          "lastPurchased": "2026-10-08",
+          "daysSince": 6,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/原釀‧醇鮮頭抽優惠裝-贈品隨機發送/p/BP_104817",
+          "note": "",
+          "title": "原釀‧醇鮮頭抽優惠裝 (贈品隨機發送) VIP26:$400-$30"
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-07-18",
+          "daysSince": 453,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10158438",
+          "note": "",
+          "title": "頭道原釀減鹽頭抽 500ML",
+          "pack": "500ML"
+        }
+      ],
+      "pack": "500ML"
     },
     {
       "type": "乾貨／調味",
@@ -4860,7 +5235,7 @@
       "lastPurchased": "2026-07-21",
       "daysSince": 85,
       "suggest": "優先",
-      "note": "約每 41 日一件 · 預計已到期",
+      "note": "約每 40 日一件 · 預計 320 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -4946,7 +5321,7 @@
       "lastPurchased": "2026-05-06",
       "daysSince": 161,
       "suggest": "優先",
-      "note": "約每 60 日一件 · 預計已到期",
+      "note": "約每 19 日一件 · 預計已到期",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -5025,127 +5400,6 @@
     },
     {
       "type": "乾貨／調味",
-      "name": "生粉",
-      "lastPurchased": "2026-09-15",
-      "daysSince": 29,
-      "suggest": "優先",
-      "note": "約每 80 日一件 · 預計 50 日要補貨",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-09-15",
-          "daysSince": 29,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B1146001_S_AJ415",
-          "note": "",
-          "title": "【2包】泰國特級AB牌生粉 250g x2 #勾芡 #醃肉 #煎炸粉",
-          "pack": "250g"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-12-04",
-          "daysSince": 314,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10009072A",
-          "note": "",
-          "title": "鷹粟粉 420克"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-05-14",
-          "daysSince": 518,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10155240B",
-          "note": "",
-          "title": "生粉 x 3"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-03-25",
-          "daysSince": 568,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10009072",
-          "note": "",
-          "title": "鷹粟粉 420克"
-        }
-      ],
-      "pack": "2包"
-    },
-    {
-      "type": "乾貨／調味",
-      "name": "岩鹽",
-      "lastPurchased": "2026-09-19",
-      "daysSince": 25,
-      "suggest": "優先",
-      "note": "約每 54 日一件 · 預計 82 日要補貨",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-09-19",
-          "daysSince": 25,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H6297001_S_WT0006",
-          "note": "",
-          "title": "100%天然喜馬拉雅山粉紅岩鹽 600g x 2包 (幼粒)[食用有效",
-          "pack": "600g"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-08-14",
-          "daysSince": 61,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H6297001_S_WT0006",
-          "note": "",
-          "title": "100%天然喜馬拉雅山粉紅岩鹽 600g x 2包 (幼粒)",
-          "pack": "600g"
-        },
-        {
-          "brand": "李錦記",
-          "lastPurchased": "2026-05-12",
-          "daysSince": 155,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/減鹽生抽/p/BP_163808",
-          "note": "",
-          "title": "減鹽生抽 送李錦記減鹽頭抽",
-          "pack": "500ML"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-11-28",
-          "daysSince": 320,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10158008",
-          "note": "",
-          "title": "減鹽蠔油 x 2 & 頭道原釀頭抽"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-07-18",
-          "daysSince": 453,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10158438",
-          "note": "",
-          "title": "頭道原釀減鹽頭抽 500ML",
-          "pack": "500ML"
-        }
-      ],
-      "pack": "600g"
-    },
-    {
-      "type": "乾貨／調味",
       "name": "乾意粉／義大利麵（成人）",
       "lastPurchased": "2026-07-04",
       "daysSince": 102,
@@ -5214,7 +5468,7 @@
       "lastPurchased": "2026-09-29",
       "daysSince": 15,
       "suggest": "暫緩",
-      "note": "約每 17 日一包 · 預計 18 日要補貨",
+      "note": "約每 16 日一包 · 預計 16 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -5351,7 +5605,7 @@
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
       "suggest": "暫緩",
-      "note": "約每 114 日一支 · 預計 220 日要補貨",
+      "note": "約每 87 日一支 · 預計 166 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -5412,142 +5666,6 @@
     },
     {
       "type": "乾貨／調味",
-      "name": "豉油／頭抽",
-      "lastPurchased": "2026-10-08",
-      "daysSince": 6,
-      "suggest": "暫緩",
-      "note": "約每 38 日一件 · 預計 70 日要補貨",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": "淘大",
-          "lastPurchased": "2026-10-08",
-          "daysSince": 6,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/原釀‧醇鮮頭抽優惠裝-贈品隨機發送/p/BP_104817",
-          "note": "",
-          "title": "原釀‧醇鮮頭抽優惠裝 (贈品隨機發送) VIP26:$400-$30"
-        },
-        {
-          "brand": "淘大",
-          "lastPurchased": "2026-10-08",
-          "daysSince": 6,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/原釀-‧-蒸魚頭抽/p/BP_155601",
-          "note": "",
-          "title": "原釀 ‧ 蒸魚頭抽 VIP26:$400-$30",
-          "pack": "500ML"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-08-05",
-          "daysSince": 70,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10021342",
-          "note": "",
-          "title": "雙璜蒸魚頭抽 #豉油 #生抽 #醬油 #頭抽"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-06-03",
-          "daysSince": 133,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10000383",
-          "note": "",
-          "title": "蒸魚豉油 #香港製造 #豉油"
-        },
-        {
-          "brand": "李錦記",
-          "lastPurchased": "2026-05-26",
-          "daysSince": 141,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/頭道原釀生抽/p/BP_402979",
-          "note": "",
-          "title": "頭道原釀生抽 VIPDAY:92折 26PAM2 comeback:$1000-$500",
-          "pack": "500ML"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-04-22",
-          "daysSince": 175,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10143996",
-          "note": "",
-          "title": "頭道原釀頭抽 #豉油 #生抽 #醬油 (新舊包裝隨機送出) 舊名:"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-03-19",
-          "daysSince": 209,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10009676",
-          "note": "",
-          "title": "高級生抽 (100%純釀造)"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-02-21",
-          "daysSince": 235,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10016454",
-          "note": "",
-          "title": "高級蒸魚醬油"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-11-28",
-          "daysSince": 320,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10009677",
-          "note": "",
-          "title": "高級老抽 (100%純釀造)"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-10-31",
-          "daysSince": 348,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10147598A",
-          "note": "",
-          "title": "[香港製造]桂林風味辣椒醬 (細樽) x 2"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-09-04",
-          "daysSince": 405,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H6646010_S_078895161441-1pc",
-          "note": "",
-          "title": "李錦記頭道原釀生抽500ML (新舊包裝隨機發貨)(頭道鮮抽 原釀醬香",
-          "pack": "500ML"
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-08-29",
-          "daysSince": 411,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_10000383A",
-          "note": "",
-          "title": "蒸魚豉油 x 2 #香港製造 #豉油"
-        }
-      ],
-      "pack": "500ML"
-    },
-    {
-      "type": "乾貨／調味",
       "name": "清酒／酒類",
       "lastPurchased": "2026-09-29",
       "daysSince": 15,
@@ -5597,7 +5715,7 @@
       "lastPurchased": "2026-10-12",
       "daysSince": 2,
       "suggest": "暫緩",
-      "note": "約每 68 日一件 · 預計 65 日要補貨；康怡已簽收 13/10",
+      "note": "約每 59 日一件 · 預計 57 日要補貨；康怡已簽收 13/10",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -5651,7 +5769,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": -1,
       "suggest": "在途",
-      "note": "約每 63 日一件 · 預計 63 日要補貨；家居送貨",
+      "note": "約每 61 日一件 · 預計 61 日要補貨；家居送貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -6275,7 +6393,7 @@
       "lastPurchased": "2026-10-06",
       "daysSince": 8,
       "suggest": "暫緩",
-      "note": "約每 80 日一件 · 預計 71 日要補貨",
+      "note": "約每 49 日一件 · 預計 40 日要補貨",
       "image": null,
       "imageAlt": null,
       "brands": [
@@ -6401,7 +6519,7 @@
       "lastPurchased": "2026-08-30",
       "daysSince": 45,
       "suggest": "優先",
-      "note": "約每 15 日一件 · 預計已到期",
+      "note": "約每 20 日一件 · 預計已到期",
       "image": null,
       "imageAlt": null,
       "brands": [
