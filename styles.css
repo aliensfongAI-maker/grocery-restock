@@ -953,6 +953,13 @@ body {
   color: #8a5a00;
 }
 
+.reclass-flag {
+  margin: 0.45rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
 .item-card.is-held {
   box-shadow: inset 3px 0 0 #e6a23c;
 }
@@ -973,7 +980,9 @@ body {
 
 .action-btn:focus-visible,
 .sheet-dialog button:focus-visible,
-.sheet-dialog textarea:focus-visible {
+.sheet-dialog textarea:focus-visible,
+.sheet-dialog select:focus-visible,
+.sheet-dialog input:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -999,6 +1008,18 @@ body {
 .action-unhold {
   color: #7a4e00;
   border-color: #e6c98a;
+  background: #fff;
+}
+
+.action-reclass {
+  color: var(--accent);
+  border-color: #9ec9c9;
+  background: var(--accent-soft);
+}
+
+.action-reclass-clear {
+  color: var(--accent);
+  border-color: #c5e4e4;
   background: #fff;
 }
 
@@ -1075,10 +1096,24 @@ body {
   resize: vertical;
 }
 
+.sheet-dialog select,
+.sheet-dialog input[type="text"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: #fff;
+  color: var(--text);
+}
+
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
@@ -1240,6 +1275,7 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.4rem;
     min-width: 0;
   }
@@ -1259,6 +1295,7 @@ body {
   .item-card > .item-when,
   .item-card > .item-note,
   .item-card > .hold-flag,
+  .item-card > .reclass-flag,
   .item-card > .exclusion-when,
   .item-card > .brand-empty {
     grid-column: 1;

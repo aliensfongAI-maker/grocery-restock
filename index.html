@@ -125,7 +125,27 @@
     </form>
   </dialog>
 
+  <dialog id="reclassDialog" class="sheet-dialog" aria-labelledby="reclassDialogTitle">
+    <form id="reclassForm" method="dialog">
+      <h2 id="reclassDialogTitle" data-i18n="reclass">改類</h2>
+      <p id="reclassDialogItem" class="exclude-dialog-item" translate="no"></p>
+      <p class="exclude-dialog-help" data-i18n="reclassHelp">改呢項嘅類型同子類。寫入 Google Sheet，唔改呢份 data.json。Gmail 之後會再整份資料。</p>
+      <label for="reclassType" data-i18n="reclassTypeLabel">類型</label>
+      <select id="reclassType" name="newType" translate="no"></select>
+      <label for="reclassSubtype" data-i18n="reclassSubtypeLabel">子類（可揀建議，亦可自己打）</label>
+      <input id="reclassSubtype" name="newSubtype" type="text" list="reclassSubtypeList" maxlength="80" autocomplete="off" placeholder="揀現有子類，或自己打" data-i18n-placeholder="reclassPlaceholder" translate="no" />
+      <datalist id="reclassSubtypeList" translate="no"></datalist>
+      <label for="reclassNote" data-i18n="noteLabel">備註（可留空）</label>
+      <textarea id="reclassNote" name="note" maxlength="200" rows="3" placeholder="例如：屋企仲有" data-i18n-placeholder="excludePlaceholder" autocomplete="off"></textarea>
+      <div class="dialog-actions">
+        <button type="button" class="text-btn" id="reclassClear" data-i18n="reclassClear" hidden>取消改類</button>
+        <button type="button" class="text-btn" id="reclassCancel" data-i18n="cancel">取消</button>
+        <button type="submit" class="action-btn action-reclass" id="reclassConfirm" data-i18n="reclassConfirm">確認改類</button>
+      </div>
+    </form>
+  </dialog>
+
   <script src="./config.js"></script>
-  <script src="./app.js?v=20261015-5" defer></script>
+  <script src="./app.js?v=20261015-6" defer></script>
 </body>
 </html>
