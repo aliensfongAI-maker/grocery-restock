@@ -11,8 +11,9 @@
 | `styles.css` | 樣式（mobile-first） |
 | `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組、牌子摺疊。`window.GROCERY_READ_ONLY` 為真時唔呼叫剔除／暫緩 |
 | `i18n-data.json` | `type`、`subtype`、品名嘅英文同印尼文對照（靜態檔，冇翻譯 API） |
-| `config.js` | Sheet Web App 網址（預設留空；剔除同暫緩共用） |
-| `gas/Code.gs` | Apps Script：讀寫 Google Sheet |
+| `config.js` | Sheet Web App 網址（預設留空；剔除、暫緩、改類共用） |
+| `gas/Code.gs` | Apps Script：讀寫 Google Sheet（剔除、暫緩、改類 overrides） |
+| `gas/seed-reclass.json` | 改類 seed 清單（9 行）。編輯器跑 `seedReclassOverrides_()`，呢份檔唔會被網站讀 |
 | `data.json` | 建議資料（前端只顯示 `suggest`，唔重算；唔存剔除或暫緩） |
 
 ## 分組
@@ -63,7 +64,7 @@
 - 兩件事分開。暫緩唔會隱藏；剔除先會。同一件貨可以同時有兩組列。
 - 舊表如果第一列係 `excludedAt`，第一次讀寫會把欄名改做 `at`，入面嘅時間唔郁。
 
-`doGet` 回傳 `{ items: [剔除中…], held: [暫緩中…] }`。
+`doGet` 回傳 `{ items: [剔除中…], held: [暫緩中…], overrides: [改類 active…] }`。`overrides` 只包含最新狀態係 `active` 嘅列；`cleared` 唔出現。剔除同暫緩嘅讀寫同之前一樣，同改類分開。
 
 1. 開新 Google 試算表，名稱 **超市補貨-剔除**（用第一個工作表，唔使自己打欄位）。
 2. 擴充功能 → **Apps Script**。刪除預設程式，將 `gas/Code.gs` 全部貼上，儲存。
@@ -78,6 +79,16 @@ window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/…/exec";
 ```
 
 6. Commit 並 push 到 GitHub Pages 用緊嘅分支。之後改 `Code.gs`，要喺「管理部署」建立**新版本**先會生效。
+7. 部署新版本之後，喺 Apps Script 編輯器跑一次 `seedReclassOverrides_()`。佢會寫入 9 行初始改類（濕紙巾、幼兒小食／補充、洗衣液、成人益生菌）。同一 `oldType|name` 已經有 `active` 列就跳過。清單同 `gas/seed-reclass.json` 一致；網站唔讀呢份 JSON。
+
+### 改類（overrides）
+
+同一個 Web App、同一張試算表。冇名為 `overrides` 嘅工作表就會自動建立。欄位：`oldType | name | newType | newSubtype | at | status | note`。`status` 只得 `active`、`cleared`。主鍵係 `oldType|name`（對應 `data.json` 嘅 `type|name`）。
+
+- **改類**：POST `action` 係 `reclass`，再帶 `type`、`name`、`newType`、`newSubtype`（可空）、可選 `note`。追加一列 `active`。
+- **取消改類**：POST `action` 係 `reclass_clear`，帶 `type`、`name`。追加一列 `cleared`。GET 唔再回傳該鍵。
+- 成功 `reclass` 之後，如果 Script Properties 有 `RECLASS_WEBHOOK_URL`，會 POST JSON `{ event: "reclass", type, name, newType, newSubtype, at }`。屬性留空就唔打。可選 `RECLASS_WEBHOOK_AUTH` 係完整 `Authorization` header 值。Webhook 失敗唔會擋低寫入。
+- 呢個 PR 只更新 Apps Script。頁面仲未呼叫 `reclass`／`reclass_clear`，亦未用 `overrides` 改顯示。
 
 `GROCERY_EXCLUSIONS_API` 留空時，頁面照常顯示補貨清單，「⋯」入面嘅「暫不考慮」同「手動暫緩」會停用。網站請求只帶 `type`、`name`、`note`（時間由試算表寫入），冇 token、冇私人資料。瀏覽器可能用 localStorage 暫存剔除同暫緩，但每次成功讀到 Sheet 都會以試算表覆蓋。
 
@@ -96,6 +107,7 @@ window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/…/exec";
 
 - 舊程式唔識 `callback`，JSONP 後備用唔到（`fetch` 成功就唔使靠 JSONP）
 - 舊程式唔識 `hold`／`unhold`，亦唔會回傳 `held`，「手動暫緩」用唔到
+- 舊程式唔識 `reclass`／`reclass_clear`，亦唔會回傳 `overrides`
 
 ## 本機預覽
 
