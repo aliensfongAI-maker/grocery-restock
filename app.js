@@ -79,6 +79,7 @@
       actionPrefix: "操作：",
       daysValue: "{n}日",
       daysUntil: "還有 {n} 日",
+      deliveringToday: "今日送貨",
       daysLabel: "距今天數",
       restore: "回復",
       unhold: "回復日子",
@@ -174,6 +175,7 @@
       actionPrefix: "Actions: ",
       daysValue: "{n} days",
       daysUntil: "{n} days left",
+      deliveringToday: "Delivering today",
       daysLabel: "Days ago",
       restore: "Restore",
       unhold: "Restore dates",
@@ -269,6 +271,7 @@
       actionPrefix: "Aksi: ",
       daysValue: "{n} hari",
       daysUntil: "{n} hari lagi",
+      deliveringToday: "Dikirim hari ini",
       daysLabel: "Hari lalu",
       restore: "Pulihkan",
       unhold: "Pulihkan tanggal",
@@ -755,17 +758,45 @@
   }
 
   /**
-   * Positive days until delivery, or null when this row is not a future delivery.
-   * Future when daysSince is negative, or lastPurchased is after HKT today.
-   * A negative daysSince supplies N (its absolute value).
+   * Calendar timing for a delivery row. Does not read or write suggest.
+   * "today": lastPurchased is the HKT calendar today.
+   * "until": lastPurchased is after today; n is calendar days (tomorrow = 1).
+   * A negative daysSince does not override a known date. It only fills in
+   * when the date is missing.
+   * Null means a past delivery.
    */
-  function daysUntilDelivery(entry) {
+  function deliveryTiming(entry) {
     if (!entry || typeof entry !== "object") return null;
-    const since = finiteNumber(entry.daysSince);
-    if (since != null && since < 0) return Math.abs(since);
     const ahead = daysAfterHktToday(entry.lastPurchased);
-    if (ahead != null && ahead > 0) return ahead;
+    if (ahead === 0) return { kind: "today" };
+    if (ahead != null && ahead > 0) return { kind: "until", n: ahead };
+    const since = finiteNumber(entry.daysSince);
+    if (since != null && since < 0 && ahead == null) return { kind: "until", n: Math.abs(since) };
     return null;
+  }
+
+  /** Today or a later HKT delivery date. */
+  function isOpenDelivery(entry) {
+    return deliveryTiming(entry) != null;
+  }
+
+  function deliveryPhrase(entry) {
+    if (!entry || entry.manualHold) return "";
+    const timing = deliveryTiming(entry);
+    if (!timing) return "";
+    if (timing.kind === "today") return t("deliveringToday");
+    return t("daysUntil", { n: String(timing.n) });
+  }
+
+  /** Days-ago figure. A stale negative daysSince on a past date uses the calendar. */
+  function pastDaysValue(entry) {
+    const since = finiteNumber(entry && entry.daysSince);
+    if (since != null && since < 0) {
+      const ahead = daysAfterHktToday(entry && entry.lastPurchased);
+      if (ahead != null && ahead < 0) return Math.abs(ahead);
+      return null;
+    }
+    return entry ? entry.daysSince : null;
   }
 
   /** Bought pieces: qty, then quantity, then count. Missing or invalid is 1. */
@@ -825,14 +856,20 @@
 
   /**
    * Display overlay only. Does not rewrite data.json.
-   * A future delivery is shown, sorted, and filtered as 在途 (已下單).
+   * Today and future deliveries show, sort, and filter as 在途 (已下單).
+   * A past delivery with suggest 在途 leaves that bucket and groups as 紀錄.
    * Manual holds stay 暫緩. 水果 / 蔬菜 stay off the suggest axis.
    */
   function applyFutureDeliveryOverlay(item) {
     if (!item || item.manualHold || isHistoryOnly(item)) return item;
-    if (daysUntilDelivery(item) == null) return item;
-    if (item.suggest === "在途") return item;
-    return Object.assign({}, item, { suggest: "在途" });
+    if (isOpenDelivery(item)) {
+      if (item.suggest === "在途") return item;
+      return Object.assign({}, item, { suggest: "在途" });
+    }
+    if (item.suggest === "在途") {
+      return Object.assign({}, item, { suggest: "", pastDelivery: true });
+    }
+    return item;
   }
 
   function displayItem(item) {
@@ -885,9 +922,10 @@
     return sourceItems().filter((item) => {
       const historyOnly = isHistoryOnly(item);
       // data.json suggest is display-only. A manual hold may overlay 暫緩.
-      // A future delivery may overlay 在途. History-only rows stay out of those buckets.
+      // Today and future deliveries may overlay 在途. A past 在途 row does not.
+      // History-only rows and past deliveries stay out of the suggest chips.
       if (state.suggest !== "all") {
-        if (historyOnly) return false;
+        if (historyOnly || item.pastDelivery) return false;
         if ((item.suggest || "") !== state.suggest) return false;
       }
       if (state.type !== "all" && item.type !== state.type) return false;
@@ -951,17 +989,18 @@
   /**
    * Suggest axis for grouping. 水果 / 蔬菜 always use the history bucket,
    * so a missing or leftover suggest cannot file them under 優先 / 暫緩 / 在途.
+   * A past delivery marked 在途 also stays in 紀錄, not 已下單.
    * Other items with a missing suggest stay in 「未有建議」.
    */
   function suggestNode(item) {
-    if (isHistoryOnly(item)) return { kind: "history", value: "" };
+    if (isHistoryOnly(item) || item.pastDelivery) return { kind: "history", value: "" };
     return { kind: "suggest", value: item.suggest || "" };
   }
 
   /**
    * suggest-type: 建議 then 類型. type-suggest: the other way.
-   * Manual holds overlay suggest to 暫緩, and future deliveries overlay 在途, before this runs.
-   * History-only types: 「紀錄」 then type, or type then 「紀錄」.
+   * Manual holds overlay suggest to 暫緩. Today and future deliveries overlay 在途.
+   * Past 在途 rows overlay onto 紀錄. History-only types use 紀錄 then type, or type then 紀錄.
    */
   function nest(items) {
     const suggestFirst = state.groupMode !== "type-suggest";
@@ -1103,15 +1142,11 @@
   }
 
   function daysHtml(entry) {
-    const until = daysUntilDelivery(entry);
-    if (until != null) {
-      return (
-        '<span class="item-days">' +
-        escapeHtml(t("daysUntil", { n: String(until) })) +
-        "</span>"
-      );
+    const phrase = deliveryPhrase(entry);
+    if (phrase) {
+      return '<span class="item-days">' + escapeHtml(phrase) + "</span>";
     }
-    const text = formatDaysSince(entry && entry.daysSince);
+    const text = formatDaysSince(pastDaysValue(entry));
     const shown = text === "—" ? "—" : t("daysValue", { n: text });
     return (
       '<span class="item-days"><span class="sr-only">' +
@@ -1123,19 +1158,15 @@
   }
 
   function daysMetaHtml(entry) {
-    const until = daysUntilDelivery(entry);
-    if (until != null) {
-      return (
-        '<div><span class="meta-value">' +
-        escapeHtml(t("daysUntil", { n: String(until) })) +
-        "</span></div>"
-      );
+    const phrase = deliveryPhrase(entry);
+    if (phrase) {
+      return '<div><span class="meta-value">' + escapeHtml(phrase) + "</span></div>";
     }
     return (
       '<div><span class="meta-label">' +
       escapeHtml(t("daysLabel")) +
       '</span><span class="meta-value">' +
-      escapeHtml(formatDaysSince(entry && entry.daysSince)) +
+      escapeHtml(formatDaysSince(pastDaysValue(entry))) +
       "</span></div>"
     );
   }

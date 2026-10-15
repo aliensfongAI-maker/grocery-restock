@@ -1142,7 +1142,7 @@ body {
 @media (min-width: 900px) {
   :root {
     --page-max: 1200px;
-    --wide-cols: minmax(0, 1fr) 7rem max-content max-content;
+    --wide-cols: minmax(0, 1fr) 10rem max-content max-content;
   }
 
   .site-header {
@@ -1273,11 +1273,11 @@ body {
 
   /* 水果 / 蔬菜: name + days only. No suggest or action column. */
   .item-list.is-history {
-    --wide-cols: minmax(0, 1fr) 7rem;
+    --wide-cols: minmax(0, 1fr) 10rem;
   }
 
   /* Read-only page: name, days, suggest. No action column. */
   .item-list.is-readonly {
-    --wide-cols: minmax(0, 1fr) 7rem max-content;
+    --wide-cols: minmax(0, 1fr) 10rem max-content;
   }
 }
