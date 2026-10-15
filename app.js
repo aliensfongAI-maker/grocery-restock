@@ -79,6 +79,14 @@
       holdHelp: "用嚟記低已經補咗貨、但 data.json 未更新。呢項會留喺補貨清單，唔會隱藏。建議會顯示做「未使買住」，上次送貨同距今天數由暫緩當日計。想恢復 data.json 嘅日子同建議，撳「回復日子」。",
       holdPlaceholder: "例如：今日超市買咗",
       holdConfirm: "確認暫緩",
+      reclass: "改類",
+      reclassHelp: "改呢項嘅類型同子類。寫入 Google Sheet，唔改呢份 data.json。Gmail 之後會再整份資料。",
+      reclassTypeLabel: "類型",
+      reclassSubtypeLabel: "子類（可揀建議，亦可自己打）",
+      reclassConfirm: "確認改類",
+      reclassClear: "取消改類",
+      reclassPlaceholder: "揀現有子類，或自己打",
+      reclassFlag: "改類已記下，等 data.json 更新",
       updatedPrefix: "上次更新：",
       updatedFailed: "上次更新：載入失敗",
       noSuggest: "未有建議",
@@ -118,11 +126,15 @@
       doneRestore: "已回復「{name}」到補貨清單。",
       doneHold: "已手動暫緩「{name}」。仍然留喺補貨清單。",
       doneUnhold: "已回復「{name}」嘅日子同建議。",
+      doneReclass: "已改類「{name}」。Gmail 會再整份 data.json。",
+      doneReclassClear: "已取消「{name}」嘅改類。Gmail 會再整份 data.json。",
       doneGeneric: "已更新。",
       failExclude: "剔除失敗：",
       failRestore: "回復失敗：",
       failHold: "手動暫緩失敗：",
       failUnhold: "回復日子失敗：",
+      failReclass: "改類失敗：",
+      failReclassClear: "取消改類失敗：",
       failGeneric: "更新失敗：",
       tryAgain: "請再試",
       unknownError: "未知錯誤",
@@ -175,6 +187,14 @@
       holdHelp: "Use this when you already restocked, but data.json has not updated. The item stays on the restock list and is not hidden. The suggestion shows as “Not needed yet”, and last delivery and days ago count from the hold date. To bring back the dates and suggestion from data.json, choose “Restore dates”.",
       holdPlaceholder: "e.g. bought at the supermarket today",
       holdConfirm: "Confirm hold",
+      reclass: "Reclassify",
+      reclassHelp: "Change this item’s type and subtype. This is stored in the Google Sheet and does not edit data.json. Gmail will rebuild the file afterwards.",
+      reclassTypeLabel: "Type",
+      reclassSubtypeLabel: "Subtype (pick a suggestion or type your own)",
+      reclassConfirm: "Confirm reclass",
+      reclassClear: "Clear reclass",
+      reclassPlaceholder: "Pick an existing subtype, or type one",
+      reclassFlag: "Reclass saved, waiting for data.json",
       updatedPrefix: "Updated: ",
       updatedFailed: "Updated: failed to load",
       noSuggest: "No suggestion",
@@ -214,11 +234,15 @@
       doneRestore: "Restored “{name}” to the restock list.",
       doneHold: "Set a manual hold on “{name}”. It stays on the restock list.",
       doneUnhold: "Restored the dates and suggestion for “{name}”.",
+      doneReclass: "Reclassified “{name}”. Gmail will rebuild data.json.",
+      doneReclassClear: "Cleared the reclass for “{name}”. Gmail will rebuild data.json.",
       doneGeneric: "Updated.",
       failExclude: "Could not skip: ",
       failRestore: "Could not restore: ",
       failHold: "Could not set a manual hold: ",
       failUnhold: "Could not restore dates: ",
+      failReclass: "Could not reclassify: ",
+      failReclassClear: "Could not clear reclass: ",
       failGeneric: "Update failed: ",
       tryAgain: "Please try again",
       unknownError: "Unknown error",
@@ -271,6 +295,14 @@
       holdHelp: "Pakai ini kalau barang sudah diisi ulang, tetapi data.json belum diperbarui. Item tetap di daftar restok dan tidak disembunyikan. Saran ditampilkan sebagai “Belum perlu beli”, lalu pengiriman terakhir dan hari sejak itu dihitung dari tanggal tunda. Untuk mengembalikan tanggal dan saran dari data.json, pilih “Pulihkan tanggal”.",
       holdPlaceholder: "misalnya: beli di supermarket hari ini",
       holdConfirm: "Konfirmasi tunda",
+      reclass: "Ubah jenis",
+      reclassHelp: "Ubah jenis dan subjenis item ini. Disimpan di Google Sheet, data.json tidak diubah. Gmail akan menyusun ulang berkasnya nanti.",
+      reclassTypeLabel: "Jenis",
+      reclassSubtypeLabel: "Subjenis (pilih saran atau ketik sendiri)",
+      reclassConfirm: "Konfirmasi ubah jenis",
+      reclassClear: "Batalkan ubah jenis",
+      reclassPlaceholder: "Pilih subjenis yang ada, atau ketik sendiri",
+      reclassFlag: "Ubah jenis tersimpan, menunggu data.json",
       updatedPrefix: "Diperbarui: ",
       updatedFailed: "Diperbarui: gagal memuat",
       noSuggest: "Tanpa saran",
@@ -310,11 +342,15 @@
       doneRestore: "“{name}” dipulihkan ke daftar restok.",
       doneHold: "“{name}” ditunda manual. Tetap ada di daftar restok.",
       doneUnhold: "Tanggal dan saran “{name}” dipulihkan.",
+      doneReclass: "“{name}” diubah jenisnya. Gmail akan menyusun ulang data.json.",
+      doneReclassClear: "Ubah jenis “{name}” dibatalkan. Gmail akan menyusun ulang data.json.",
       doneGeneric: "Diperbarui.",
       failExclude: "Gagal melewati: ",
       failRestore: "Gagal memulihkan: ",
       failHold: "Gagal menunda manual: ",
       failUnhold: "Gagal memulihkan tanggal: ",
+      failReclass: "Gagal mengubah jenis: ",
+      failReclassClear: "Gagal membatalkan ubah jenis: ",
       failGeneric: "Pembaruan gagal: ",
       tryAgain: "Silakan coba lagi",
       unknownError: "Kesalahan tidak diketahui",
@@ -359,6 +395,7 @@
     openProducts: new Set(),
     exclusions: [],
     holds: [],
+    overrides: [],
     apiUrl: "",
     pendingKey: "",
     pendingAction: "",
@@ -459,6 +496,15 @@
     holdDialogItem: document.getElementById("holdDialogItem"),
     holdNote: document.getElementById("holdNote"),
     holdCancel: document.getElementById("holdCancel"),
+    reclassDialog: document.getElementById("reclassDialog"),
+    reclassForm: document.getElementById("reclassForm"),
+    reclassDialogItem: document.getElementById("reclassDialogItem"),
+    reclassType: document.getElementById("reclassType"),
+    reclassSubtype: document.getElementById("reclassSubtype"),
+    reclassSubtypeList: document.getElementById("reclassSubtypeList"),
+    reclassNote: document.getElementById("reclassNote"),
+    reclassCancel: document.getElementById("reclassCancel"),
+    reclassClear: document.getElementById("reclassClear"),
   };
 
   function applyStaticI18n() {
@@ -525,6 +571,10 @@
       }
       if (els.holdDialog && els.holdDialog.open && els.holdDialogItem) {
         els.holdDialogItem.textContent = text;
+      }
+      if (els.reclassDialog && els.reclassDialog.open && els.reclassDialogItem) {
+        els.reclassDialogItem.textContent = text;
+        fillReclassTypes(els.reclassType ? els.reclassType.value : "");
       }
     }
     refreshUpdatedAt();
@@ -703,15 +753,43 @@
     return out;
   }
 
-  function applyFromSheet(items, held) {
+  /** Active reclass rows only. Key is oldType|name from the Sheet. */
+  function normalizeOverrides(items) {
+    if (!Array.isArray(items)) return [];
+    const best = new Map();
+    for (const raw of items) {
+      if (!raw || typeof raw !== "object") continue;
+      const oldType = String(raw.oldType || raw.type || "").trim();
+      const name = String(raw.name || "").trim();
+      if (!oldType || !name) continue;
+      if (raw.status && raw.status !== "active") continue;
+      const row = {
+        oldType: oldType,
+        name: name,
+        newType: String(raw.newType || "").trim(),
+        newSubtype: String(raw.newSubtype || "").trim(),
+        at: String(raw.at || ""),
+        note: String(raw.note || ""),
+        status: "active",
+      };
+      const key = exclusionKey(oldType, name);
+      const prev = best.get(key);
+      if (!prev || row.at >= prev.at) best.set(key, row);
+    }
+    return Array.from(best.values());
+  }
+
+  function applyFromSheet(items, held, overrides) {
     state.exclusions = normalizeExclusions(items);
     if (Array.isArray(held)) state.holds = normalizeHolds(held);
+    if (Array.isArray(overrides)) state.overrides = normalizeOverrides(overrides);
     try {
       localStorage.setItem(
         CACHE_KEY,
         JSON.stringify({
           items: state.exclusions,
           held: state.holds,
+          overrides: state.overrides,
           savedAt: new Date().toISOString(),
         })
       );
@@ -729,6 +807,7 @@
       return {
         items: normalizeExclusions(parsed.items),
         held: normalizeHolds(parsed.held),
+        overrides: normalizeOverrides(parsed.overrides),
       };
     } catch (_) {
       return null;
@@ -912,8 +991,41 @@
     return item;
   }
 
+  function overrideRecord(type, name) {
+    const key = exclusionKey(type, name);
+    for (const row of state.overrides) {
+      if (exclusionKey(row.oldType, row.name) === key) return row;
+    }
+    return null;
+  }
+
+  /**
+   * Display-only. data.json stays put until Gmail rebuilds it.
+   * The read-only page does not apply this, so view.html keeps the file's types.
+   */
+  function applyReclassOverlay(item) {
+    if (READ_ONLY || !item) return item;
+    const row = overrideRecord(item.type, item.name);
+    if (!row || !row.newType) return item;
+    return Object.assign({}, item, {
+      sourceType: item.type,
+      sourceName: item.name,
+      type: row.newType,
+      subtype: row.newSubtype,
+      reclassPending: true,
+    });
+  }
+
   function displayItem(item) {
-    return applyFutureDeliveryOverlay(applyHoldOverlay(item));
+    return applyReclassOverlay(applyFutureDeliveryOverlay(applyHoldOverlay(item)));
+  }
+
+  function sheetTypeOf(item) {
+    return item && item.sourceType ? item.sourceType : item.type;
+  }
+
+  function sheetNameOf(item) {
+    return item && item.sourceName ? item.sourceName : item.name;
   }
 
   function excludedDisplayItems() {
@@ -1120,7 +1232,9 @@
   }
 
   function sheetButtonHtml(item, action, label, className, asMenuItem) {
-    const busy = state.pendingKey === keyOf(item);
+    const type = sheetTypeOf(item);
+    const name = sheetNameOf(item);
+    const busy = state.pendingKey === exclusionKey(type, name);
     const pending = busy && state.pendingAction === action;
     const shown = pending ? t("processing") : label;
     const enabled = exclusionsEnabled() && !busy;
@@ -1130,9 +1244,9 @@
       '" data-action="' +
       action +
       '" data-type="' +
-      escapeHtml(item.type) +
+      escapeHtml(type) +
       '" data-name="' +
-      escapeHtml(item.name) +
+      escapeHtml(name) +
       '"' +
       (enabled ? "" : " disabled") +
       (exclusionsEnabled() ? "" : ' title="' + escapeHtml(t("noApiTitle")) + '"') +
@@ -1147,7 +1261,7 @@
 
   function rowMenuHtml(item) {
     const menuId = domId("menu", keyOf(item));
-    const pending = state.pendingKey === keyOf(item);
+    const pending = state.pendingKey === exclusionKey(sheetTypeOf(item), sheetNameOf(item));
     const label = (pending ? t("processingPrefix") : t("actionPrefix")) + catalogLabel("name", item.name);
     return (
       '<div class="row-menu">' +
@@ -1239,7 +1353,12 @@
     const hold = item.manualHold
       ? sheetButtonHtml(item, "unhold", t("unhold"), "action-unhold", asMenuItem)
       : sheetButtonHtml(item, "hold", t("hold"), "action-hold", asMenuItem);
-    return hold + exclude;
+    const reclass = sheetButtonHtml(item, "reclass", t("reclass"), "action-reclass", asMenuItem);
+    const pending = overrideRecord(sheetTypeOf(item), sheetNameOf(item));
+    const clear = pending
+      ? sheetButtonHtml(item, "reclass_clear", t("reclassClear"), "action-reclass-clear", asMenuItem)
+      : "";
+    return hold + reclass + clear + exclude;
   }
 
   function holdMetaHtml(item) {
@@ -1248,6 +1367,11 @@
       ? '<p class="item-note">' + escapeHtml(t("holdNotePrefix") + item.holdNote) + "</p>"
       : "";
     return '<p class="hold-flag">' + escapeHtml(t("holdFlag")) + "</p>" + note;
+  }
+
+  function reclassMetaHtml(item) {
+    if (READ_ONLY || !item.reclassPending) return "";
+    return '<p class="reclass-flag">' + escapeHtml(t("reclassFlag")) + "</p>";
   }
 
   function exclusionMetaHtml(item) {
@@ -1427,6 +1551,7 @@
       (isOpen ? " is-open" : "") +
       (historyOnly ? " is-history" : "") +
       (!historyOnly && item.manualHold ? " is-held" : "") +
+      (item.reclassPending ? " is-reclass" : "") +
       '" data-key="' +
       escapeHtml(key) +
       '">' +
@@ -1440,6 +1565,7 @@
       when +
       note +
       holdMetaHtml(item) +
+      reclassMetaHtml(item) +
       exclusionMetaHtml(item) +
       empty +
       brandList +
@@ -1540,6 +1666,8 @@
         restore: "doneRestore",
         hold: "doneHold",
         unhold: "doneUnhold",
+        reclass: "doneReclass",
+        reclass_clear: "doneReclassClear",
       }[entry.action];
       return key ? t(key, { name: catalogLabel("name", entry.name) }) : t("doneGeneric");
     }
@@ -1549,6 +1677,8 @@
         restore: "failRestore",
         hold: "failHold",
         unhold: "failUnhold",
+        reclass: "failReclass",
+        reclass_clear: "failReclassClear",
       }[entry.action];
       const detail = entry.err ? shortReason(entry.err) : t("tryAgain");
       return t(key || "failGeneric") + detail;
@@ -1737,6 +1867,73 @@
     }
   }
 
+  function rawItem(type, name) {
+    for (const item of state.items) {
+      if (item.type === type && item.name === name) return item;
+    }
+    return null;
+  }
+
+  function fillReclassTypes(selected) {
+    const sel = els.reclassType;
+    if (!sel) return;
+    const current = selected || sel.value;
+    sel.innerHTML = "";
+    for (const typeName of TYPE_ORDER) {
+      const opt = document.createElement("option");
+      opt.value = typeName;
+      opt.textContent = catalogLabel("type", typeName);
+      sel.appendChild(opt);
+    }
+    if (TYPE_ORDER.indexOf(current) !== -1) sel.value = current;
+  }
+
+  function fillReclassSubtypes(typeName) {
+    const list = els.reclassSubtypeList;
+    if (!list) return;
+    const names = [];
+    const seen = new Set();
+    for (const item of state.items) {
+      if (typeName && item.type !== typeName) continue;
+      const sub = item.subtype == null ? "" : String(item.subtype).trim();
+      if (!sub || seen.has(sub)) continue;
+      seen.add(sub);
+      names.push(sub);
+    }
+    names.sort((a, b) => a.localeCompare(b, "zh-HK"));
+    list.innerHTML = "";
+    for (const sub of names) {
+      const opt = document.createElement("option");
+      opt.value = sub;
+      opt.label = catalogLabel("subtype", sub);
+      list.appendChild(opt);
+    }
+  }
+
+  function openReclassDialog(type, name, trigger) {
+    if (READ_ONLY || !exclusionsEnabled() || !els.reclassDialog || state.pendingKey || isHistoryOnlyType(type)) return;
+    const raw = rawItem(type, name);
+    const override = overrideRecord(type, name);
+    const selectedType = (override && override.newType) || (raw && raw.type) || type;
+    const selectedSubtype = override
+      ? override.newSubtype || ""
+      : raw && raw.subtype
+        ? String(raw.subtype)
+        : "";
+    state.dialogItem = { type: type, name: name, kind: "reclass" };
+    state.dialogTrigger = trigger || null;
+    els.reclassDialogItem.textContent = dialogItemText(type, name);
+    fillReclassTypes(selectedType);
+    fillReclassSubtypes(els.reclassType.value);
+    els.reclassSubtype.value = selectedSubtype;
+    els.reclassNote.value = "";
+    if (els.reclassClear) els.reclassClear.hidden = !override;
+    if (typeof els.reclassDialog.showModal === "function") {
+      els.reclassDialog.showModal();
+      els.reclassType.focus();
+    }
+  }
+
   function openHoldDialog(type, name, trigger) {
     if (READ_ONLY || !exclusionsEnabled() || state.pendingKey || isHistoryOnlyType(type)) return;
     state.dialogItem = { type: type, name: name, kind: "hold" };
@@ -1789,7 +1986,7 @@
     });
   }
 
-  async function postExclusion(action, type, name, note) {
+  async function postExclusion(action, type, name, note, fields) {
     if (READ_ONLY || !exclusionsEnabled() || isHistoryOnlyType(type)) return;
     const key = exclusionKey(type, name);
     if (state.pendingKey) return;
@@ -1801,6 +1998,12 @@
     try {
       const payload = { action: action, type: type, name: name };
       if (action === "exclude" || action === "hold") payload.note = String(note || "").trim();
+      if (action === "reclass" && fields) {
+        payload.newType = String(fields.newType || "").trim();
+        payload.newSubtype = String(fields.newSubtype == null ? "" : fields.newSubtype).trim();
+        const extraNote = String(fields.note || "").trim();
+        if (extraNote) payload.note = extraNote;
+      }
       // POST stays a simple request: text/plain JSON body, no preflight.
       // Apps Script does not answer CORS preflight OPTIONS.
       const data = await fetchJson(state.apiUrl, {
@@ -1809,7 +2012,11 @@
         body: JSON.stringify(payload),
       });
       if (Array.isArray(data.items)) {
-        applyFromSheet(data.items, Array.isArray(data.held) ? data.held : undefined);
+        applyFromSheet(
+          data.items,
+          Array.isArray(data.held) ? data.held : undefined,
+          Array.isArray(data.overrides) ? data.overrides : undefined
+        );
         state.baseNotice = null;
         state.baseLevel = "";
       }
@@ -1896,7 +2103,13 @@
   }
 
   function onRowMenuKeydown(e) {
-    if ((els.excludeDialog && els.excludeDialog.open) || (els.holdDialog && els.holdDialog.open)) return;
+    if (
+      (els.excludeDialog && els.excludeDialog.open) ||
+      (els.holdDialog && els.holdDialog.open) ||
+      (els.reclassDialog && els.reclassDialog.open)
+    ) {
+      return;
+    }
     const openMenu = els.sections.querySelector(".row-menu.is-open");
     const inMenu = e.target.closest ? e.target.closest(".row-menu") : null;
 
@@ -1973,6 +2186,8 @@
     if (action === "restore") postExclusion("restore", type, name);
     if (action === "hold") openHoldDialog(type, name, focus);
     if (action === "unhold") postExclusion("unhold", type, name);
+    if (action === "reclass") openReclassDialog(type, name, focus);
+    if (action === "reclass_clear") postExclusion("reclass_clear", type, name);
   }
 
   function bindEvents() {
@@ -2108,6 +2323,52 @@
       });
     }
 
+    if (els.reclassCancel && els.reclassDialog && els.reclassForm && els.reclassType) {
+      els.reclassType.addEventListener("change", () => {
+        fillReclassSubtypes(els.reclassType.value);
+      });
+
+      els.reclassCancel.addEventListener("click", () => {
+        state.dialogItem = null;
+        els.reclassDialog.close();
+      });
+
+      els.reclassClear.addEventListener("click", () => {
+        const item = state.dialogItem;
+        state.dialogItem = null;
+        els.reclassDialog.close();
+        if (!item || item.kind !== "reclass") return;
+        postExclusion("reclass_clear", item.type, item.name);
+      });
+
+      els.reclassForm.addEventListener("submit", () => {
+        const item = state.dialogItem;
+        const newType = els.reclassType.value;
+        const newSubtype = els.reclassSubtype.value.trim();
+        const note = els.reclassNote.value;
+        state.dialogItem = null;
+        if (!item || item.kind !== "reclass" || !newType) return;
+        postExclusion("reclass", item.type, item.name, null, {
+          newType: newType,
+          newSubtype: newSubtype,
+          note: note,
+        });
+      });
+
+      els.reclassDialog.addEventListener("close", () => {
+        const trigger = state.dialogTrigger;
+        state.dialogTrigger = null;
+        if (trigger && typeof trigger.focus === "function") trigger.focus();
+      });
+
+      els.reclassDialog.addEventListener("click", (e) => {
+        if (e.target === els.reclassDialog) {
+          state.dialogItem = null;
+          els.reclassDialog.close();
+        }
+      });
+    }
+
     document.addEventListener("click", (e) => {
       if (e.target.closest(".row-menu")) return;
       closeRowMenus(false);
@@ -2182,7 +2443,11 @@
     if (!data || typeof data !== "object") throw appError("errBadFormat");
     if (data.error && !Array.isArray(data.items)) throw new Error(data.error);
     const hasHeld = Array.isArray(data.held);
-    applyFromSheet(Array.isArray(data.items) ? data.items : [], hasHeld ? data.held : undefined);
+    applyFromSheet(
+      Array.isArray(data.items) ? data.items : [],
+      hasHeld ? data.held : undefined,
+      Array.isArray(data.overrides) ? data.overrides : undefined
+    );
     if (data.error) {
       state.baseNotice = { kind: "text", text: String(data.error) };
       state.baseLevel = "error";
@@ -2265,12 +2530,14 @@
     if (cached) {
       state.exclusions = cached.items;
       state.holds = cached.held;
+      state.overrides = cached.overrides || [];
       state.baseNotice = { kind: "cache", err: err, jsonpErr: jsonpErr };
       state.baseLevel = "warn";
       return;
     }
     state.exclusions = [];
     state.holds = [];
+    state.overrides = [];
     state.baseNotice = { kind: "failRead", err: err, jsonpErr: jsonpErr };
     state.baseLevel = "error";
   }
@@ -2283,6 +2550,7 @@
     if (!url) {
       state.exclusions = [];
       state.holds = [];
+      state.overrides = [];
       state.baseNotice = { kind: "noApi" };
       state.baseLevel = "warn";
       state.loadingExclusions = false;
@@ -2329,7 +2597,7 @@
       refreshTypeFilter();
 
       els.errorBox.hidden = true;
-      // Read-only still hides excluded rows (type|name). It does not offer skip or hold actions.
+      // Read-only still hides excluded rows (type|name). It does not offer skip, hold, or reclass.
       await loadExclusions();
       refreshTypeFilter();
       render();
