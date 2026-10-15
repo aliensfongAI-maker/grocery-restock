@@ -2312,7 +2312,8 @@
       refreshTypeFilter();
 
       els.errorBox.hidden = true;
-      if (!READ_ONLY) await loadExclusions();
+      // Read-only still hides excluded rows (type|name). It does not offer skip or hold actions.
+      await loadExclusions();
       refreshTypeFilter();
       render();
     } catch (err) {
