@@ -722,17 +722,39 @@
     }
   }
 
+  /**
+   * Hong Kong calendar day as YYYY-MM-DD.
+   * Parts are read by type. en-CA `.format()` is not YYYY-MM-DD in every browser,
+   * and a failed parse used to let daysSince -1 show as 「還有 1 日」.
+   */
   function hktYmd(date) {
     try {
-      return new Intl.DateTimeFormat("en-CA", {
+      const parts = new Intl.DateTimeFormat("en-US", {
         timeZone: "Asia/Hong_Kong",
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
-      }).format(date);
+      }).formatToParts(date);
+      const get = (type) => {
+        const part = parts.find((p) => p.type === type);
+        return part ? String(part.value) : "";
+      };
+      const year = get("year");
+      let month = get("month");
+      let day = get("day");
+      if (!/^\d{4}$/.test(year) || !/^\d{1,2}$/.test(month) || !/^\d{1,2}$/.test(day)) return "";
+      if (month.length === 1) month = "0" + month;
+      if (day.length === 1) day = "0" + day;
+      return year + "-" + month + "-" + day;
     } catch (_) {
       return "";
     }
+  }
+
+  function calendarYmd(value) {
+    if (value == null) return "";
+    const text = String(value).trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : "";
   }
 
   function finiteNumber(value) {
@@ -747,31 +769,36 @@
     return null;
   }
 
-  /** Calendar days from HKT today to ymd. Negative means that date is in the past. */
+  /** Calendar days from HKT today to ymd. 0 is today. Negative means that date is in the past. */
   function daysAfterHktToday(ymd) {
-    if (typeof ymd !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return null;
+    const day = calendarYmd(ymd);
     const today = hktYmd(new Date());
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(today)) return null;
+    if (!day || !/^\d{4}-\d{2}-\d{2}$/.test(today)) return null;
+    if (day === today) return 0;
     const start = Date.UTC(+today.slice(0, 4), +today.slice(5, 7) - 1, +today.slice(8, 10));
-    const end = Date.UTC(+ymd.slice(0, 4), +ymd.slice(5, 7) - 1, +ymd.slice(8, 10));
+    const end = Date.UTC(+day.slice(0, 4), +day.slice(5, 7) - 1, +day.slice(8, 10));
     return Math.round((end - start) / 86400000);
   }
 
   /**
    * Calendar timing for a delivery row. Does not read or write suggest.
-   * "today": lastPurchased is the HKT calendar today.
-   * "until": lastPurchased is after today; n is calendar days (tomorrow = 1).
-   * A negative daysSince does not override a known date. It only fills in
-   * when the date is missing.
-   * Null means a past delivery.
+   * A known lastPurchased date wins over daysSince, including daysSince -1.
+   * "today": that date is the HKT calendar today.
+   * "until": that date is after today; n is calendar days (tomorrow = 1).
+   * daysSince is used only when the date is missing.
+   * Null means a past delivery, or a known date we will not guess from daysSince.
    */
   function deliveryTiming(entry) {
     if (!entry || typeof entry !== "object") return null;
-    const ahead = daysAfterHktToday(entry.lastPurchased);
-    if (ahead === 0) return { kind: "today" };
-    if (ahead != null && ahead > 0) return { kind: "until", n: ahead };
+    const day = calendarYmd(entry.lastPurchased);
+    if (day) {
+      const ahead = daysAfterHktToday(day);
+      if (ahead === 0) return { kind: "today" };
+      if (ahead != null && ahead > 0) return { kind: "until", n: ahead };
+      return null;
+    }
     const since = finiteNumber(entry.daysSince);
-    if (since != null && since < 0 && ahead == null) return { kind: "until", n: Math.abs(since) };
+    if (since != null && since < 0) return { kind: "until", n: Math.abs(since) };
     return null;
   }
 
@@ -1229,6 +1256,16 @@
     return Array.isArray(item.brands) ? item.brands : [];
   }
 
+  /**
+   * Open-delivery rows (已下單) expand to today/future brands only.
+   * Past brands stay in data.json and still show on rows that are not open deliveries.
+   */
+  function shownBrands(item) {
+    const brands = brandsOf(item);
+    if (!item || item.manualHold || isHistoryOnly(item) || !isOpenDelivery(item)) return brands;
+    return brands.filter((entry) => isOpenDelivery(entry));
+  }
+
   function domId(prefix, key) {
     return prefix + "-" + encodeURIComponent(key).replace(/%/g, "");
   }
@@ -1314,7 +1351,7 @@
   }
 
   function cardHtml(item) {
-    const brands = brandsOf(item);
+    const brands = shownBrands(item);
     const canExpand = brands.length > 0;
     const key = keyOf(item);
     const isOpen = canExpand && state.openProducts.has(key);
@@ -1345,7 +1382,10 @@
         nameAndPack +
         "</button>"
       : '<div class="product-title-static">' + nameAndPack + "</div>";
-    const empty = canExpand ? "" : '<p class="brand-empty">' + escapeHtml(t("noBrandDetail")) + "</p>";
+    const empty =
+      canExpand || brandsOf(item).length > 0
+        ? ""
+        : '<p class="brand-empty">' + escapeHtml(t("noBrandDetail")) + "</p>";
     const brandList = canExpand
       ? '<ul class="brand-list" id="' +
         panelId +
