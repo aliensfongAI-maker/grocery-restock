@@ -2,21 +2,32 @@
   "use strict";
 
   const SUGGEST_ORDER = { 在途: 0, 優先: 1, 暫緩: 2 };
-  /** Purchase history only. Exact `type` match; 鮮果蔬 stays a normal suggestion type. */
+  /** Purchase history only. Exact `type` match. */
   const HISTORY_ONLY_TYPES = new Set(["水果", "蔬菜"]);
   /** Sits after 在途 / 優先 / 暫緩 and before an empty 「未有建議」 bucket. */
   const HISTORY_GROUP_RANK = 3;
+  /**
+   * Order for types that current data.json uses. Names absent from the file
+   * are not listed. A type that appears in data but not here sorts after these.
+   */
   const TYPE_ORDER = [
-    "用紙／清潔",
-    "嬰兒／幼兒",
-    "飲品／即食",
-    "鮮果蔬",
+    "紙品／即棄品",
+    "家居清潔用品",
+    "嬰兒用品／食品",
+    "飲品／即沖飲品",
+    "即食麵／麵／意粉",
+    "湯／熟食／醃製食品",
+    "早餐／果醬",
+    "米／食油",
+    "罐頭／乾貨",
+    "零食／甜品",
+    "酒類",
     "水果",
     "蔬菜",
-    "急凍蛋白",
-    "乾貨／調味",
-    "個人護理",
-    "口罩／防疫",
+    "冷凍／急凍食品",
+    "鹽／糖／生粉",
+    "豉油／生抽／頭抽／蒸魚豉油／蠔油",
+    "個人護理用品",
   ];
   const CACHE_KEY = "grocery-exclusions-v1";
   const GROUP_MODE_KEY = "grocery-restock-group-mode";
@@ -625,7 +636,9 @@
 
   function uniqueTypes(items) {
     const set = new Set(items.map((i) => i.type).filter(Boolean));
-    return Array.from(set).sort((a, b) => typeSortKey(a) - typeSortKey(b));
+    return Array.from(set).sort(
+      (a, b) => typeSortKey(a) - typeSortKey(b) || String(a).localeCompare(String(b), "zh-HK")
+    );
   }
 
   function exclusionKey(type, name) {
@@ -1629,10 +1642,8 @@
   }
 
   function refreshTypeFilter() {
-    const types = uniqueTypes(
-      state.items.concat(state.exclusions.map((ex) => ({ type: ex.type })))
-    );
-    populateTypeFilter(types);
+    // Options follow data.json only. Sheet rows can still name retired types.
+    populateTypeFilter(uniqueTypes(state.items));
   }
 
   function setSuggestFilter(value) {
