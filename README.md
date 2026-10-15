@@ -1,6 +1,6 @@
-# 超市補貨
+# 方氏超市補貨
 
-公開靜態頁：睇補貨歷史同建議（唔下單）。`index.html` 可以暫不考慮同手動暫緩。`view.html` 只供睇。顯示名「超市補貨」。粵語／繁中、英文、印尼文、香港時間（HKT）、手機優先。
+公開靜態頁：依過住網購單歷史建議。`index.html` 可以暫不考慮同手動暫緩。`view.html` 只供睇。顯示名「方氏超市補貨」。粵語／繁中、英文、印尼文、香港時間（HKT）、手機優先。
 
 ## 檔案
 
@@ -43,7 +43,7 @@
 
 ## 唯讀頁
 
-`view.html` 同 `index.html` 讀同一份 `data.json` 同 `i18n-data.json`。保留語言、分組、搜尋、類型篩選、兩層摺疊同牌子展開。頁面喺載入 `app.js` 之前設 `window.GROCERY_READ_ONLY = true`，所以唔顯示「⋯」、手動暫緩、暫不考慮、回復、暫緩備註，亦唔讀寫 Google Sheet。文件標題同 `h1` 仍然係「超市補貨」。頁內冇連去 `/` 或 `index.html`。
+`view.html` 同 `index.html` 讀同一份 `data.json` 同 `i18n-data.json`。保留語言、分組、搜尋、類型篩選、兩層摺疊同牌子展開。頁面喺載入 `app.js` 之前設 `window.GROCERY_READ_ONLY = true`，所以唔顯示「⋯」、手動暫緩、暫不考慮、回復、暫緩備註，亦唔讀寫 Google Sheet。文件標題同 `h1` 仍然係「方氏超市補貨」。頁內冇連去 `/` 或 `index.html`。
 
 ## GitHub Pages
 

@@ -45,9 +45,9 @@
    */
   const I18N = {
     zh: {
-      appTitle: "超市補貨",
-      metaDescription: "超市補貨 — 睇歷史同補貨建議（唔下單）",
-      tagline: "睇歷史 · 睇建議 · 唔下單",
+      appTitle: "方氏超市補貨",
+      metaDescription: "方氏超市補貨 — 依過住網購單歷史建議",
+      tagline: "依過住網購單歷史建議",
       loading: "載入緊…",
       langLabel: "語言",
       toolbarLabel: "搜尋同篩選",
@@ -153,9 +153,9 @@
       holdNoteDefault: "已從非網購渠道補貨",
     },
     en: {
-      appTitle: "Grocery restock",
-      metaDescription: "Grocery restock — history and restock suggestions (no ordering)",
-      tagline: "History · suggestions · no ordering",
+      appTitle: "Fong's grocery restock",
+      metaDescription: "Fong's grocery restock — suggestions from past online-order history",
+      tagline: "Suggestions from past online-order history",
       loading: "Loading…",
       langLabel: "Language",
       toolbarLabel: "Search and filters",
@@ -261,9 +261,9 @@
       holdNoteDefault: "Restocked outside online shopping",
     },
     id: {
-      appTitle: "Restok supermarket",
-      metaDescription: "Restok supermarket — riwayat dan saran isi ulang (tanpa memesan)",
-      tagline: "Riwayat · saran · tanpa memesan",
+      appTitle: "Restok supermarket Fong",
+      metaDescription: "Restok supermarket Fong — saran dari riwayat pesanan daring sebelumnya",
+      tagline: "Saran dari riwayat pesanan daring sebelumnya",
       loading: "Memuat…",
       langLabel: "Bahasa",
       toolbarLabel: "Cari dan filter",
