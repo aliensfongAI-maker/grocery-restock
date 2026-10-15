@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T12:52:27+08:00",
+  "updatedAt": "2026-10-15T13:57:12+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -637,7 +637,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 7,
       "suggest": "暫緩",
-      "note": "約每 142 日一件 · 預計 276 日要補貨",
+      "note": "約每 114 日一件 · 預計 220 日要補貨",
       "image": "https://medias.pns.hk/publishing/PNSHK-155996-front-thumbnail.jpg?version=1772126425",
       "imageAlt": "嬰兒洗衣液（橄欖花香味）樽裝 買2慳$30 VIP26:$400-$30",
       "brands": [
@@ -679,6 +679,18 @@
         },
         {
           "brand": null,
+          "lastPurchased": "2025-04-24",
+          "daysSince": 539,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/0b62/4e65/d5fc/zKkPdKDVrk20260410184512_1200.jpg",
+          "imageAlt": "天然草本嬰兒洗衣液(橄欖花香味) 4包2.1L 補充裝(原箱)",
+          "link": "https://www.hktvmall.com/p/H5266002_S_MBA003",
+          "note": "",
+          "title": "天然草本嬰兒洗衣液(橄欖花香味) 4包2.1L 補充裝(原箱)",
+          "pack": "2.1L",
+          "qty": 1
+        },
+        {
+          "brand": null,
           "lastPurchased": "2025-03-08",
           "daysSince": 586,
           "image": "https://images.hktvmall.com/h0888001/fd3f85ede3bda9e428ffe4d6e61dbb5e26d58321/h0888001_10002928_230214053506_01_1200.jpg",
@@ -689,7 +701,7 @@
           "qty": 1
         }
       ],
-      "subtype": "洗衣液",
+      "subtype": "幼兒清潔",
       "pack": "1.5L",
       "qty": 2
     },
@@ -1022,6 +1034,31 @@
         }
       ],
       "subtype": "百潔布",
+      "qty": 1
+    },
+    {
+      "type": "嬰兒用品／食品",
+      "name": "七星茶",
+      "lastPurchased": "2025-11-20",
+      "daysSince": 329,
+      "suggest": "優先",
+      "note": "",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/a526/7eba/bea5/lbQbRLgaDS20251022125427_1200.webp",
+      "imageAlt": "康溢愛兒七星茶顆粒沖劑(6包裝) (香港中成藥註冊編號﹕HKC-146",
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2025-11-20",
+          "daysSince": 329,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/a526/7eba/bea5/lbQbRLgaDS20251022125427_1200.webp",
+          "imageAlt": "康溢愛兒七星茶顆粒沖劑(6包裝) (香港中成藥註冊編號﹕HKC-146",
+          "link": "https://www.hktvmall.com/p/H6643004_S_GR-CLK",
+          "note": "",
+          "title": "康溢愛兒七星茶顆粒沖劑(6包裝) (香港中成藥註冊編號﹕HKC-146",
+          "qty": 1
+        }
+      ],
+      "subtype": "幼兒補充",
       "qty": 1
     },
     {
@@ -1509,6 +1546,33 @@
     },
     {
       "type": "嬰兒用品／食品",
+      "name": "嬰幼兒益生菌滴劑",
+      "lastPurchased": "2026-03-02",
+      "daysSince": 227,
+      "suggest": "優先",
+      "note": "約每 95 日一件 · 預計已到期",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/eb2f/5f7c/1273/tuNiCDXvKR20260423163758_1200.jpg",
+      "imageAlt": "瑞典拜奧 - 嬰幼兒益生菌滴劑（EXP 2027年）10ml 添加維他",
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-03-02",
+          "daysSince": 227,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/eb2f/5f7c/1273/tuNiCDXvKR20260423163758_1200.jpg",
+          "imageAlt": "瑞典拜奧 - 嬰幼兒益生菌滴劑（EXP 2027年）10ml 添加維他",
+          "link": "https://www.hktvmall.com/p/H8856001_S_00094",
+          "note": "",
+          "title": "瑞典拜奧 - 嬰幼兒益生菌滴劑（EXP 2027年）10ml 添加維他",
+          "pack": "10ml",
+          "qty": 1
+        }
+      ],
+      "subtype": "幼兒補充",
+      "pack": "10ml",
+      "qty": 1
+    },
+    {
+      "type": "嬰兒用品／食品",
       "name": "嬰幼兒米糊",
       "lastPurchased": "2026-05-26",
       "daysSince": 142,
@@ -1741,7 +1805,7 @@
           "qty": 1
         }
       ],
-      "subtype": "嬰兒食品",
+      "subtype": "幼兒小食",
       "pack": "100G",
       "qty": 1
     },
@@ -1811,7 +1875,7 @@
       "lastPurchased": "2026-08-03",
       "daysSince": 73,
       "suggest": "優先",
-      "note": "約每 128 日一件 · 預計 55 日要補貨",
+      "note": "",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/e02b/1760/f9f4/EszKbyyBAH20260630145248_1200.jpg",
       "imageAlt": "開心Share套裝 - 兒童香脆椰子卷（香蕉/椰子/芒果）1歲+（非油",
       "brands": [
@@ -1825,31 +1889,9 @@
           "note": "",
           "title": "開心Share套裝 - 兒童香脆椰子卷（香蕉/椰子/芒果）1歲+（非油",
           "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-12-04",
-          "daysSince": 315,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/acb1/3a51/ea63/HAsZKRPmcj20240911104347_1200.jpg",
-          "imageAlt": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-蘋果香蕉 [8包",
-          "link": "https://www.hktvmall.com/p/H0617001_S_AA-00280",
-          "note": "",
-          "title": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-蘋果香蕉 [8包",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-11-20",
-          "daysSince": 329,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/bb1b/dd96/3cca/npXZHgomTY20240910163137_1200.jpg",
-          "imageAlt": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-混合雜莓 [8包",
-          "link": "https://www.hktvmall.com/p/H0617001_S_AA-00281",
-          "note": "",
-          "title": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-混合雜莓 [8包",
-          "qty": 1
         }
       ],
-      "subtype": "嬰兒食品",
+      "subtype": "幼兒小食",
       "qty": 1
     },
     {
@@ -1858,7 +1900,7 @@
       "lastPurchased": "2026-08-03",
       "daysSince": 73,
       "suggest": "優先",
-      "note": "約每 54 日一件 · 預計 197 日要補貨",
+      "note": "約每 51 日一件 · 預計 183 日要補貨",
       "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/4634/d7c2/150c/WvKzvrSbgD20231016101538_1200.jpg",
       "imageAlt": "多種蔬菜營養手指餅乾 15 克 x 4 包 (兒童零食1歲+) 嬰幼兒",
       "brands": [
@@ -1886,18 +1928,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-03-02",
-          "daysSince": 227,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/eb2f/5f7c/1273/tuNiCDXvKR20260423163758_1200.jpg",
-          "imageAlt": "瑞典拜奧 - 嬰幼兒益生菌滴劑（EXP 2027年）10ml 添加維他",
-          "link": "https://www.hktvmall.com/p/H8856001_S_00094",
-          "note": "",
-          "title": "瑞典拜奧 - 嬰幼兒益生菌滴劑（EXP 2027年）10ml 添加維他",
-          "pack": "10ml",
-          "qty": 1
-        },
-        {
-          "brand": null,
           "lastPurchased": "2026-02-26",
           "daysSince": 231,
           "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/6af8/3be6/f126/yhvjHkeoEW20221015191744_1200.png",
@@ -1920,62 +1950,28 @@
         },
         {
           "brand": null,
+          "lastPurchased": "2025-12-04",
+          "daysSince": 315,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/acb1/3a51/ea63/HAsZKRPmcj20240911104347_1200.jpg",
+          "imageAlt": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-蘋果香蕉 [8包",
+          "link": "https://www.hktvmall.com/p/H0617001_S_AA-00280",
+          "note": "",
+          "title": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-蘋果香蕉 [8包",
+          "qty": 1
+        },
+        {
+          "brand": null,
           "lastPurchased": "2025-11-20",
           "daysSince": 329,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/a526/7eba/bea5/lbQbRLgaDS20251022125427_1200.webp",
-          "imageAlt": "康溢愛兒七星茶顆粒沖劑(6包裝) (香港中成藥註冊編號﹕HKC-146",
-          "link": "https://www.hktvmall.com/p/H6643004_S_GR-CLK",
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/bb1b/dd96/3cca/npXZHgomTY20240910163137_1200.jpg",
+          "imageAlt": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-混合雜莓 [8包",
+          "link": "https://www.hktvmall.com/p/H0617001_S_AA-00281",
           "note": "",
-          "title": "康溢愛兒七星茶顆粒沖劑(6包裝) (香港中成藥註冊編號﹕HKC-146",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-07-03",
-          "daysSince": 469,
-          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/e23b/98a3/5c94/CgSdeZzOpF20230313162854_1200.jpg",
-          "imageAlt": "排毒益生菌 30包1盒 Bifina S(美菲娜)晶球減肥瘦身乳酸菌",
-          "link": "https://www.hktvmall.com/p/H0967001_S_SD4987227028276",
-          "note": "",
-          "title": "排毒益生菌 30包1盒 Bifina S(美菲娜)晶球減肥瘦身乳酸菌",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-04-24",
-          "daysSince": 539,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/0b62/4e65/d5fc/zKkPdKDVrk20260410184512_1200.jpg",
-          "imageAlt": "天然草本嬰兒洗衣液(橄欖花香味) 4包2.1L 補充裝(原箱)",
-          "link": "https://www.hktvmall.com/p/H5266002_S_MBA003",
-          "note": "",
-          "title": "天然草本嬰兒洗衣液(橄欖花香味) 4包2.1L 補充裝(原箱)",
-          "pack": "2.1L",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-04-15",
-          "daysSince": 548,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/05a8/04a0/baaf/WHowOTShtZ20250321112326_1200.jpg",
-          "imageAlt": "森下仁丹Bifina S 美菲娜晶球益生菌 共28包 (7包x4套)",
-          "link": "https://www.hktvmall.com/p/B0153002_S_4987227028276try",
-          "note": "",
-          "title": "森下仁丹Bifina S 美菲娜晶球益生菌 共28包 (7包x4套)",
-          "qty": 4
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-02-02",
-          "daysSince": 620,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/S6348001_S_4987227028276",
-          "note": "",
-          "title": "Bifina S美菲娜晶球益生菌30包(1盒) 最新包裝 EXP:10",
+          "title": "益生元維C有機全穀磨牙乳酪糙米餅(無添加糖鹽無麩質)-混合雜莓 [8包",
           "qty": 1
         }
       ],
-      "subtype": "嬰兒食品",
+      "subtype": "幼兒小食",
       "pack": "4包",
       "qty": 5
     },
@@ -6375,6 +6371,53 @@
       "subtype": "口罩",
       "pack": "30片",
       "qty": 3
+    },
+    {
+      "type": "個人護理用品",
+      "name": "成人益生菌",
+      "lastPurchased": "2025-07-03",
+      "daysSince": 469,
+      "suggest": "優先",
+      "note": "約每 46 日一件 · 預計已到期",
+      "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/e23b/98a3/5c94/CgSdeZzOpF20230313162854_1200.jpg",
+      "imageAlt": "排毒益生菌 30包1盒 Bifina S(美菲娜)晶球減肥瘦身乳酸菌",
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2025-07-03",
+          "daysSince": 469,
+          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/e23b/98a3/5c94/CgSdeZzOpF20230313162854_1200.jpg",
+          "imageAlt": "排毒益生菌 30包1盒 Bifina S(美菲娜)晶球減肥瘦身乳酸菌",
+          "link": "https://www.hktvmall.com/p/H0967001_S_SD4987227028276",
+          "note": "",
+          "title": "排毒益生菌 30包1盒 Bifina S(美菲娜)晶球減肥瘦身乳酸菌",
+          "qty": 1
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-04-15",
+          "daysSince": 548,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/05a8/04a0/baaf/WHowOTShtZ20250321112326_1200.jpg",
+          "imageAlt": "森下仁丹Bifina S 美菲娜晶球益生菌 共28包 (7包x4套)",
+          "link": "https://www.hktvmall.com/p/B0153002_S_4987227028276try",
+          "note": "",
+          "title": "森下仁丹Bifina S 美菲娜晶球益生菌 共28包 (7包x4套)",
+          "qty": 4
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-02-02",
+          "daysSince": 620,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/S6348001_S_4987227028276",
+          "note": "",
+          "title": "Bifina S美菲娜晶球益生菌30包(1盒) 最新包裝 EXP:10",
+          "qty": 1
+        }
+      ],
+      "subtype": "保健食品",
+      "qty": 1
     },
     {
       "type": "個人護理用品",
