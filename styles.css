@@ -681,19 +681,14 @@ body {
   flex-shrink: 0;
 }
 
-.public-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  margin-top: 0.15rem;
+.brand-name-link {
   color: var(--accent);
-  font-weight: 700;
-  font-size: 0.875rem;
   text-decoration: underline;
   text-underline-offset: 0.15em;
+  overflow-wrap: anywhere;
 }
 
-.public-link:focus-visible {
+.brand-name-link:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }

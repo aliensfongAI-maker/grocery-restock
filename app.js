@@ -107,7 +107,6 @@
       exclusionNotePrefix: "剔除備註：",
       excludedAtLabel: "剔除時間",
       noBrand: "未有牌子",
-      publicLink: "公開連結",
       lastPurchased: "上次送貨",
       qtyValue: "{n} 件",
       noBrandDetail: "未有牌子明細",
@@ -215,7 +214,6 @@
       exclusionNotePrefix: "Skip note: ",
       excludedAtLabel: "Skipped at",
       noBrand: "No brand",
-      publicLink: "Public link",
       lastPurchased: "Last delivery",
       qtyValue: "{n} pcs",
       noBrandDetail: "No brand details",
@@ -323,7 +321,6 @@
       exclusionNotePrefix: "Catatan lewati: ",
       excludedAtLabel: "Waktu dilewati",
       noBrand: "Tanpa merek",
-      publicLink: "Tautan publik",
       lastPurchased: "Pengiriman terakhir",
       qtyValue: "{n} buah",
       noBrandDetail: "Belum ada detail merek",
@@ -1439,6 +1436,19 @@
     return { primary: t("noBrand"), secondary: "" };
   }
 
+  function brandNameHtml(entry, labels) {
+    const text = escapeHtml(labels.primary);
+    const href = safeLink(entry && entry.link);
+    if (!href) return text;
+    return (
+      '<a class="brand-name-link" href="' +
+      escapeHtml(href) +
+      '" target="_blank" rel="noopener noreferrer">' +
+      text +
+      "</a>"
+    );
+  }
+
   function brandHtml(entry) {
     const labels = brandLabelParts(entry);
     const secondary = labels.secondary
@@ -1448,14 +1458,6 @@
       entry.note && String(entry.note).trim()
         ? '<p class="item-note">' + escapeHtml(entry.note) + "</p>"
         : "";
-    const href = safeLink(entry.link);
-    const link = href
-      ? '<a class="public-link" href="' +
-        escapeHtml(href) +
-        '" target="_blank" rel="noopener noreferrer">' +
-        escapeHtml(t("publicLink")) +
-        "</a>"
-      : "";
     const imgSrc = safeLink(entry.image);
     const img = imgSrc
       ? thumbHtml(
@@ -1468,7 +1470,7 @@
       img +
       '<div class="brand-main">' +
       '<p class="brand-name">' +
-      escapeHtml(labels.primary) +
+      brandNameHtml(entry, labels) +
       packHtml(entry.pack, "brand-pack") +
       qtyHtml(entry, "brand-qty") +
       "</p>" +
@@ -1482,7 +1484,6 @@
       daysMetaHtml(entry) +
       "</div>" +
       note +
-      link +
       "</div></li>"
     );
   }
