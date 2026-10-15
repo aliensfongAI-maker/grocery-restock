@@ -1,0 +1,100 @@
+{
+  "sheet": "overrides",
+  "headers": [
+    "oldType",
+    "name",
+    "newType",
+    "newSubtype",
+    "at",
+    "status",
+    "note"
+  ],
+  "status": "active",
+  "key": "oldType|name",
+  "note": "seed",
+  "webhook": {
+    "scriptProperty": "RECLASS_WEBHOOK_URL",
+    "method": "POST",
+    "contentType": "application/json",
+    "bodyExample": {
+      "event": "reclass",
+      "type": "嬰兒用品／食品",
+      "name": "幼兒動物餅",
+      "newType": "嬰兒用品／食品",
+      "newSubtype": "幼兒小食",
+      "at": "2026-10-15T14:00:00+08:00"
+    },
+    "muteIfEmpty": true
+  },
+  "actions": {
+    "reclass": {
+      "action": "reclass",
+      "type": "...",
+      "name": "...",
+      "newType": "...",
+      "newSubtype": "...",
+      "note": "optional"
+    },
+    "reclass_clear": {
+      "action": "reclass_clear",
+      "type": "...",
+      "name": "..."
+    }
+  },
+  "rows": [
+    {
+      "oldType": "紙品／即棄品",
+      "name": "嬰兒濕廁紙",
+      "newType": "紙品／即棄品",
+      "newSubtype": "濕紙巾"
+    },
+    {
+      "oldType": "嬰兒用品／食品",
+      "name": "嬰兒濕紙巾",
+      "newType": "嬰兒用品／食品",
+      "newSubtype": "濕紙巾"
+    },
+    {
+      "oldType": "嬰兒用品／食品",
+      "name": "幼兒動物餅",
+      "newType": "嬰兒用品／食品",
+      "newSubtype": "幼兒小食"
+    },
+    {
+      "oldType": "嬰兒用品／食品",
+      "name": "幼兒小食（椰子卷／手指餅等）",
+      "newType": "嬰兒用品／食品",
+      "newSubtype": "幼兒小食"
+    },
+    {
+      "oldType": "嬰兒用品／食品",
+      "name": "幼兒小食／補充",
+      "newType": "嬰兒用品／食品",
+      "newSubtype": "幼兒小食"
+    },
+    {
+      "oldType": "嬰兒用品／食品",
+      "name": "七星茶",
+      "newType": "嬰兒用品／食品",
+      "newSubtype": "幼兒補充"
+    },
+    {
+      "oldType": "嬰兒用品／食品",
+      "name": "嬰幼兒益生菌滴劑",
+      "newType": "嬰兒用品／食品",
+      "newSubtype": "幼兒補充"
+    },
+    {
+      "oldType": "家居清潔用品",
+      "name": "嬰兒洗衣液",
+      "newType": "家居清潔用品",
+      "newSubtype": "幼兒清潔"
+    },
+    {
+      "oldType": "個人護理用品",
+      "name": "成人益生菌",
+      "newType": "個人護理用品",
+      "newSubtype": "保健食品"
+    }
+  ]
+}
