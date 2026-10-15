@@ -87,8 +87,8 @@ window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/…/exec";
 
 - **改類**：POST `action` 係 `reclass`，再帶 `type`、`name`、`newType`、`newSubtype`（可空）、可選 `note`。追加一列 `active`。
 - **取消改類**：POST `action` 係 `reclass_clear`，帶 `type`、`name`。追加一列 `cleared`。GET 唔再回傳該鍵。
-- 成功 `reclass` 之後，如果 Script Properties 有 `RECLASS_WEBHOOK_URL`，會 POST JSON `{ event: "reclass", type, name, newType, newSubtype, at }`。屬性留空就唔打。可選 `RECLASS_WEBHOOK_AUTH` 係完整 `Authorization` header 值。Webhook 失敗唔會擋低寫入。
-- 呢個 PR 只更新 Apps Script。頁面仲未呼叫 `reclass`／`reclass_clear`，亦未用 `overrides` 改顯示。
+- 成功 `reclass` 之後先通知，主體係 JSON `{ event: "reclass", type, name, newType, newSubtype, at }`。優先 Script Property `RECLASS_NOTIFY_EMAIL`（例如 `reclass@mail.grokbot.com`），用 `MailApp.sendEmail` 寄出。有呢個值就唔打 webhook。冇 email 先至可選用 `RECLASS_WEBHOOK_URL` POST 同一份 JSON；`RECLASS_WEBHOOK_AUTH` 係完整 `Authorization` header。兩個都空就唔通知。通知失敗唔會擋低寫入。新版本部署要授權寄信。
+- 編輯頁「⋯」可以呼叫 `reclass`／`reclass_clear`。`view.html` 冇改類按鈕。通知只喺 Apps Script 發生，唔寫入 `data.json`。
 
 `GROCERY_EXCLUSIONS_API` 留空時，頁面照常顯示補貨清單，「⋯」入面嘅「暫不考慮」同「手動暫緩」會停用。網站請求只帶 `type`、`name`、`note`（時間由試算表寫入），冇 token、冇私人資料。瀏覽器可能用 localStorage 暫存剔除同暫緩，但每次成功讀到 Sheet 都會以試算表覆蓋。
 

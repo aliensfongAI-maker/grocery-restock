@@ -28,7 +28,8 @@
  * POST action `reclass` upsert active；`reclass_clear` 將該鍵設為 cleared。
  * 改類成功後會 POST JSON 到 Script Properties `RECLASS_WEBHOOK_URL`
  * （{event:"reclass", type, name, newType, newSubtype, at}）。Property 空就靜音唔打。
- * 可選 `RECLASS_WEBHOOK_AUTH`＝Authorization header 完整值（跟 routine 面板）。
+ * 優先 `RECLASS_NOTIFY_EMAIL`（例 reclass@mail.grokbot.com）用 MailApp 通知；
+ * 可選 webhook：`RECLASS_WEBHOOK_URL`＋`RECLASS_WEBHOOK_AUTH`。
  * 編輯器可跑一次 `seedReclassOverrides_()` 寫入初始 toddler／濕紙巾／洗衣液等 seed。
  *
  * 瀏覽器用簡單請求：GET，或 POST 且 Content-Type 為 text/plain
@@ -441,13 +442,28 @@ function latestOverride_(rows) {
 
 function notifyReclass_(payload) {
   var props;
+  var email = "";
   var url = "";
   var auth = "";
   try {
     props = PropertiesService.getScriptProperties();
+    email = String(props.getProperty("RECLASS_NOTIFY_EMAIL") || "").trim();
     url = String(props.getProperty("RECLASS_WEBHOOK_URL") || "").trim();
     auth = String(props.getProperty("RECLASS_WEBHOOK_AUTH") || "").trim();
   } catch (err) {
+    return;
+  }
+  // Prefer email (Gmail Bot inbox); webhook optional fallback
+  if (email) {
+    try {
+      MailApp.sendEmail({
+        to: email,
+        subject: "超市補貨改類 " + (payload.name || ""),
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      // mute
+    }
     return;
   }
   if (!url) return;
@@ -468,9 +484,6 @@ function notifyReclass_(payload) {
   }
 }
 
-/**
- * 編輯器跑一次：寫入初始改類 seed（已存在 active 同鍵就跳過）。
- */
 function seedReclassOverrides_() {
   var seeds = [
     ["紙品／即棄品", "嬰兒濕廁紙", "紙品／即棄品", "濕紙巾"],
