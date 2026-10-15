@@ -545,7 +545,9 @@ body {
 }
 
 .item-pack,
-.brand-pack {
+.brand-pack,
+.item-qty,
+.brand-qty {
   display: inline-block;
   flex-shrink: 0;
   font-size: 0.75rem;
@@ -558,7 +560,14 @@ body {
   white-space: nowrap;
 }
 
-.brand-pack {
+.item-qty,
+.brand-qty {
+  color: var(--text);
+  background: #eef1f4;
+}
+
+.brand-pack,
+.brand-qty {
   margin-left: 0.4rem;
   vertical-align: 0.05em;
 }
