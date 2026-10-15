@@ -1699,12 +1699,18 @@
   }
 
   function expandAllVisible() {
-    for (const key of collectGroupKeys(nest(filterItems()))) state.collapsedGroups.delete(key);
+    const visible = filterItems();
+    for (const key of collectGroupKeys(nest(visible))) state.collapsedGroups.delete(key);
+    for (const item of visible) {
+      if (shownBrands(item).length > 0) state.openProducts.add(keyOf(item));
+    }
     render();
   }
 
   function collapseAll() {
-    for (const key of collectGroupKeys(nest(filterItems()))) state.collapsedGroups.add(key);
+    const visible = filterItems();
+    for (const key of collectGroupKeys(nest(visible))) state.collapsedGroups.add(key);
+    for (const item of visible) state.openProducts.delete(keyOf(item));
     render();
   }
 
