@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T15:09:30+08:00",
+  "updatedAt": "2026-10-15T17:35:49+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -3143,7 +3143,7 @@
       "lastPurchased": "2026-07-21",
       "daysSince": 86,
       "suggest": "優先",
-      "note": "約每 40 日一件 · 預計 319 日要補貨",
+      "note": "約每 40 日一件 · 預計 316 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/e306/514b/31ab/axfkYlodZz20260305175726_1200.jpg",
       "imageAlt": "日常堅果雜錦包 (黃色) 20g x 10包",
       "brands": [
@@ -3214,6 +3214,17 @@
           "link": "https://www.hktvmall.com/p/H0817001_S_31373_redeem",
           "note": "",
           "title": "[每日一店2025年6月3日00:00開搶] 贈品-尚品蓮子杏仁糊 (",
+          "qty": 1
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-06-06",
+          "daysSince": 496,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0817001_S_11064_redeem_1",
+          "note": "",
+          "title": "[每日一店2025年6月3日00:00開搶] -贈品 鱈魚膠(13-1",
           "qty": 1
         },
         {
