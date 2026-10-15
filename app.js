@@ -1942,27 +1942,35 @@
     if (!sel) return;
     const keep = preferred == null ? currentReclassSubtype() : String(preferred).trim();
     const names = subtypeOptionsForType(typeName);
+    const useCustom = !keep || names.indexOf(keep) === -1;
     reclassSubtypeFilling = true;
     try {
-      sel.innerHTML = "";
+      // Build off-DOM and mark the chosen option before it is shown. Appending
+      // into a live <select> selects the first option immediately, and some
+      // browsers then keep painting that label after the value moves to 「自訂…」.
+      const frag = document.createDocumentFragment();
       for (const sub of names) {
         const opt = document.createElement("option");
         opt.value = sub;
         opt.textContent = catalogLabel("subtype", sub);
-        sel.appendChild(opt);
+        if (!useCustom && sub === keep) opt.selected = true;
+        frag.appendChild(opt);
       }
       const custom = document.createElement("option");
       custom.value = RECLASS_CUSTOM;
       custom.textContent = t("reclassCustom");
-      sel.appendChild(custom);
-      if (keep && names.indexOf(keep) !== -1) {
-        sel.value = keep;
-        setReclassCustomVisible(false);
-        if (els.reclassSubtype) els.reclassSubtype.value = "";
-      } else {
-        sel.value = RECLASS_CUSTOM;
-        setReclassCustomVisible(true);
-        if (els.reclassSubtype) els.reclassSubtype.value = keep;
+      if (useCustom) custom.selected = true;
+      frag.appendChild(custom);
+      sel.replaceChildren(frag);
+      setReclassCustomVisible(useCustom);
+      if (els.reclassSubtype) els.reclassSubtype.value = useCustom ? keep : "";
+      // Recreate the platform widget so the closed control shows the option
+      // that is actually selected, including after a type change.
+      const parent = sel.parentNode;
+      if (parent) {
+        const next = sel.nextSibling;
+        parent.removeChild(sel);
+        parent.insertBefore(sel, next);
       }
     } finally {
       reclassSubtypeFilling = false;
