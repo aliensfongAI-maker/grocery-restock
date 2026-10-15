@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T17:35:49+08:00",
+  "updatedAt": "2026-10-15T18:01:39+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -1567,7 +1567,7 @@
           "qty": 1
         }
       ],
-      "subtype": "幼兒補充",
+      "subtype": "嬰兒營養",
       "pack": "10ml",
       "qty": 1
     },
@@ -1784,33 +1784,6 @@
     },
     {
       "type": "嬰兒用品／食品",
-      "name": "幼兒動物餅",
-      "lastPurchased": "2026-05-26",
-      "daysSince": 142,
-      "suggest": "優先",
-      "note": "",
-      "image": "https://medias.pns.hk/publishing/PNSHK-179690-front-thumbnail.jpg?version=1776688399",
-      "imageAlt": "有機動物餅小食（１２個月或以上） VIPDAY:92折 26PAM2 comeback:$1000-$500",
-      "brands": [
-        {
-          "brand": "ORGANIX",
-          "lastPurchased": "2026-05-26",
-          "daysSince": 142,
-          "image": "https://medias.pns.hk/publishing/PNSHK-179690-front-thumbnail.jpg?version=1776688399",
-          "imageAlt": "有機動物餅小食（１２個月或以上） VIPDAY:92折 26PAM2 comeback:$1000-$500",
-          "link": "https://www.pns.hk/有機動物餅小食（１２個月或以上）/p/BP_179690",
-          "note": "",
-          "title": "有機動物餅小食（１２個月或以上） VIPDAY:92折 26PAM2 comeback:$1000-$500",
-          "pack": "100G",
-          "qty": 1
-        }
-      ],
-      "subtype": "幼兒小食",
-      "pack": "100G",
-      "qty": 1
-    },
-    {
-      "type": "嬰兒用品／食品",
       "name": "幼兒奶粉（3 號）",
       "lastPurchased": "2026-09-05",
       "daysSince": 40,
@@ -1871,11 +1844,11 @@
     },
     {
       "type": "嬰兒用品／食品",
-      "name": "幼兒小食（椰子卷／手指餅等）",
+      "name": "嬰幼兒小食",
       "lastPurchased": "2026-08-03",
       "daysSince": 73,
       "suggest": "優先",
-      "note": "",
+      "note": "約每 43 日一件 · 預計 183 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/e02b/1760/f9f4/EszKbyyBAH20260630145248_1200.jpg",
       "imageAlt": "開心Share套裝 - 兒童香脆椰子卷（香蕉/椰子/芒果）1歲+（非油",
       "brands": [
@@ -1889,21 +1862,7 @@
           "note": "",
           "title": "開心Share套裝 - 兒童香脆椰子卷（香蕉/椰子/芒果）1歲+（非油",
           "qty": 1
-        }
-      ],
-      "subtype": "幼兒小食",
-      "qty": 1
-    },
-    {
-      "type": "嬰兒用品／食品",
-      "name": "幼兒小食／補充",
-      "lastPurchased": "2026-08-03",
-      "daysSince": 73,
-      "suggest": "優先",
-      "note": "約每 51 日一件 · 預計 183 日要補貨",
-      "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/4634/d7c2/150c/WvKzvrSbgD20231016101538_1200.jpg",
-      "imageAlt": "多種蔬菜營養手指餅乾 15 克 x 4 包 (兒童零食1歲+) 嬰幼兒",
-      "brands": [
+        },
         {
           "brand": null,
           "lastPurchased": "2026-08-03",
@@ -1924,6 +1883,18 @@
           "link": "https://www.hktvmall.com/p/B0529002_S_Nicha-FruitMelts-4",
           "note": "",
           "title": "[臨期特價]【4包装】100%天然凍乾 益生元水果溶豆條-香蕉菠菜味",
+          "qty": 1
+        },
+        {
+          "brand": "ORGANIX",
+          "lastPurchased": "2026-05-26",
+          "daysSince": 142,
+          "image": "https://medias.pns.hk/publishing/PNSHK-179690-front-thumbnail.jpg?version=1776688399",
+          "imageAlt": "有機動物餅小食（１２個月或以上） VIPDAY:92折 26PAM2 comeback:$1000-$500",
+          "link": "https://www.pns.hk/有機動物餅小食（１２個月或以上）/p/BP_179690",
+          "note": "",
+          "title": "有機動物餅小食（１２個月或以上） VIPDAY:92折 26PAM2 comeback:$1000-$500",
+          "pack": "100G",
           "qty": 1
         },
         {
@@ -1971,9 +1942,9 @@
           "qty": 1
         }
       ],
-      "subtype": "幼兒小食",
+      "subtype": "嬰幼兒小食",
       "pack": "4包",
-      "qty": 5
+      "qty": 6
     },
     {
       "type": "飲品／即沖飲品",
