@@ -37,6 +37,8 @@
   const SUGGEST_KEYS = { 優先: "suggestPriority", 暫緩: "suggestHold", 在途: "suggestTransit" };
   /** view.html sets this. index.html leaves it unset, so actions stay available. */
   const READ_ONLY = window.GROCERY_READ_ONLY === true;
+  /** <option> value that reveals the free-text subtype field. Not a stored subtype. */
+  const RECLASS_CUSTOM = "__custom__";
 
   /**
    * UI chrome only. Notes, packs, and brand titles from data.json or the
@@ -82,10 +84,12 @@
       reclass: "改類",
       reclassHelp: "改呢項嘅類型同子類。寫入 Google Sheet，唔改呢份 data.json。Gmail 之後會再整份資料。",
       reclassTypeLabel: "類型",
-      reclassSubtypeLabel: "子類（可揀建議，亦可自己打）",
+      reclassSubtypeLabel: "子類（可揀現有，或選「自訂…」自己打）",
+      reclassCustom: "自訂…",
+      reclassCustomLabel: "自訂子類",
       reclassConfirm: "確認改類",
       reclassClear: "取消改類",
-      reclassPlaceholder: "揀現有子類，或自己打",
+      reclassPlaceholder: "自己打子類",
       reclassFlag: "改類已記下，等 data.json 更新",
       updatedPrefix: "上次更新：",
       updatedFailed: "上次更新：載入失敗",
@@ -189,10 +193,12 @@
       reclass: "Reclassify",
       reclassHelp: "Change this item’s type and subtype. This is stored in the Google Sheet and does not edit data.json. Gmail will rebuild the file afterwards.",
       reclassTypeLabel: "Type",
-      reclassSubtypeLabel: "Subtype (pick a suggestion or type your own)",
+      reclassSubtypeLabel: "Subtype (pick an existing one, or choose Custom…)",
+      reclassCustom: "Custom…",
+      reclassCustomLabel: "Custom subtype",
       reclassConfirm: "Confirm reclass",
       reclassClear: "Clear reclass",
-      reclassPlaceholder: "Pick an existing subtype, or type one",
+      reclassPlaceholder: "Type a subtype",
       reclassFlag: "Reclass saved, waiting for data.json",
       updatedPrefix: "Updated: ",
       updatedFailed: "Updated: failed to load",
@@ -296,10 +302,12 @@
       reclass: "Ubah jenis",
       reclassHelp: "Ubah jenis dan subjenis item ini. Disimpan di Google Sheet, data.json tidak diubah. Gmail akan menyusun ulang berkasnya nanti.",
       reclassTypeLabel: "Jenis",
-      reclassSubtypeLabel: "Subjenis (pilih saran atau ketik sendiri)",
+      reclassSubtypeLabel: "Subjenis (pilih yang ada, atau pilih Kustom…)",
+      reclassCustom: "Kustom…",
+      reclassCustomLabel: "Subjenis kustom",
       reclassConfirm: "Konfirmasi ubah jenis",
       reclassClear: "Batalkan ubah jenis",
-      reclassPlaceholder: "Pilih subjenis yang ada, atau ketik sendiri",
+      reclassPlaceholder: "Ketik subjenis",
       reclassFlag: "Ubah jenis tersimpan, menunggu data.json",
       updatedPrefix: "Diperbarui: ",
       updatedFailed: "Diperbarui: gagal memuat",
@@ -497,8 +505,9 @@
     reclassForm: document.getElementById("reclassForm"),
     reclassDialogItem: document.getElementById("reclassDialogItem"),
     reclassType: document.getElementById("reclassType"),
+    reclassSubtypeSelect: document.getElementById("reclassSubtypeSelect"),
+    reclassSubtypeCustomLabel: document.getElementById("reclassSubtypeCustomLabel"),
     reclassSubtype: document.getElementById("reclassSubtype"),
-    reclassSubtypeList: document.getElementById("reclassSubtypeList"),
     reclassNote: document.getElementById("reclassNote"),
     reclassCancel: document.getElementById("reclassCancel"),
     reclassClear: document.getElementById("reclassClear"),
@@ -571,7 +580,9 @@
       }
       if (els.reclassDialog && els.reclassDialog.open && els.reclassDialogItem) {
         els.reclassDialogItem.textContent = text;
-        fillReclassTypes(els.reclassType ? els.reclassType.value : "");
+        const typeName = els.reclassType ? els.reclassType.value : "";
+        fillReclassTypes(typeName);
+        fillReclassSubtypes(typeName);
       }
     }
     refreshUpdatedAt();
@@ -1889,25 +1900,80 @@
     if (TYPE_ORDER.indexOf(current) !== -1) sel.value = current;
   }
 
-  function fillReclassSubtypes(typeName) {
-    const list = els.reclassSubtypeList;
-    if (!list) return;
+  function subtypeOptionsForType(typeName) {
     const names = [];
     const seen = new Set();
     for (const item of state.items) {
       if (typeName && item.type !== typeName) continue;
       const sub = item.subtype == null ? "" : String(item.subtype).trim();
-      if (!sub || seen.has(sub)) continue;
+      if (!sub || sub === RECLASS_CUSTOM || seen.has(sub)) continue;
       seen.add(sub);
       names.push(sub);
     }
     names.sort((a, b) => a.localeCompare(b, "zh-HK"));
-    list.innerHTML = "";
-    for (const sub of names) {
-      const opt = document.createElement("option");
-      opt.value = sub;
-      opt.label = catalogLabel("subtype", sub);
-      list.appendChild(opt);
+    return names;
+  }
+
+  let reclassSubtypeFilling = false;
+
+  function setReclassCustomVisible(visible) {
+    if (els.reclassSubtypeCustomLabel) els.reclassSubtypeCustomLabel.hidden = !visible;
+    if (els.reclassSubtype) els.reclassSubtype.hidden = !visible;
+  }
+
+  /** Selected subtype, or the custom text field when 「自訂…」 is chosen. */
+  function currentReclassSubtype() {
+    const sel = els.reclassSubtypeSelect;
+    if (!sel || sel.value === RECLASS_CUSTOM) {
+      return els.reclassSubtype ? els.reclassSubtype.value.trim() : "";
+    }
+    return String(sel.value || "").trim();
+  }
+
+  /**
+   * Native <select>, not <datalist>. iOS Safari often shows an empty
+   * suggestion list even when datalist options are present.
+   * A matching subtype stays selected. Anything else opens 「自訂…」 with
+   * that text so free input still works, including types with no subtypes.
+   * Omit `preferred` to keep whatever the controls currently show.
+   */
+  function fillReclassSubtypes(typeName, preferred) {
+    const sel = els.reclassSubtypeSelect;
+    if (!sel) return;
+    const keep = preferred == null ? currentReclassSubtype() : String(preferred).trim();
+    const names = subtypeOptionsForType(typeName);
+    const useCustom = !keep || names.indexOf(keep) === -1;
+    reclassSubtypeFilling = true;
+    try {
+      // Build off-DOM and mark the chosen option before it is shown. Appending
+      // into a live <select> selects the first option immediately, and some
+      // browsers then keep painting that label after the value moves to 「自訂…」.
+      const frag = document.createDocumentFragment();
+      for (const sub of names) {
+        const opt = document.createElement("option");
+        opt.value = sub;
+        opt.textContent = catalogLabel("subtype", sub);
+        if (!useCustom && sub === keep) opt.selected = true;
+        frag.appendChild(opt);
+      }
+      const custom = document.createElement("option");
+      custom.value = RECLASS_CUSTOM;
+      custom.textContent = t("reclassCustom");
+      if (useCustom) custom.selected = true;
+      frag.appendChild(custom);
+      sel.replaceChildren(frag);
+      setReclassCustomVisible(useCustom);
+      if (els.reclassSubtype) els.reclassSubtype.value = useCustom ? keep : "";
+      // Recreate the platform widget so the closed control shows the option
+      // that is actually selected, including after a type change.
+      const parent = sel.parentNode;
+      if (parent) {
+        const next = sel.nextSibling;
+        parent.removeChild(sel);
+        parent.insertBefore(sel, next);
+      }
+    } finally {
+      reclassSubtypeFilling = false;
     }
   }
 
@@ -1925,8 +1991,7 @@
     state.dialogTrigger = trigger || null;
     els.reclassDialogItem.textContent = dialogItemText(type, name);
     fillReclassTypes(selectedType);
-    fillReclassSubtypes(els.reclassType.value);
-    els.reclassSubtype.value = selectedSubtype;
+    fillReclassSubtypes(els.reclassType.value, selectedSubtype);
     els.reclassNote.value = "";
     if (els.reclassClear) els.reclassClear.hidden = !override;
     if (typeof els.reclassDialog.showModal === "function") {
@@ -2329,6 +2394,17 @@
         fillReclassSubtypes(els.reclassType.value);
       });
 
+      if (els.reclassSubtypeSelect) {
+        els.reclassSubtypeSelect.addEventListener("change", () => {
+          if (reclassSubtypeFilling) return;
+          const custom = els.reclassSubtypeSelect.value === RECLASS_CUSTOM;
+          setReclassCustomVisible(custom);
+          if (!els.reclassSubtype) return;
+          els.reclassSubtype.value = "";
+          if (custom) els.reclassSubtype.focus();
+        });
+      }
+
       els.reclassCancel.addEventListener("click", () => {
         state.dialogItem = null;
         els.reclassDialog.close();
@@ -2345,7 +2421,7 @@
       els.reclassForm.addEventListener("submit", () => {
         const item = state.dialogItem;
         const newType = els.reclassType.value;
-        const newSubtype = els.reclassSubtype.value.trim();
+        const newSubtype = currentReclassSubtype();
         const note = els.reclassNote.value;
         state.dialogItem = null;
         if (!item || item.kind !== "reclass" || !newType) return;

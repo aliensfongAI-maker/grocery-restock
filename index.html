@@ -132,9 +132,10 @@
       <p class="exclude-dialog-help" data-i18n="reclassHelp">改呢項嘅類型同子類。寫入 Google Sheet，唔改呢份 data.json。Gmail 之後會再整份資料。</p>
       <label for="reclassType" data-i18n="reclassTypeLabel">類型</label>
       <select id="reclassType" name="newType" translate="no"></select>
-      <label for="reclassSubtype" data-i18n="reclassSubtypeLabel">子類（可揀建議，亦可自己打）</label>
-      <input id="reclassSubtype" name="newSubtype" type="text" list="reclassSubtypeList" maxlength="80" autocomplete="off" placeholder="揀現有子類，或自己打" data-i18n-placeholder="reclassPlaceholder" translate="no" />
-      <datalist id="reclassSubtypeList" translate="no"></datalist>
+      <label for="reclassSubtypeSelect" data-i18n="reclassSubtypeLabel">子類（可揀現有，或選「自訂…」自己打）</label>
+      <select id="reclassSubtypeSelect" translate="no"></select>
+      <label id="reclassSubtypeCustomLabel" for="reclassSubtype" data-i18n="reclassCustomLabel" hidden>自訂子類</label>
+      <input id="reclassSubtype" type="text" maxlength="80" autocomplete="off" placeholder="自己打子類" data-i18n-placeholder="reclassPlaceholder" translate="no" hidden />
       <label for="reclassNote" data-i18n="noteLabel">備註（可留空）</label>
       <textarea id="reclassNote" name="note" maxlength="200" rows="3" placeholder="例如：屋企仲有" data-i18n-placeholder="excludePlaceholder" autocomplete="off"></textarea>
       <div class="dialog-actions">
@@ -146,6 +147,6 @@
   </dialog>
 
   <script src="./config.js"></script>
-  <script src="./app.js?v=20261015-8" defer></script>
+  <script src="./app.js?v=20261015-10" defer></script>
 </body>
 </html>
