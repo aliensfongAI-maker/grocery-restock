@@ -13,7 +13,7 @@
 | `i18n-data.json` | `type`、`subtype`、品名嘅英文同印尼文對照（靜態檔，冇翻譯 API） |
 | `config.js` | Sheet Web App 網址（預設留空；剔除、暫緩、改類共用） |
 | `gas/Code.gs` | Apps Script：讀寫 Google Sheet（剔除、暫緩、改類 overrides） |
-| `gas/seed-reclass.json` | 改類 seed 清單（9 行）。編輯器跑 `seedReclassOverrides_()`，呢份檔唔會被網站讀 |
+| `gas/seed-reclass.json` | 改類 seed 清單（9 行）。編輯器跑 `seedReclassOverrides`（冇底線），呢份檔唔會被網站讀 |
 | `data.json` | 建議資料（前端只顯示 `suggest`，唔重算；唔存剔除或暫緩） |
 
 ## 分組
@@ -79,7 +79,7 @@ window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/…/exec";
 ```
 
 6. Commit 並 push 到 GitHub Pages 用緊嘅分支。之後改 `Code.gs`，要喺「管理部署」建立**新版本**先會生效。
-7. 部署新版本之後，喺 Apps Script 編輯器跑一次 `seedReclassOverrides_()`。佢會寫入 9 行初始改類（濕紙巾、幼兒小食／補充、洗衣液、成人益生菌）。同一 `oldType|name` 已經有 `active` 列就跳過。清單同 `gas/seed-reclass.json` 一致；網站唔讀呢份 JSON。
+7. 部署新版本之後，喺 Apps Script 編輯器 Run 選單跑一次 `seedReclassOverrides`（冇底線；`seedReclassOverrides_()` 係私有，選單睇唔到）。佢會寫入 9 行初始改類（濕紙巾、幼兒小食／補充、洗衣液、成人益生菌）。同一 `oldType|name` 已經有 `active` 列就跳過。清單同 `gas/seed-reclass.json` 一致；網站唔讀呢份 JSON。
 
 ### 改類（overrides）
 

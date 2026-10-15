@@ -30,7 +30,7 @@
  * （{event:"reclass", type, name, newType, newSubtype, at}）。Property 空就靜音唔打。
  * 優先 `RECLASS_NOTIFY_EMAIL`（例 reclass@mail.grokbot.com）用 MailApp 通知；
  * 可選 webhook：`RECLASS_WEBHOOK_URL`＋`RECLASS_WEBHOOK_AUTH`。
- * 編輯器可跑一次 `seedReclassOverrides_()` 寫入初始 toddler／濕紙巾／洗衣液等 seed。
+ * 部署後喺編輯器 Run 選單跑一次 `seedReclassOverrides`（冇底線）寫入初始 toddler／濕紙巾／洗衣液等 seed。
  *
  * 瀏覽器用簡單請求：GET，或 POST 且 Content-Type 為 text/plain
  * （Apps Script 唔會回應 CORS preflight OPTIONS；Web App「任何人」會加 Access-Control-Allow-Origin）。
@@ -482,6 +482,10 @@ function notifyReclass_(payload) {
   } catch (err) {
     // mute — 唔阻主流程
   }
+}
+
+function seedReclassOverrides() {
+  return seedReclassOverrides_();
 }
 
 function seedReclassOverrides_() {
