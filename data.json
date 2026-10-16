@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T08:09:05+08:00",
+  "updatedAt": "2026-10-16T11:42:12+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -227,6 +227,18 @@
         },
         {
           "brand": null,
+          "lastPurchased": "2026-01-08",
+          "daysSince": 281,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/00a2/7a2c/d50e/LpNazQvhMc20250826124839_1200.jpg",
+          "imageAlt": "[韓國版30卷裝]4D Deluxe立體壓花衛生紙 (天然植萃) #紙",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10162386",
+          "note": "",
+          "title": "[韓國版30卷裝]4D Deluxe立體壓花衛生紙 (天然植萃) #紙",
+          "pack": "30卷",
+          "qty": 1
+        },
+        {
+          "brand": null,
           "lastPurchased": "2025-10-31",
           "daysSince": 350,
           "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/c076/833d/9d2b/SBDSkDHHZy20230627165355_1200.jpg",
@@ -333,8 +345,8 @@
       "name": "懸掛式面紙",
       "lastPurchased": "2026-10-15",
       "daysSince": 1,
-      "suggest": "優先",
-      "note": "約每 9 日一包 · 預計 7 日要補貨",
+      "suggest": "暫緩",
+      "note": "約每 28 日一包 · 預計 26 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/c95f/9e1b/3cd5/fpmVlfeqVm20260518161249_1200.jpg",
       "imageAlt": "[2件優惠裝] 皇牌系列懸掛式面紙 (忠犬麻糬柴犬/蠟筆小新)",
       "brands": [
@@ -362,52 +374,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-09-08",
-          "daysSince": 38,
-          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/7925/04b9/84c6/duBCAIhngy20240429125851_1200.png",
-          "imageAlt": "小麥蔬菜意粉螺絲粉（菠菜乾、番茄乾、紅菜頭乾、薑黃） 嬰幼兒通粉 [",
-          "link": "https://www.hktvmall.com/p/S6061001_S_93301",
-          "note": "",
-          "title": "小麥蔬菜意粉螺絲粉（菠菜乾、番茄乾、紅菜頭乾、薑黃） 嬰幼兒通粉 [",
-          "qty": 3
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-04",
-          "daysSince": 104,
-          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/8aa6/357c/b5aa/yxNXAolVcr20240429135425_1200.png",
-          "imageAlt": "幼童小麥義大利麵汽車形狀（五種口味） (250g) [02091]",
-          "link": "https://www.hktvmall.com/p/S6061001_S_93302",
-          "note": "",
-          "title": "幼童小麥義大利麵汽車形狀（五種口味） (250g) [02091]",
-          "pack": "250g",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-04",
-          "daysSince": 104,
-          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/c78f/2200/8484/BWTaPRjQJv20240709173154_1200.png",
-          "imageAlt": "有機嬰幼兒意粉 三色粗粒小麥蕃茄菠菜義大利麵米奇老鼠 [00364]",
-          "link": "https://www.hktvmall.com/p/S6061001_S_93602",
-          "note": "",
-          "title": "有機嬰幼兒意粉 三色粗粒小麥蕃茄菠菜義大利麵米奇老鼠 [00364]",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-04",
-          "daysSince": 104,
-          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/2ff9/d87a/7d14/rWTsUooERP20240604125524_1200.jpg",
-          "imageAlt": "有機無麩質紅菜頭菠菜白米麵粉義大利麵 (250g) [49456]",
-          "link": "https://www.hktvmall.com/p/S6061001_S_94012",
-          "note": "",
-          "title": "有機無麩質紅菜頭菠菜白米麵粉義大利麵 (250g) [49456]",
-          "pack": "250g",
-          "qty": 1
-        },
-        {
-          "brand": null,
           "lastPurchased": "2026-04-22",
           "daysSince": 177,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/c95f/9e1b/3cd5/fpmVlfeqVm20260518161249_1200.jpg",
@@ -415,17 +381,6 @@
           "link": "https://www.hktvmall.com/p/H0888001_S_10157998A",
           "note": "",
           "title": "[2件優惠裝] 皇牌系列懸掛式面紙 (忠犬麻糬柴犬)",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-02-26",
-          "daysSince": 232,
-          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/fa98/6372/6d3b/AkjEDYKgHU20221128231004_1200.png",
-          "imageAlt": "幼兒低敏天然無麩質手指餅曲奇(無白糖無鹽無牛油配方)-胡蘿蔔 [3包]",
-          "link": "https://www.hktvmall.com/p/H0617001_S_AA-00135",
-          "note": "",
-          "title": "幼兒低敏天然無麩質手指餅曲奇(無白糖無鹽無牛油配方)-胡蘿蔔 [3包]",
           "qty": 1
         },
         {
@@ -450,7 +405,7 @@
       "lastPurchased": "2026-09-24",
       "daysSince": 22,
       "suggest": "優先",
-      "note": "約每 106 日一包 · 預計 190 日要補貨",
+      "note": "約每 85 日一包 · 預計 148 日要補貨",
       "image": "https://medias.pns.hk/publishing/PNSHK-157894-front-thumbnail.jpg?version=1781094079",
       "imageAlt": "三層壓花抽取式面紙- 5包裝 (百佳獨家) 送唯潔雅面紙",
       "brands": [
@@ -467,18 +422,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-05-27",
-          "daysSince": 142,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/2073/d90b/23d8/AcAJobMZei20251008171618_1200.jpg",
-          "imageAlt": "Attack 抗菌EX 強力潔净洗衣液 750g [平行進口] (新舊",
-          "link": "https://www.hktvmall.com/p/H9340001_S_64512",
-          "note": "",
-          "title": "Attack 抗菌EX 強力潔净洗衣液 750g [平行進口] (新舊",
-          "pack": "750g",
-          "qty": 1
-        },
-        {
-          "brand": null,
           "lastPurchased": "2026-02-21",
           "daysSince": 237,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/d7e0/d1d9/2faf/GICYCdYsip20260928162819_1200.jpg",
@@ -486,18 +429,6 @@
           "link": "https://www.hktvmall.com/p/H0888001_S_10138220A",
           "note": "",
           "title": "[優惠孖裝] 四層天然無香袋裝面紙 (新舊包裝隨機發送)",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-01-08",
-          "daysSince": 281,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/00a2/7a2c/d50e/LpNazQvhMc20250826124839_1200.jpg",
-          "imageAlt": "[韓國版30卷裝]4D Deluxe立體壓花衛生紙 (天然植萃) #紙",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10162386",
-          "note": "",
-          "title": "[韓國版30卷裝]4D Deluxe立體壓花衛生紙 (天然植萃) #紙",
-          "pack": "30卷",
           "qty": 1
         },
         {
@@ -637,7 +568,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 8,
       "suggest": "暫緩",
-      "note": "約每 69 日一件 · 預計 130 日要補貨",
+      "note": "約每 265 日一件 · 預計 522 日要補貨",
       "image": "https://medias.pns.hk/publishing/PNSHK-155996-front-thumbnail.jpg?version=1772126425",
       "imageAlt": "嬰兒洗衣液（橄欖花香味）樽裝 買2慳$30 VIP26:$400-$30",
       "brands": [
@@ -663,18 +594,6 @@
           "note": "",
           "title": "天然草本嬰兒洗衣液(橄欖花香味) 4包 1.6L 補充裝(原箱)",
           "pack": "1.6L",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-12-21",
-          "daysSince": 299,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/7fb4/911a/a6f2/aHsZPudnIK20250421163518_1200.jpg",
-          "imageAlt": "嬰兒無添加衣物洗滌劑 柔和型 (補充裝) 720ml (平行進口貨)",
-          "link": "https://www.hktvmall.com/p/S2232001_S_PIG1323L",
-          "note": "",
-          "title": "嬰兒無添加衣物洗滌劑 柔和型 (補充裝) 720ml (平行進口貨)",
-          "pack": "720ml",
           "qty": 1
         },
         {
@@ -924,6 +843,18 @@
         },
         {
           "brand": null,
+          "lastPurchased": "2026-05-27",
+          "daysSince": 142,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/2073/d90b/23d8/AcAJobMZei20251008171618_1200.jpg",
+          "imageAlt": "Attack 抗菌EX 強力潔净洗衣液 750g [平行進口] (新舊",
+          "link": "https://www.hktvmall.com/p/H9340001_S_64512",
+          "note": "",
+          "title": "Attack 抗菌EX 強力潔净洗衣液 750g [平行進口] (新舊",
+          "pack": "750g",
+          "qty": 1
+        },
+        {
+          "brand": null,
           "lastPurchased": "2025-06-05",
           "daysSince": 498,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/5981/bcb3/f5c2/STYMGWdboH20241211145821_1200.png",
@@ -1153,7 +1084,7 @@
       "lastPurchased": "2026-05-26",
       "daysSince": 143,
       "suggest": "優先",
-      "note": "約每 64 日一件 · 預計已到期",
+      "note": "約每 217 日一件 · 預計 73 日要補貨",
       "image": "https://medias.pns.hk/publishing/PNSHK-257843-front-thumbnail.jpg?version=1732804010",
       "imageAlt": "Hipp 喜寶嬰兒潤膚露 350毫升 VIPDAY:92折 買2慳$44 26PAM2 comeback:$1000-$500",
       "brands": [
@@ -1171,18 +1102,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-02-14",
-          "daysSince": 244,
-          "image": "https://images.hktvmall.com/h0967001/91524/h0967001_10211751_170412074051_01_1200.jpg",
-          "imageAlt": "BB爽身粉 天然植物嬰兒痱子粉 120g (綠色)(150424) 連",
-          "link": "https://www.hktvmall.com/p/H0967001_S_10211751",
-          "note": "",
-          "title": "BB爽身粉 天然植物嬰兒痱子粉 120g (綠色)(150424) 連",
-          "pack": "120g",
-          "qty": 2
-        },
-        {
-          "brand": null,
           "lastPurchased": "2025-11-20",
           "daysSince": 330,
           "image": "https://images.hktvmall.com/h0888001/1bd8c671021a5f0a3d3b202bbb173f34331014b0/h0888001_10137355_221205050758_01_1200.jpg",
@@ -1191,41 +1110,6 @@
           "note": "",
           "title": "強生極致修護潤膚露500毫升 [升級400ml>500ml]",
           "pack": "400ml",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-11-07",
-          "daysSince": 343,
-          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/d71f/5adc/cb81/CWJlmqwGTh20240509143302_1200.jpg",
-          "imageAlt": "嬰兒用罐庄植物性爽身粉(連粉撲)120g【平行進口貨品】",
-          "link": "https://www.hktvmall.com/p/S2214001_S_RW150424",
-          "note": "",
-          "title": "嬰兒用罐庄植物性爽身粉(連粉撲)120g【平行進口貨品】",
-          "pack": "120g",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-06-20",
-          "daysSince": 483,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/B0630002_S_150424",
-          "note": "",
-          "title": "嬰兒用罐庄植物性爽身粉 紅茶香味(連粉撲)120g平行進口）15042",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-06-20",
-          "daysSince": 483,
-          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/0864/7aff/664f/FBhZOShaQe20240509143235_1200.jpg",
-          "imageAlt": "嬰兒藥用罐庄爽身粉(連粉撲)140g(敏感肌用)【平行進口貨品】",
-          "link": "https://www.hktvmall.com/p/S2214001_S_RW145055",
-          "note": "",
-          "title": "嬰兒藥用罐庄爽身粉(連粉撲)140g(敏感肌用)【平行進口貨品】",
-          "pack": "140g",
           "qty": 1
         },
         {
@@ -1405,7 +1289,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": 1,
       "suggest": "優先",
-      "note": "約每 16 日一件 · 預計 14 日要補貨",
+      "note": "約每 14 日一件 · 預計 13 日要補貨",
       "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/c189/63a5/8596/rLEKsffTlJ20240709173112_1200.png",
       "imageAlt": "有機嬰幼兒意粉 三色粗粒小麥蕃茄菠菜義大利麵 - 迪士尼汽車 此日期前",
       "brands": [
@@ -1422,6 +1306,52 @@
         },
         {
           "brand": null,
+          "lastPurchased": "2026-09-08",
+          "daysSince": 38,
+          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/7925/04b9/84c6/duBCAIhngy20240429125851_1200.png",
+          "imageAlt": "小麥蔬菜意粉螺絲粉（菠菜乾、番茄乾、紅菜頭乾、薑黃） 嬰幼兒通粉 [",
+          "link": "https://www.hktvmall.com/p/S6061001_S_93301",
+          "note": "",
+          "title": "小麥蔬菜意粉螺絲粉（菠菜乾、番茄乾、紅菜頭乾、薑黃） 嬰幼兒通粉 [",
+          "qty": 3
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-07-04",
+          "daysSince": 104,
+          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/8aa6/357c/b5aa/yxNXAolVcr20240429135425_1200.png",
+          "imageAlt": "幼童小麥義大利麵汽車形狀（五種口味） (250g) [02091]",
+          "link": "https://www.hktvmall.com/p/S6061001_S_93302",
+          "note": "",
+          "title": "幼童小麥義大利麵汽車形狀（五種口味） (250g) [02091]",
+          "pack": "250g",
+          "qty": 1
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-07-04",
+          "daysSince": 104,
+          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/c78f/2200/8484/BWTaPRjQJv20240709173154_1200.png",
+          "imageAlt": "有機嬰幼兒意粉 三色粗粒小麥蕃茄菠菜義大利麵米奇老鼠 [00364]",
+          "link": "https://www.hktvmall.com/p/S6061001_S_93602",
+          "note": "",
+          "title": "有機嬰幼兒意粉 三色粗粒小麥蕃茄菠菜義大利麵米奇老鼠 [00364]",
+          "qty": 1
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-07-04",
+          "daysSince": 104,
+          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/2ff9/d87a/7d14/rWTsUooERP20240604125524_1200.jpg",
+          "imageAlt": "有機無麩質紅菜頭菠菜白米麵粉義大利麵 (250g) [49456]",
+          "link": "https://www.hktvmall.com/p/S6061001_S_94012",
+          "note": "",
+          "title": "有機無麩質紅菜頭菠菜白米麵粉義大利麵 (250g) [49456]",
+          "pack": "250g",
+          "qty": 1
+        },
+        {
+          "brand": null,
           "lastPurchased": "2026-06-17",
           "daysSince": 121,
           "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/1318/58f2/f5bc/qIcebVLver20240429154947_1200.png",
@@ -1433,6 +1363,7 @@
         }
       ],
       "subtype": "嬰兒食品",
+      "pack": "250g",
       "qty": 1
     },
     {
@@ -1848,7 +1779,7 @@
       "lastPurchased": "2026-08-03",
       "daysSince": 74,
       "suggest": "優先",
-      "note": "約每 78 日一件 · 預計 392 日要補貨",
+      "note": "約每 54 日一件 · 預計 250 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/e02b/1760/f9f4/EszKbyyBAH20260630145248_1200.jpg",
       "imageAlt": "開心Share套裝 - 兒童香脆椰子卷（香蕉/椰子/芒果）1歲+（非油",
       "brands": [
@@ -1895,6 +1826,17 @@
           "note": "",
           "title": "有機動物餅小食（１２個月或以上） VIPDAY:92折 26PAM2 comeback:$1000-$500",
           "pack": "100G",
+          "qty": 1
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-02-26",
+          "daysSince": 232,
+          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/fa98/6372/6d3b/AkjEDYKgHU20221128231004_1200.png",
+          "imageAlt": "幼兒低敏天然無麩質手指餅曲奇(無白糖無鹽無牛油配方)-胡蘿蔔 [3包]",
+          "link": "https://www.hktvmall.com/p/H0617001_S_AA-00135",
+          "note": "",
+          "title": "幼兒低敏天然無麩質手指餅曲奇(無白糖無鹽無牛油配方)-胡蘿蔔 [3包]",
           "qty": 1
         },
         {
@@ -2096,18 +2038,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-03-12",
-          "daysSince": 218,
-          "image": "https://images.hktv-img.com/images/HKTV/18356/ITO_820714_Baby_Ca_Bisc_75g_x2_main_31333872_20191114022839_01_1200.jpg",
-          "imageAlt": "北海道產牛乳鈣餅 75g X2盒 (827066) (在此日期前最佳:",
-          "link": "https://www.hktvmall.com/p/S6031001_S_ITO_820714_Baby_Ca_Bisc_75g_x2",
-          "note": "",
-          "title": "北海道產牛乳鈣餅 75g X2盒 (827066) (在此日期前最佳:",
-          "pack": "75g",
-          "qty": 2
-        },
-        {
-          "brand": null,
           "lastPurchased": "2026-01-14",
           "daysSince": 275,
           "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/83cc/dc9d/8392/RtDWlhzWbd20240612180215_1200.jpg",
@@ -2116,6 +2046,18 @@
           "note": "",
           "title": "高鈣低脂奶 / 到期日:2026年2月20日 /",
           "qty": 2
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-12-30",
+          "daysSince": 290,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/27b8/e072/0d5d/dAbpxcJnit20241204143145_1200.jpg",
+          "imageAlt": "【6盒裝】韓國延世大學 1A 牛乳 高品質牛奶 190ml 早餐奶 全",
+          "link": "https://www.hktvmall.com/p/H0967001_S_SD8801753000543_6pcs",
+          "note": "",
+          "title": "【6盒裝】韓國延世大學 1A 牛乳 高品質牛奶 190ml 早餐奶 全",
+          "pack": "190ml",
+          "qty": 1
         }
       ],
       "subtype": "乳製品",
@@ -2509,7 +2451,7 @@
       "lastPurchased": "2026-05-26",
       "daysSince": 143,
       "suggest": "優先",
-      "note": "約每 22 日一件 · 預計已到期；碗／杯裝只加熱水",
+      "note": "約每 16 日一件 · 預計已到期；碗／杯裝只加熱水",
       "image": "https://medias.pns.hk/publishing/PNSHK-158438-front-thumbnail.jpg?version=1732748940",
       "imageAlt": "公仔海鮮蠔油炒麵王 送公仔炒麵王",
       "brands": [
@@ -2550,6 +2492,18 @@
           "qty": 1
         },
         {
+          "brand": "公仔",
+          "lastPurchased": "2026-05-12",
+          "daysSince": 157,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.pns.hk/炒麵王—港式沙嗲牛肉味/p/BP_130651",
+          "note": "",
+          "title": "炒麵王—港式沙嗲牛肉味 送公仔炒麵王",
+          "pack": "108G",
+          "qty": 1
+        },
+        {
           "brand": null,
           "lastPurchased": "2026-02-05",
           "daysSince": 253,
@@ -2559,6 +2513,28 @@
           "note": "",
           "title": "濃厚醬油碗麵 x 5 / 到期日:2026年4月29日 /",
           "qty": 5
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-01-14",
+          "daysSince": 275,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/3ea1/7823/8710/oFXitaHUuW20241017113554_1200.png",
+          "imageAlt": "[日本直送] 咚兵衛牛肉湯烏冬(碗) x 3 #日本直送 #新舊包裝隨",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10142700B",
+          "note": "",
+          "title": "[日本直送] 咚兵衛牛肉湯烏冬(碗) x 3 #日本直送 #新舊包裝隨",
+          "qty": 3
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-09-11",
+          "daysSince": 400,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/68f1/5944/b70e/QWoPgkRzHc20250331164816_1200.jpg",
+          "imageAlt": "咚兵衛杯烏冬 - 日式腐皮 (新舊包裝隨機派送!) x 4",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10159774C",
+          "note": "",
+          "title": "咚兵衛杯烏冬 - 日式腐皮 (新舊包裝隨機派送!) x 4",
+          "qty": 4
         }
       ],
       "subtype": "即食麵",
@@ -2633,7 +2609,7 @@
       "lastPurchased": "2026-05-26",
       "daysSince": 143,
       "suggest": "優先",
-      "note": "約每 123 日一件 · 預計已到期",
+      "note": "",
       "image": "https://medias.pns.hk/publishing/PNSHK-369985-front-thumbnail.jpg?version=1732836395",
       "imageAlt": "橄欖植物牛油[澳洲](冷凍 0-4°c) VIPDAY:92折 26PAM2 comeback:$1000-$500",
       "brands": [
@@ -2648,17 +2624,6 @@
           "title": "橄欖植物牛油[澳洲](冷凍 0-4°c) VIPDAY:92折 26PAM2 comeback:$1000-$500",
           "pack": "500G",
           "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-01-23",
-          "daysSince": 266,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/26d7/a788/1fe9/JXBgIcTbUe20261010015552_1200.jpg",
-          "imageAlt": "[59折 優惠]日版Sugar Butter Tree 招牌糖烤牛油",
-          "link": "https://www.hktvmall.com/p/S1061001_S_MON-SUG-SNK-43361",
-          "note": "",
-          "title": "[59折 優惠]日版Sugar Butter Tree 招牌糖烤牛油",
-          "qty": 1
         }
       ],
       "subtype": "牛油 人造牛油",
@@ -2671,7 +2636,7 @@
       "lastPurchased": "2026-07-16",
       "daysSince": 92,
       "suggest": "優先",
-      "note": "約每 18 日一件 · 預計已到期",
+      "note": "約每 233 日一件 · 預計 141 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/b53a/9a1e/30f1/btBGyYEbQV20260920085837_1200.jpg",
       "imageAlt": "即食燕麥片 紅色 800克 【香港行貨】【最佳使用日期:09/2027",
       "brands": [
@@ -2684,17 +2649,6 @@
           "link": "https://www.hktvmall.com/p/B0961005_S_9556174902219",
           "note": "",
           "title": "即食燕麥片 紅色 800克 【香港行貨】【最佳使用日期:09/2027",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-05-16",
-          "daysSince": 518,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/7773/a712/2614/BYHJwjgsGN20240725105204_1200.jpg",
-          "imageAlt": "[零售獨賣] 開心果味燕麥飲品 1公升 #原裝行貨#燕麥奶 #健康 #",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10158271",
-          "note": "",
-          "title": "[零售獨賣] 開心果味燕麥飲品 1公升 #原裝行貨#燕麥奶 #健康 #",
           "qty": 1
         },
         {
@@ -2820,28 +2774,6 @@
           "qty": 2
         },
         {
-          "brand": null,
-          "lastPurchased": "2026-06-12",
-          "daysSince": 126,
-          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/97ae/0a4a/84ab/CXDDERlZgD20231027115359_1200.jpg",
-          "imageAlt": "拖板 3位13A獨立開關掣及指示燈3米線拖板 排蘇插座延長電線排插 兒",
-          "link": "https://www.hktvmall.com/p/H0606003_S_S933",
-          "note": "",
-          "title": "拖板 3位13A獨立開關掣及指示燈3米線拖板 排蘇插座延長電線排插 兒",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-06-12",
-          "daysSince": 126,
-          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/a663/bd7b/fd5b/qQGqYQOxxp20231027115250_1200.jpg",
-          "imageAlt": "拖板 2位13A獨立開關掣及指示燈3米線拖板 排蘇插座延長電線排插 兒",
-          "link": "https://www.hktvmall.com/p/H0606003_S_S922",
-          "note": "",
-          "title": "拖板 2位13A獨立開關掣及指示燈3米線拖板 排蘇插座延長電線排插 兒",
-          "qty": 1
-        },
-        {
           "brand": "ZEN NOH PEARL RICE",
           "lastPurchased": "2026-05-12",
           "daysSince": 157,
@@ -2867,17 +2799,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-03-01",
-          "daysSince": 229,
-          "image": "https://images.hktv-img.com/images/HKTV/13757/4000002006_main_28847568_20190815182037_01_1200.jpg",
-          "imageAlt": "(米奇) 日本製造迪士尼可愛卡通造型 幼兒餐具套裝 (1套3件)",
-          "link": "https://www.hktvmall.com/p/H5789001_S_4000002006",
-          "note": "",
-          "title": "(米奇) 日本製造迪士尼可愛卡通造型 幼兒餐具套裝 (1套3件)",
-          "qty": 1
-        },
-        {
-          "brand": null,
           "lastPurchased": "2026-02-27",
           "daysSince": 231,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/833f/b91d/a1bd/kzDVryoqJg20260212145827_1200.jpg",
@@ -2897,6 +2818,39 @@
           "note": "",
           "title": "富山縣產越光米",
           "qty": 1
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-01-16",
+          "daysSince": 273,
+          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/5ae2/5d88/fdb6/whFeDKsCOq20240612102328_1200.jpg",
+          "imageAlt": "山形縣山拔米",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10157630",
+          "note": "",
+          "title": "山形縣山拔米",
+          "qty": 1
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-12-21",
+          "daysSince": 299,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/4cfd/7730/6b35/dRepbaUwDj20240904120857_1200.jpg",
+          "imageAlt": "滋賀產 近江米 2公斤 x 2",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10158313A",
+          "note": "",
+          "title": "滋賀產 近江米 2公斤 x 2",
+          "qty": 2
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-25",
+          "daysSince": 570,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/0fda/6f8b/e854/OcdMnTxLyc20260409112623_1200.jpg",
+          "imageAlt": "日本秋田小町米",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10158326",
+          "note": "",
+          "title": "日本秋田小町米",
+          "qty": 2
         }
       ],
       "subtype": "米",
@@ -2998,28 +2952,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-01-09",
-          "daysSince": 280,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/f33f/1782/6be0/RSBcDLLxQt20241003165153_1200.jpg",
-          "imageAlt": "九製老陳皮(80克)",
-          "link": "https://www.hktvmall.com/p/H0817001_S_10323NEW",
-          "note": "",
-          "title": "九製老陳皮(80克)",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-01-09",
-          "daysSince": 280,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/92bf/9709/eab2/JdiltFfbyz20241002145228_1200.jpg",
-          "imageAlt": "換購品-尚品薑棗燉桃膠 (228克)",
-          "link": "https://www.hktvmall.com/p/H0817001_S_12133_redeem",
-          "note": "",
-          "title": "換購品-尚品薑棗燉桃膠 (228克)",
-          "qty": 1
-        },
-        {
-          "brand": null,
           "lastPurchased": "2025-06-06",
           "daysSince": 497,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/4e4a/3fec/2955/OkJGsOYhPy20250625150905_1200.jpg",
@@ -3039,17 +2971,6 @@
           "link": "https://www.hktvmall.com/p/H7775001_S_MH062",
           "note": "",
           "title": "龍牙大百合 (300克裝)",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-04-24",
-          "daysSince": 540,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/9904/7b09/5b44/bwRWNDzXHm20250310094634_1200.jpg",
-          "imageAlt": "5年陳藏 - 真新會陳皮 (25克)",
-          "link": "https://www.hktvmall.com/p/H0827002_S_HK0300395",
-          "note": "",
-          "title": "5年陳藏 - 真新會陳皮 (25克)",
           "qty": 1
         }
       ],
@@ -3220,7 +3141,7 @@
       "lastPurchased": "2026-05-06",
       "daysSince": 163,
       "suggest": "優先",
-      "note": "約每 7 日一件 · 預計已到期",
+      "note": "約每 41 日一件 · 預計 166 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/8093/a18e/5831/KtpnCZRAiK20241022075134_1200.png",
       "imageAlt": "高鈣天然酵母梳打餅 (6枚X8袋)(4901360353422)【平行",
       "brands": [
@@ -3237,14 +3158,14 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-02-02",
-          "daysSince": 256,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/d6be/4ca8/d8c7/EhKFUeMvZs20250902150703_1200.jpg",
-          "imageAlt": "[原箱] 梳打水玻璃樽 325毫升 X 24 #零卡路里 #無糖 #溝",
-          "link": "https://www.hktvmall.com/p/H0888001_S_P10009143",
+          "lastPurchased": "2026-02-12",
+          "daysSince": 246,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ec8c/de78/2cdb/jkEIhwqSkG20250124172110_1200.jpg",
+          "imageAlt": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口 / 到期日:",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10159858A",
           "note": "",
-          "title": "[原箱] 梳打水玻璃樽 325毫升 X 24 #零卡路里 #無糖 #溝",
-          "qty": 24
+          "title": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口 / 到期日:",
+          "qty": 2
         },
         {
           "brand": null,
@@ -3281,6 +3202,17 @@
         },
         {
           "brand": null,
+          "lastPurchased": "2025-08-29",
+          "daysSince": 413,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ec8c/de78/2cdb/jkEIhwqSkG20250124172110_1200.jpg",
+          "imageAlt": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10159858A",
+          "note": "",
+          "title": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口",
+          "qty": 2
+        },
+        {
+          "brand": null,
           "lastPurchased": "2025-06-18",
           "daysSince": 485,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/464d/98ab/6d47/mjqlXzsmSf20241126123401_1200.jpg",
@@ -3288,6 +3220,17 @@
           "link": "https://www.hktvmall.com/p/H0888001_S_10160004A",
           "note": "",
           "title": "天然酵母蘇打餅(海苔味) x 2",
+          "qty": 2
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-05",
+          "daysSince": 590,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ec8c/de78/2cdb/jkEIhwqSkG20250124172110_1200.jpg",
+          "imageAlt": "[日本直送] 天然酵母梳打餅 48枚 x 2 (新舊包裝隨機發送) #",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10159858A",
+          "note": "",
+          "title": "[日本直送] 天然酵母梳打餅 48枚 x 2 (新舊包裝隨機發送) #",
           "qty": 2
         },
         {
@@ -3772,8 +3715,8 @@
       "daysSince": 41,
       "suggest": "",
       "note": "",
-      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/83c3/cf4f/2757/WyEGPnwqIr20251112164709_1200.jpg",
-      "imageAlt": "柑橘烤香料雞味薯片150g (1包) Chargrilled Spic",
+      "image": null,
+      "imageAlt": null,
       "brands": [
         {
           "brand": "SELECT佳之選",
@@ -3784,18 +3727,6 @@
           "link": "https://www.pns.hk/鮮橙５個裝-南非/p/BP_75126",
           "note": "",
           "title": "鮮橙５個裝 [南非] MAF26:享92折優惠 +$16.5換購SELECT佳之選鮮橙",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-01-09",
-          "daysSince": 280,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/83c3/cf4f/2757/WyEGPnwqIr20251112164709_1200.jpg",
-          "imageAlt": "柑橘烤香料雞味薯片150g (1包) Chargrilled Spic",
-          "link": "https://www.hktvmall.com/p/H7606001_S_SD2020113265A",
-          "note": "",
-          "title": "柑橘烤香料雞味薯片150g (1包) Chargrilled Spic",
-          "pack": "150g",
           "qty": 1
         }
       ],
@@ -4702,29 +4633,6 @@
           "qty": 1
         },
         {
-          "brand": "公仔",
-          "lastPurchased": "2026-05-12",
-          "daysSince": 157,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.pns.hk/炒麵王—港式沙嗲牛肉味/p/BP_130651",
-          "note": "",
-          "title": "炒麵王—港式沙嗲牛肉味 送公仔炒麵王",
-          "pack": "108G",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-01-14",
-          "daysSince": 275,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/3ea1/7823/8710/oFXitaHUuW20241017113554_1200.png",
-          "imageAlt": "[日本直送] 咚兵衛牛肉湯烏冬(碗) x 3 #日本直送 #新舊包裝隨",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10142700B",
-          "note": "",
-          "title": "[日本直送] 咚兵衛牛肉湯烏冬(碗) x 3 #日本直送 #新舊包裝隨",
-          "qty": 3
-        },
-        {
           "brand": null,
           "lastPurchased": "2026-01-08",
           "daysSince": 281,
@@ -4770,17 +4678,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2025-07-18",
-          "daysSince": 455,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/1813/64b4/ef00/SUXFYtFmop20250929104005_1200.jpg",
-          "imageAlt": "丹麥無激素添加急凍豬柳 450克 (急凍-18°C)",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10141278",
-          "note": "",
-          "title": "丹麥無激素添加急凍豬柳 450克 (急凍-18°C)",
-          "qty": 1
-        },
-        {
-          "brand": null,
           "lastPurchased": "2025-07-09",
           "daysSince": 464,
           "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/a7f7/8435/1453/CxrDeRObvN20220618105848_1200.jpg",
@@ -4789,28 +4686,6 @@
           "note": "",
           "title": "巴西牛筋腩 約1000g #生酮#無添加#無防腐劑#咖哩牛腩#柱侯#蘿",
           "pack": "1000g",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-06-13",
-          "daysSince": 490,
-          "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/71e8/3061/232e/ZAtOopMbwB20240510141710_1200.jpg",
-          "imageAlt": "[西班牙進口] 不見天(條) - 伊比利亞黑毛豬(急凍 -18°C)",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10156458",
-          "note": "",
-          "title": "[西班牙進口] 不見天(條) - 伊比利亞黑毛豬(急凍 -18°C)",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-05-16",
-          "daysSince": 518,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/0276/efaf/5930/jsIOYwzaSW20250714144656_1200.png",
-          "imageAlt": "1磅裝！日本進口青森縣豬手粒 (急凍-18°C) #無添加#無防腐劑#",
-          "link": "https://www.hktvmall.com/p/H7290001_S_PORK-JP-001",
-          "note": "",
-          "title": "1磅裝！日本進口青森縣豬手粒 (急凍-18°C) #無添加#無防腐劑#",
           "qty": 1
         }
       ],
@@ -6248,18 +6123,6 @@
           "note": "",
           "title": "高級老抽(100% 純釀造) 590毫升 (2樽裝)",
           "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-03-05",
-          "daysSince": 590,
-          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/4de4/4eb7/d82a/XmAquwnxQi20240120163336_1200.png",
-          "imageAlt": "悅和醬油 添丁甜醋 500ml (支裝) #21080735 Yuet",
-          "link": "https://www.hktvmall.com/p/H8032002_S_SP-00238",
-          "note": "",
-          "title": "悅和醬油 添丁甜醋 500ml (支裝) #21080735 Yuet",
-          "pack": "500ml",
-          "qty": 2
         }
       ],
       "subtype": "豉油",
@@ -6796,7 +6659,7 @@
       "lastPurchased": "2026-10-06",
       "daysSince": 10,
       "suggest": "暫緩",
-      "note": "約每 37 日一件 · 預計 27 日要補貨",
+      "note": "約每 354 日一件 · 預計 343 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/6f49/6e62/494e/wiFnCDUVye20251202123924_1200.jpg",
       "imageAlt": "Cetaphil 潤膚膏 保濕霜 550克 (13024) (到期日:",
       "brands": [
@@ -6813,17 +6676,6 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-02-12",
-          "daysSince": 246,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ec8c/de78/2cdb/jkEIhwqSkG20250124172110_1200.jpg",
-          "imageAlt": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口 / 到期日:",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10159858A",
-          "note": "",
-          "title": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口 / 到期日:",
-          "qty": 2
-        },
-        {
-          "brand": null,
           "lastPurchased": "2025-11-20",
           "daysSince": 330,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/33cc/e215/7379/KTGGVjLmea20240831111121_1200.jpg",
@@ -6832,28 +6684,6 @@
           "note": "",
           "title": "CoenRich 藥用美白特潤護手霜 (蜜桃清香) 80克 (4971",
           "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-08-29",
-          "daysSince": 413,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ec8c/de78/2cdb/jkEIhwqSkG20250124172110_1200.jpg",
-          "imageAlt": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10159858A",
-          "note": "",
-          "title": "[日本直送] 天然酵母梳打餅 48枚 x 2 #平行進口",
-          "qty": 2
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-03-05",
-          "daysSince": 590,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ec8c/de78/2cdb/jkEIhwqSkG20250124172110_1200.jpg",
-          "imageAlt": "[日本直送] 天然酵母梳打餅 48枚 x 2 (新舊包裝隨機發送) #",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10159858A",
-          "note": "",
-          "title": "[日本直送] 天然酵母梳打餅 48枚 x 2 (新舊包裝隨機發送) #",
-          "qty": 2
         },
         {
           "brand": null,
@@ -7020,7 +6850,7 @@
       "lastPurchased": "2026-10-08",
       "daysSince": 8,
       "suggest": "暫緩",
-      "note": "約每 27 日一件 · 預計 73 日要補貨",
+      "note": "約每 69 日一件 · 預計 200 日要補貨",
       "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/fe38/da8b/9bcc/JDfhHQSIQO20231129190447_1200.png",
       "imageAlt": "德國強力腦活素 GLQ10",
       "brands": [
@@ -7034,17 +6864,6 @@
           "note": "",
           "title": "德國強力腦活素 GLQ10",
           "qty": 3
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-03-06",
-          "daysSince": 224,
-          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/a44b/76ed/8e2c/NbjwzJyzcg20230508171331_1200.jpg",
-          "imageAlt": "福建雲耳(120克) - 優質保健食品｜排毒理氣",
-          "link": "https://www.hktvmall.com/p/H0817001_S_10340NE",
-          "note": "",
-          "title": "福建雲耳(120克) - 優質保健食品｜排毒理氣",
-          "qty": 1
         },
         {
           "brand": null,
@@ -7225,7 +7044,7 @@
       "lastPurchased": "2026-10-12",
       "daysSince": 4,
       "suggest": "暫緩",
-      "note": "約每 15 日一件 · 預計 10 日要補貨；康怡已簽收 13/10",
+      "note": "約每 38 日一件 · 預計 33 日要補貨；康怡已簽收 13/10",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/c119/79f2/5192/ukOmvTozfE20260710103902_1200.jpg",
       "imageAlt": "超級天然鈣",
       "brands": [
@@ -7242,15 +7061,14 @@
         },
         {
           "brand": null,
-          "lastPurchased": "2026-07-24",
-          "daysSince": 84,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/f9f1/58c3/55d3/jYqBFRzrxl20260504142203_1200.jpg",
-          "imageAlt": "CA加鈣 鐵強化餅乾 3.6g x 8袋/盒 (平行進口貨)",
-          "link": "https://www.hktvmall.com/p/S2232001_S_WKD01650",
+          "lastPurchased": "2025-09-04",
+          "daysSince": 407,
+          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/2566/12bc/ae42/eCZbiUIeoS20230725110741_1200.jpg",
+          "imageAlt": "超級天然鈣 香港行貨",
+          "link": "https://www.hktvmall.com/p/B0153002_S_A2003",
           "note": "",
-          "title": "CA加鈣 鐵強化餅乾 3.6g x 8袋/盒 (平行進口貨)",
-          "pack": "3.6g",
-          "qty": 8
+          "title": "超級天然鈣 香港行貨",
+          "qty": 1
         },
         {
           "brand": null,
