@@ -13,5 +13,5 @@ compatibility_date = "2025-09-01"
 binding = "DB"
 database_name = "grocery-restock-exclusions"
 # Replace after: npx wrangler d1 create grocery-restock-exclusions
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "8efc24ae-cb86-43b7-82a1-11749f088704"
 migrations_dir = "migrations"
