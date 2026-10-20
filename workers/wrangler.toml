@@ -1,0 +1,17 @@
+name = "grocery-restock-exclusions"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+# Public browser GET/POST matches the GAS Web App (no write secret).
+# WRITE_SECRET, RECLASS_WEBHOOK_URL, and RECLASS_WEBHOOK_AUTH are secrets:
+#   npx wrangler secret put WRITE_SECRET
+#   npx wrangler secret put RECLASS_WEBHOOK_URL
+#   npx wrangler secret put RECLASS_WEBHOOK_AUTH
+# Do not put those values in this file.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "grocery-restock-exclusions"
+# Replace after: npx wrangler d1 create grocery-restock-exclusions
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"

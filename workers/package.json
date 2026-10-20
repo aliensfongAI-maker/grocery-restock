@@ -1,0 +1,13 @@
+{
+  "name": "grocery-restock-exclusions-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --disable-warning=ExperimentalWarning --test test/contract.test.js",
+    "dev": "wrangler dev --local",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.2"
+  }
+}

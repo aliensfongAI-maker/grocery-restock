@@ -11,9 +11,10 @@
 | `styles.css` | 樣式（mobile-first） |
 | `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組、牌子摺疊。`window.GROCERY_READ_ONLY` 為真時唔呼叫剔除／暫緩 |
 | `i18n-data.json` | `type`、`subtype`、品名嘅英文同印尼文對照（靜態檔，冇翻譯 API） |
-| `config.js` | Sheet Web App 網址（預設留空；剔除、暫緩、改類共用） |
-| `gas/Code.gs` | Apps Script：讀寫 Google Sheet（剔除、暫緩、改類 overrides） |
-| `gas/seed-reclass.json` | 改類 seed 清單（9 行）。編輯器跑 `seedReclassOverrides`（冇底線），呢份檔唔會被網站讀 |
+| `config.js` | 剔除 API 網址。而家仍然係 GAS；直切時先改成 Worker URL |
+| `workers/` | Cloudflare Worker + D1。直切取代 GAS 嘅後端（見 `workers/README.md`） |
+| `gas/Code.gs` | Apps Script 參考實作。直切完成之前留喺 repo，呢次唔刪 |
+| `gas/seed-reclass.json` | 改類 seed 清單（9 行）。Worker `/admin/seed` 同 GAS `seedReclassOverrides` 用同一份 |
 | `data.json` | 建議資料（前端只顯示 `suggest`，唔重算；唔存剔除或暫緩） |
 
 ## 分組
@@ -53,9 +54,22 @@
 
 唔好放私人資料、價錢、地址、帳戶資訊入 `data.json`。
 
+## 直切：Cloudflare Workers + D1
+
+剔除、手動暫緩、改類下一個後端係 `workers/`（Cloudflare Worker + D1）。合約同 GAS Web App 一樣：GET JSON／JSONP，POST `text/plain` JSON。`gas/Code.gs` 留喺 repo 做參考，呢次唔刪程式、亦唔改線上網址。
+
+`config.js` 暫時仍然指住 GAS。Worker 主機名要 `npx wrangler deploy` 之後先有，唔好估。直切係**同一步**，冇並行期、冇雙寫：
+
+1. 部署 Worker、建立 D1、跑 migration、設定 secrets（`WRITE_SECRET`、`RECLASS_WEBHOOK_URL`、`RECLASS_WEBHOOK_AUTH`）。
+2. 用而家 GAS 嘅 GET snapshot 匯入 D1。snapshot 冇改類列，先再叫 `/admin/seed` 寫入 9 行。
+3. 將 `GROCERY_EXCLUSIONS_API` 改成該次 deploy 印出嘅 Worker URL，push 上 GitHub Pages。
+4. Pages 用緊新網址之後，立刻停用 GAS 網頁應用程式部署。
+
+瀏覽器六個 action（exclude、restore、hold、unhold、reclass、reclass_clear）同而家 GAS「任何人」一樣，唔使 secret。`/admin/seed` 同 `/admin/import` 先要 `WRITE_SECRET`。Workers 改類通知只打 webhook，冇 MailApp。命令同 curl 例子喺 `workers/README.md`。
+
 ## 暫不考慮（Google Sheet）
 
-剔除／回復同手動暫緩都唔寫入 `data.json`。Google Sheet 先算數；主清單照舊只讀 `data.json`。每項主鍵係 `type|name`（成件貨，唔係逐個牌子）。
+以下係而家線上 GAS 嘅行為。直切去 Worker 之後，D1 先算數，GAS 網頁應用程式要停。剔除／回復同手動暫緩都唔寫入 `data.json`。主清單照舊只讀 `data.json`。每項主鍵係 `type|name`（成件貨，唔係逐個牌子）。
 
 工作表欄位：`type | name | at | note | status`。`at` 係香港時間 ISO。`status` 只得 `excluded`、`restored`、`held`、`unheld`。
 
@@ -65,6 +79,8 @@
 - 舊表如果第一列係 `excludedAt`，第一次讀寫會把欄名改做 `at`，入面嘅時間唔郁。
 
 `doGet` 回傳 `{ items: [剔除中…], held: [暫緩中…], overrides: [改類 active…] }`。`overrides` 只包含最新狀態係 `active` 嘅列；`cleared` 唔出現。剔除同暫緩嘅讀寫同之前一樣，同改類分開。
+
+下面 1–7 只係記錄而家呢個 Web App 點樣部署。下一次切換跟 `workers/README.md` 直切，唔好再開一個新 GAS 部署。
 
 1. 開新 Google 試算表，名稱 **超市補貨-剔除**（用第一個工作表，唔使自己打欄位）。
 2. 擴充功能 → **Apps Script**。刪除預設程式，將 `gas/Code.gs` 全部貼上，儲存。
@@ -103,7 +119,7 @@ window.GROCERY_EXCLUSIONS_API = "https://script.google.com/macros/s/…/exec";
 
 寫入（POST）維持 `Content-Type: text/plain` 嘅 JSON 主體，係簡單請求，唔會觸發 CORS preflight。
 
-**你而家要做：** 將更新後嘅 `gas/Code.gs` 貼上 Apps Script，然後喺「部署 → 管理部署」建立**新版本**（執行身分：我；誰可以存取：任何人）。同一個 Web App 網址可以繼續用，但一定要換成新版本。未建立新版本之前：
+線上頁面喺直切之前仍然打緊 GAS。切去 Worker 嘅步驟見上面「直切：Cloudflare Workers + D1」同 `workers/README.md`。如果某個舊 GAS 部署未更新到而家呢份 `Code.gs`，會有下面嘅限制（直切之後呢段先成為歷史）：
 
 - 舊程式唔識 `callback`，JSONP 後備用唔到（`fetch` 成功就唔使靠 JSONP）
 - 舊程式唔識 `hold`／`unhold`，亦唔會回傳 `held`，「手動暫緩」用唔到

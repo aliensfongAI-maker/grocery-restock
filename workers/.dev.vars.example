@@ -1,0 +1,6 @@
+# Copy to .dev.vars for `npx wrangler dev --local`. Never commit .dev.vars.
+WRITE_SECRET=replace-with-a-long-random-string
+# Leave blank until Grocery Bot is ready. Reclass still saves.
+RECLASS_WEBHOOK_URL=
+# Full Authorization header value, for example: Bearer <bot-token>
+RECLASS_WEBHOOK_AUTH=
