@@ -5,8 +5,7 @@ import { handleRequest } from "../src/index.js";
 import { SEED_ROWS, byOverride, jsonText, nowHkt } from "../src/logic.js";
 import { createTestDb } from "./d1shim.js";
 
-const GAS_URL =
-  "https://script.google.com/macros/s/AKfycbwb226k6-iCnqirUgnk-1XVZSu2PupvxTtEros1haE5h5ku_GX_nuNEavevo1d0J6kS3A/exec";
+const WORKER_URL = "https://grocery-restock-exclusions.aliensfong-gemini.workers.dev";
 
 let restoreFetch = null;
 
@@ -720,13 +719,16 @@ describe("admin seed and import", () => {
 });
 
 describe("repo cutover guards", () => {
-  test("gas/Code.gs stays and config.js still points at GAS", () => {
+  test("config.js points at live Worker; gas/Code.gs retained", () => {
     const gas = readFileSync(new URL("../../gas/Code.gs", import.meta.url), "utf8");
     assert.match(gas, /function doGet/);
     assert.match(gas, /function doPost/);
     assert.match(gas, /function seedReclassOverrides/);
     const config = readFileSync(new URL("../../config.js", import.meta.url), "utf8");
-    assert.match(config, new RegExp(`window\\.GROCERY_EXCLUSIONS_API = "${GAS_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`));
+    assert.match(
+      config,
+      new RegExp(`window\\.GROCERY_EXCLUSIONS_API = "${WORKER_URL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`)
+    );
     assert.match(config, /直切/);
   });
 });

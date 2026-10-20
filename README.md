@@ -11,7 +11,7 @@
 | `styles.css` | 樣式（mobile-first） |
 | `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組、牌子摺疊。`window.GROCERY_READ_ONLY` 為真時唔呼叫剔除／暫緩 |
 | `i18n-data.json` | `type`、`subtype`、品名嘅英文同印尼文對照（靜態檔，冇翻譯 API） |
-| `config.js` | 剔除 API 網址。而家仍然係 GAS；直切時先改成 Worker URL |
+| `config.js` | 剔除 API 網址。而家指住已部署嘅 Cloudflare Worker |
 | `workers/` | Cloudflare Worker + D1。直切取代 GAS 嘅後端（見 `workers/README.md`） |
 | `gas/Code.gs` | Apps Script 參考實作。直切完成之前留喺 repo，呢次唔刪 |
 | `gas/seed-reclass.json` | 改類 seed 清單（9 行）。Worker `/admin/seed` 同 GAS `seedReclassOverrides` 用同一份 |
