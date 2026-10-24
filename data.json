@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T22:59:27+08:00",
+  "updatedAt": "2026-10-24T23:10:15+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -1081,13 +1081,25 @@
     {
       "type": "嬰兒用品／食品",
       "name": "嬰兒潤膚露",
-      "lastPurchased": "2026-10-17",
-      "daysSince": 7,
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
       "suggest": "暫緩",
-      "note": "約每 163 日一件 · 預計 155 日要補貨",
+      "note": "約每 13 日一件 · 預計 26 日要補貨",
       "image": "https://medias.pns.hk/publishing/PNSHK-257843-front-thumbnail.jpg?version=1732804010",
       "imageAlt": "Hipp 喜寶嬰兒潤膚露 350毫升 VIPDAY:92折 買2慳$44 26PAM2 comeback:$1000-$500",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0630001_S_174161",
+          "note": "",
+          "title": "Wakodo 嬰兒護理用品 嬰兒潤膚霜 60g (平行進口) ZZ",
+          "pack": "60g",
+          "qty": 2
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-17",
@@ -1137,7 +1149,7 @@
       ],
       "subtype": "嬰兒護膚",
       "pack": "350毫升",
-      "qty": 1
+      "qty": 2
     },
     {
       "type": "嬰兒用品／食品",
@@ -1419,17 +1431,17 @@
     {
       "type": "嬰兒用品／食品",
       "name": "嬰幼兒牙刷",
-      "lastPurchased": "2026-08-05",
-      "daysSince": 80,
-      "suggest": "優先",
-      "note": "約每 33 日一件 · 預計已到期",
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
+      "suggest": "暫緩",
+      "note": "約每 64 日一件 · 預計 64 日要補貨",
       "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/1b40/1d45/29bd/cROzZXPgQl20220216135123_1200.jpg",
       "imageAlt": "STB 360 嬰幼兒牙刷 (0-3歲) 1支裝 (顏色隨機)",
       "brands": [
         {
           "brand": null,
-          "lastPurchased": "2026-08-05",
-          "daysSince": 80,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
           "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/1b40/1d45/29bd/cROzZXPgQl20220216135123_1200.jpg",
           "imageAlt": "STB 360 嬰幼兒牙刷 (0-3歲) 1支裝 (顏色隨機)",
           "link": "https://www.hktvmall.com/p/H8931001_S_ST02",
@@ -3313,13 +3325,24 @@
     {
       "type": "水果",
       "name": "奇異果",
-      "lastPurchased": "2026-10-17",
-      "daysSince": 7,
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
       "suggest": "",
       "note": "",
       "image": "https://medias.pns.hk/publishing/PNSHK-33082-front-thumbnail.jpg?version=1732811758",
       "imageAlt": "奇異果（新西蘭） VIP26:$400-$30 買5慳$9.5",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00027",
+          "note": "",
+          "title": "紐西蘭Zespri陽光珍寶金奇異果 - 1個",
+          "qty": 5
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-17",
@@ -3344,7 +3367,7 @@
         }
       ],
       "subtype": "新鮮水果",
-      "qty": 2
+      "qty": 5
     },
     {
       "type": "水果",
@@ -3411,8 +3434,8 @@
     {
       "type": "水果",
       "name": "檸檬",
-      "lastPurchased": "2026-10-17",
-      "daysSince": 7,
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
       "suggest": "",
       "note": "",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/d50e/c7e3/82a5/mufNZQHPAm20260615123854_1200.png",
@@ -3420,8 +3443,8 @@
       "brands": [
         {
           "brand": null,
-          "lastPurchased": "2026-10-17",
-          "daysSince": 7,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/d50e/c7e3/82a5/mufNZQHPAm20260615123854_1200.png",
           "imageAlt": "檸檬 - 1個 #青檸#黃檸檬",
           "link": "https://www.hktvmall.com/p/B0812001_S_00323",
@@ -3493,8 +3516,8 @@
     {
       "type": "水果",
       "name": "火龍果",
-      "lastPurchased": "2026-10-17",
-      "daysSince": 7,
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
       "suggest": "",
       "note": "",
       "image": "https://medias.pns.hk/publishing/PNSHK-69930-front-thumbnail.jpg?version=1733319789",
@@ -3502,8 +3525,8 @@
       "brands": [
         {
           "brand": null,
-          "lastPurchased": "2026-10-17",
-          "daysSince": 7,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
           "image": null,
           "imageAlt": null,
           "link": "https://www.hktvmall.com/p/B0812001_S_00033",
@@ -4215,13 +4238,24 @@
     {
       "type": "冷凍／急凍食品",
       "name": "三文魚扒",
-      "lastPurchased": "2026-10-15",
-      "daysSince": 9,
-      "suggest": "優先",
-      "note": "約每 4 日一件 · 預計已到期；與柳分開",
-      "image": "https://cdn-mms.hktvmall.com/HKTV/mms/uploadProductImage/704f/84d2/8a06/fFqlGjjVqY20240503145653_1200.png",
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
+      "suggest": "在途",
+      "note": "約每 4 日一件 · 預計 9 日要補貨；與柳分開",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ad0f/7be0/c1b2/NaSLLzoGnb20260908125149_1200.jpg",
       "imageAlt": "挪威三文魚扒 (急凍-18°C)",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ad0f/7be0/c1b2/NaSLLzoGnb20260908125149_1200.jpg",
+          "imageAlt": "挪威三文魚扒 (急凍-18°C)",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10169672",
+          "note": "",
+          "title": "挪威三文魚扒 (急凍-18°C)",
+          "qty": 2
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-15",
@@ -4303,18 +4337,29 @@
       ],
       "subtype": "急凍海鮮",
       "pack": "320G",
-      "qty": 1
+      "qty": 2
     },
     {
       "type": "冷凍／急凍食品",
       "name": "三文魚柳",
-      "lastPurchased": "2026-10-15",
-      "daysSince": 9,
-      "suggest": "優先",
-      "note": "約每 4 日一件 · 預計已到期；與扒分開",
-      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/f8a8/638c/515c/ttfzSDWOCS20240815154152_1200.jpg",
-      "imageAlt": "挪威帶皮三文魚柳 x 2 (急凍-18°C)",
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
+      "suggest": "在途",
+      "note": "約每 4 日一件 · 預計 3 日要補貨；與扒分開",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/4395/e0ab/418e/fAnVJAqODv20260914104849_1200.jpg",
+      "imageAlt": "挪威帶皮三文魚柳(急凍-18°C)",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/4395/e0ab/418e/fAnVJAqODv20260914104849_1200.jpg",
+          "imageAlt": "挪威帶皮三文魚柳(急凍-18°C)",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10144447",
+          "note": "",
+          "title": "挪威帶皮三文魚柳(急凍-18°C)",
+          "qty": 1
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-15",
@@ -4335,17 +4380,6 @@
           "link": "https://www.hktvmall.com/p/H0888001_S_10159961",
           "note": "",
           "title": "智利有皮三文魚柳4條裝 (銀鮭) (日式切法) #已去鱗 (急凍-18",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-10-06",
-          "daysSince": 18,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/4395/e0ab/418e/fAnVJAqODv20260914104849_1200.jpg",
-          "imageAlt": "挪威帶皮三文魚柳(急凍-18°C)",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10144447",
-          "note": "",
-          "title": "挪威帶皮三文魚柳(急凍-18°C)",
           "qty": 1
         },
         {
@@ -4456,7 +4490,7 @@
       ],
       "subtype": "急凍海鮮",
       "pack": "480G",
-      "qty": 2
+      "qty": 1
     },
     {
       "type": "冷凍／急凍食品",
@@ -4939,13 +4973,35 @@
     {
       "type": "冷凍／急凍食品",
       "name": "豆腐",
-      "lastPurchased": "2026-10-12",
-      "daysSince": 12,
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
       "suggest": "暫緩",
-      "note": "約每 3 日一件 · 預計已到期；康怡已簽收 13/10",
-      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/cc21/7727/6bab/iHLNWnCEjJ20260612171019_1200.png",
-      "imageAlt": "有機豆腐 400克 (冷凍 0-4°C)",
+      "note": "約每 3 日一件 · 預計 12 日要補貨；康怡已簽收 13/10",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/c3c1/34b2/8f36/ocmIKQDOvB20260610112557_1200.png",
+      "imageAlt": "山水 蒸煮有機嫩豆腐 350gm x 2 (冷凍0-4°C) 【最佳食",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/c3c1/34b2/8f36/ocmIKQDOvB20260610112557_1200.png",
+          "imageAlt": "山水 蒸煮有機嫩豆腐 350gm x 2 (冷凍0-4°C) 【最佳食",
+          "link": "https://www.hktvmall.com/p/H1115001_S_10140688A",
+          "note": "",
+          "title": "山水 蒸煮有機嫩豆腐 350gm x 2 (冷凍0-4°C) 【最佳食",
+          "qty": 2
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H1115001_S_10170800",
+          "note": "",
+          "title": "硬豆腐 300克 (冷凍0-4°C)",
+          "qty": 2
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-12",
@@ -4978,17 +5034,6 @@
           "link": "https://www.pns.hk/安曇野絹豆腐孖裝/p/BP_364873",
           "note": "",
           "title": "安曇野絹豆腐孖裝 買2慳$3 VIP26:$400-$30",
-          "qty": 2
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-04",
-          "daysSince": 112,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/c3c1/34b2/8f36/ocmIKQDOvB20260610112557_1200.png",
-          "imageAlt": "山水 蒸煮有機嫩豆腐 350gm x 2 (冷凍0-4°C) 【最佳食",
-          "link": "https://www.hktvmall.com/p/H1115001_S_10140688A",
-          "note": "",
-          "title": "山水 蒸煮有機嫩豆腐 350gm x 2 (冷凍0-4°C) 【最佳食",
           "qty": 2
         },
         {
@@ -5063,7 +5108,7 @@
       ],
       "subtype": "豆製品",
       "pack": "400克",
-      "qty": 2
+      "qty": 4
     },
     {
       "type": "冷凍／急凍食品",
@@ -5371,13 +5416,24 @@
     {
       "type": "冷凍／急凍食品",
       "name": "雞翼",
-      "lastPurchased": "2026-10-15",
-      "daysSince": 9,
-      "suggest": "優先",
-      "note": "約每 3 日一件 · 預計已到期",
-      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/df9e/acc4/599b/yDplrMVULM20260925111400_1200.png",
-      "imageAlt": "波蘭無激素添加雞中翼1磅(454克)(急凍-18°C)#100%無添加",
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
+      "suggest": "在途",
+      "note": "約每 4 日一件 · 預計 3 日要補貨；家居送貨",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/7b2e/4535/b994/jTcIsjqmhr20260904112700_1200.png",
+      "imageAlt": "[優惠孖裝] 波蘭無添加激素雞中翼 (急凍 -18°C) #100%",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/7b2e/4535/b994/jTcIsjqmhr20260904112700_1200.png",
+          "imageAlt": "[優惠孖裝] 波蘭無添加激素雞中翼 (急凍 -18°C) #100%",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10158411A",
+          "note": "",
+          "title": "[優惠孖裝] 波蘭無添加激素雞中翼 (急凍 -18°C) #100%",
+          "qty": 1
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-15",
@@ -5422,17 +5478,6 @@
           "title": "Euro Farm 歐洲農場無添加雞中翼 約454g (急凍-18°C",
           "pack": "454g",
           "qty": 2
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-09-17",
-          "daysSince": 37,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/7b2e/4535/b994/jTcIsjqmhr20260904112700_1200.png",
-          "imageAlt": "[優惠孖裝] 波蘭無添加激素雞中翼 (急凍 -18°C) #100%",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10158411A",
-          "note": "",
-          "title": "[優惠孖裝] 波蘭無添加激素雞中翼 (急凍 -18°C) #100%",
-          "qty": 1
         },
         {
           "brand": null,
@@ -5515,18 +5560,30 @@
       ],
       "subtype": "急凍肉類",
       "pack": "454克",
-      "qty": 2
+      "qty": 1
     },
     {
       "type": "冷凍／急凍食品",
       "name": "雞蛋",
-      "lastPurchased": "2026-10-15",
-      "daysSince": 9,
-      "suggest": "暫緩",
-      "note": "約每 32 日一件 · 預計 54 日要補貨",
-      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/fddc/3fc4/86ee/QNtZAwCeLM20260916105615_1200.png",
-      "imageAlt": "新紀元卵白蛋 10粒 - 1盒 #雞蛋#日本蛋",
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
+      "suggest": "在途",
+      "note": "約每 7 日一件 · 預計 7 日要補貨；家居送貨",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ddb5/385d/2cf6/gcxhJibUQZ20260317183554_1200.jpg",
+      "imageAlt": "日本青森坂本無激素雞蛋 (10隻) - 1盒 (選用防撞紙箱包裝)",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ddb5/385d/2cf6/gcxhJibUQZ20260317183554_1200.jpg",
+          "imageAlt": "日本青森坂本無激素雞蛋 (10隻) - 1盒 (選用防撞紙箱包裝)",
+          "link": "https://www.hktvmall.com/p/B0812001_S_00515",
+          "note": "",
+          "title": "日本青森坂本無激素雞蛋 (10隻) - 1盒 (選用防撞紙箱包裝)",
+          "pack": "10隻",
+          "qty": 1
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-15",
@@ -5547,18 +5604,6 @@
           "link": "https://www.pns.hk/韓國新鮮啡蛋-冷凍-0-4°c/p/BP_136647",
           "note": "",
           "title": "韓國新鮮啡蛋 (冷凍 0-4°c) VIP26:$400-$30",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-07-21",
-          "daysSince": 95,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ddb5/385d/2cf6/gcxhJibUQZ20260317183554_1200.jpg",
-          "imageAlt": "日本青森坂本無激素雞蛋 (10隻) - 1盒 (選用防撞紙箱包裝)",
-          "link": "https://www.hktvmall.com/p/B0812001_S_00515",
-          "note": "",
-          "title": "日本青森坂本無激素雞蛋 (10隻) - 1盒 (選用防撞紙箱包裝)",
-          "pack": "10隻",
           "qty": 1
         },
         {
@@ -5634,7 +5679,7 @@
       ],
       "subtype": "蛋",
       "pack": "10粒",
-      "qty": 2
+      "qty": 1
     },
     {
       "type": "冷凍／急凍食品",
@@ -6805,17 +6850,17 @@
     {
       "type": "個人護理用品",
       "name": "精油／外用貼布",
-      "lastPurchased": "2026-08-03",
-      "daysSince": 82,
-      "suggest": "優先",
-      "note": "",
+      "lastPurchased": "2026-10-24",
+      "daysSince": 0,
+      "suggest": "暫緩",
+      "note": "約每 41 日一件 · 預計 82 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/30b9/414e/0810/wiTiVQwwEf20260801000830_1200.jpg",
       "imageAlt": "[台灣直送] 金門一條根精油貼布 (8片裝) #平行進口",
       "brands": [
         {
           "brand": null,
-          "lastPurchased": "2026-08-03",
-          "daysSince": 82,
+          "lastPurchased": "2026-10-24",
+          "daysSince": 0,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/30b9/414e/0810/wiTiVQwwEf20260801000830_1200.jpg",
           "imageAlt": "[台灣直送] 金門一條根精油貼布 (8片裝) #平行進口",
           "link": "https://www.hktvmall.com/p/H0888001_S_10166809",
