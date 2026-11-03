@@ -999,22 +999,45 @@
     return item;
   }
 
-  function overrideRecord(type, name) {
+  function reclassText(value) {
+    return value == null ? "" : String(value).trim();
+  }
+
+  /**
+   * data.json already shows this override. Lookup stays outside (current
+   * type|name against oldType|name). Type must equal newType. A non-empty
+   * newSubtype must equal the item subtype. An empty or absent newSubtype
+   * does not keep the row pending once the type matches, so both sides blank
+   * counts as applied. Subtype-only rows (oldType === newType) clear the same way.
+   */
+  function reclassCaughtUp(item, row) {
+    if (!item || !row || !reclassText(row.newType)) return false;
+    if (item.type !== row.newType) return false;
+    const wanted = reclassText(row.newSubtype);
+    if (!wanted) return true;
+    return reclassText(item.subtype) === wanted;
+  }
+
+  function findOverride(overrides, type, name) {
     const key = exclusionKey(type, name);
-    for (const row of state.overrides) {
-      if (exclusionKey(row.oldType, row.name) === key) return row;
+    if (!Array.isArray(overrides)) return null;
+    for (const row of overrides) {
+      if (row && exclusionKey(row.oldType, row.name) === key) return row;
     }
     return null;
   }
 
   /**
-   * Display-only. data.json stays put until Gmail rebuilds it.
-   * The read-only page does not apply this, so view.html keeps the file's types.
+   * Display-only. Does not write data.json.
+   * Pending, and the type/subtype overlay, only while data.json has not
+   * caught up to newType / newSubtype. Read-only leaves the file's fields
+   * alone, so view.html never shows 「改類已記下」.
    */
-  function applyReclassOverlay(item) {
-    if (READ_ONLY || !item) return item;
-    const row = overrideRecord(item.type, item.name);
-    if (!row || !row.newType) return item;
+  function decideReclassOverlay(item, overrides, readOnly) {
+    if (readOnly || !item) return item;
+    const row = findOverride(overrides, item.type, item.name);
+    if (!row || !reclassText(row.newType)) return item;
+    if (reclassCaughtUp(item, row)) return item;
     return Object.assign({}, item, {
       sourceType: item.type,
       sourceName: item.name,
@@ -1022,6 +1045,14 @@
       subtype: row.newSubtype,
       reclassPending: true,
     });
+  }
+
+  function overrideRecord(type, name) {
+    return findOverride(state.overrides, type, name);
+  }
+
+  function applyReclassOverlay(item) {
+    return decideReclassOverlay(item, state.overrides, READ_ONLY);
   }
 
   function displayItem(item) {
@@ -1036,6 +1067,7 @@
     return item && item.sourceName ? item.sourceName : item.name;
   }
 
+  /** Keep data.json subtype. The reclass overlay compares it with newSubtype. */
   function excludedDisplayItems() {
     const byKey = new Map(state.items.map((item) => [keyOf(item), item]));
     return listedExclusions().map((ex) => {
@@ -1052,6 +1084,7 @@
             qty: base.qty,
             quantity: base.quantity,
             count: base.count,
+            subtype: base.subtype,
             brands: Array.isArray(base.brands) ? base.brands : [],
           }
         : {
@@ -1062,6 +1095,7 @@
             suggest: "",
             note: "",
             pack: "",
+            subtype: "",
             brands: [],
           };
       return Object.assign(grocery, {
