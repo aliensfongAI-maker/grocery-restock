@@ -67,8 +67,7 @@
       suggestTransit: "已下單",
       typeLabel: "類型",
       typeAll: "全部類型",
-      expandAll: "全部展開",
-      collapseAll: "全部摺疊",
+      imagesToggle: "圖片",
       emptyFilter: "冇符合條件嘅項目。",
       footer: "公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除同手動暫緩另存 Google Sheet",
       excludeHelp: "呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：未使買住會留喺主清單。建議維持原樣，唔改 data.json。",
@@ -175,8 +174,7 @@
       suggestTransit: "Ordered",
       typeLabel: "Type",
       typeAll: "All types",
-      expandAll: "Expand all",
-      collapseAll: "Collapse all",
+      imagesToggle: "Images",
       emptyFilter: "No matching items.",
       footer: "Public suggestion tool · no private data · times are Hong Kong time (HKT) · skips and manual holds are stored in a Google Sheet",
       excludeHelp: "This item is hidden from the restock list. You can restore it later. A manual hold is different: it stays on the main list. The suggestion is left as-is, and data.json is not changed.",
@@ -284,8 +282,7 @@
       suggestTransit: "Sudah dipesan",
       typeLabel: "Jenis",
       typeAll: "Semua jenis",
-      expandAll: "Buka semua",
-      collapseAll: "Tutup semua",
+      imagesToggle: "Gambar",
       emptyFilter: "Tidak ada item yang cocok.",
       footer: "Alat saran publik · tanpa data pribadi · waktu dalam Waktu Hong Kong (HKT) · lewati dan tunda manual disimpan di Google Sheet",
       excludeHelp: "Item ini disembunyikan dari daftar restok. Nanti bisa dipulihkan. Tunda manual berbeda: item tetap ada di daftar utama. Saran tidak diubah, dan data.json tidak diubah.",
@@ -394,7 +391,6 @@
     lang: readStoredLang(),
     loadSettled: false,
     loadFailed: false,
-    groupPrefs: new Map(),
     openProducts: new Set(),
     exclusions: [],
     holds: [],
@@ -485,8 +481,6 @@
     emptyState: document.getElementById("emptyState"),
     errorBox: document.getElementById("errorBox"),
     resultCount: document.getElementById("resultCount"),
-    expandAll: document.getElementById("expandAll"),
-    collapseAll: document.getElementById("collapseAll"),
     groupMode: document.getElementById("groupMode"),
     exclusionNotice: document.getElementById("exclusionNotice"),
     excludeDialog: document.getElementById("excludeDialog"),
@@ -1239,15 +1233,6 @@
     return outers;
   }
 
-  function collectGroupKeys(outers) {
-    const keys = [];
-    for (const outer of outers) {
-      keys.push(outer.key);
-      for (const inner of outer.groups) keys.push(inner.key);
-    }
-    return keys;
-  }
-
   function thumbHtml(item, className) {
     if (!item.image) return "";
     const alt = escapeHtml(item.imageAlt || catalogLabel("name", item.name) || "");
@@ -1557,30 +1542,59 @@
     return '<span class="item-copy">' + line1Html(item) + second + "</span>";
   }
 
+  function brandHasImage(entry) {
+    return !!safeLink(entry && entry.image);
+  }
+
+  /** Item image or any brand image that this row can actually show. */
+  function itemHasImages(item) {
+    const brands = shownBrands(item);
+    for (let i = 0; i < brands.length; i++) {
+      if (brandHasImage(brands[i])) return true;
+    }
+    return !!safeLink(item && item.image);
+  }
+
   function cardHtml(item) {
     const brands = shownBrands(item);
-    const canExpand = brands.length > 0;
+    const hasImages = itemHasImages(item);
     const key = keyOf(item);
-    const isOpen = canExpand && state.openProducts.has(key);
-    const panelId = domId("brands", key);
+    const isOpen = hasImages && state.openProducts.has(key);
+    const panelId = domId("images", key);
     const copy = itemCopyHtml(item);
-    const title = canExpand
-      ? '<button type="button" class="product-toggle" aria-expanded="' +
+    const title = '<div class="product-title-static">' + copy + "</div>";
+    const imageBtn = hasImages
+      ? '<button type="button" class="image-toggle" aria-expanded="' +
         (isOpen ? "true" : "false") +
         '" aria-controls="' +
         panelId +
         '">' +
         '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
-        copy +
-        "</button>"
-      : '<div class="product-title-static">' + copy + "</div>";
-    const brandList = canExpand
-      ? '<ul class="brand-list" id="' +
-        panelId +
-        '"' +
-        (isOpen ? "" : " hidden") +
+        '<span class="image-toggle-label">' +
+        escapeHtml(t("imagesToggle")) +
+        "</span></button>"
+      : "";
+    const cards = brands.map(brandHtml);
+    if (hasImages && !brands.some(brandHasImage) && safeLink(item && item.image)) {
+      cards.unshift(
+        '<li class="brand-card">' +
+          thumbHtml(
+            {
+              image: safeLink(item.image),
+              imageAlt: item.imageAlt || catalogLabel("name", item.name),
+              name: item.name,
+            },
+            "brand-thumb"
+          ) +
+          "</li>"
+      );
+    }
+    const brandList = cards.length
+      ? '<ul class="brand-list"' +
+        (hasImages ? ' id="' + panelId + '"' : "") +
+        (hasImages && !isOpen ? " hidden" : "") +
         ">" +
-        brands.map(brandHtml).join("") +
+        cards.join("") +
         "</ul>"
       : "";
     const historyOnly = isHistoryOnly(item);
@@ -1600,6 +1614,7 @@
       escapeHtml(key) +
       '">' +
       '<div class="product-row">' +
+      imageBtn +
       '<div class="product-head">' +
       title +
       "</div>" +
@@ -1617,46 +1632,11 @@
     return label;
   }
 
-  /**
-   * Pref id is per list view so opening 暫不考慮 does not force the main list open.
-   * true means the user collapsed this section; false means they opened it.
-   */
-  function groupPrefId(key) {
-    return state.view + "\0" + key;
-  }
-
-  /**
-   * Uses the suggest already on the display item (data.json, or an existing
-   * hold / delivery overlay). Does not recalculate suggest.
-   */
-  function sectionHasHotSuggest(node) {
-    if (node.items) {
-      for (let i = 0; i < node.items.length; i++) {
-        const suggest = node.items[i] && node.items[i].suggest;
-        if (suggest === "優先" || suggest === "在途") return true;
-      }
-    }
-    if (node.groups) {
-      for (let i = 0; i < node.groups.length; i++) {
-        if (sectionHasHotSuggest(node.groups[i])) return true;
-      }
-    }
-    return false;
-  }
-
-  function isGroupCollapsed(node) {
-    const pref = state.groupPrefs.get(groupPrefId(node.key));
-    if (pref != null) return pref === true;
-    return !sectionHasHotSuggest(node);
-  }
-
-  function accordionHtml(node, bodyHtml, extraClass) {
-    const isOpen = !isGroupCollapsed(node);
-    const panelId = domId("group", node.key);
+  function sectionHtml(node, bodyHtml, extraClass, level) {
+    const tag = level === 3 ? "h3" : "h2";
     return (
       '<section class="category' +
       (extraClass ? " " + extraClass : "") +
-      (isOpen ? " is-open" : "") +
       '" data-group-key="' +
       escapeHtml(node.key) +
       '" data-kind="' +
@@ -1664,22 +1644,16 @@
       '" data-value="' +
       escapeHtml(node.value) +
       '">' +
-      '<button type="button" class="category-toggle" aria-expanded="' +
-      (isOpen ? "true" : "false") +
-      '" aria-controls="' +
-      panelId +
-      '">' +
-      '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
+      "<" +
+      tag +
+      ' class="category-heading">' +
       groupHeadingHtml(node) +
       '<span class="category-count">' +
       node.count +
-      "</span>" +
-      "</button>" +
-      '<div class="category-body" id="' +
-      panelId +
-      '"' +
-      (isOpen ? "" : " hidden") +
+      "</span></" +
+      tag +
       ">" +
+      '<div class="category-body">' +
       bodyHtml +
       "</div></section>"
     );
@@ -1701,10 +1675,10 @@
       .map((outer) => {
         const inners = outer.groups
           .map((group) =>
-            accordionHtml(group, itemListHtml(group.items), "category-inner")
+            sectionHtml(group, itemListHtml(group.items), "category-inner", 3)
           )
           .join("");
-        return accordionHtml(outer, inners, "");
+        return sectionHtml(outer, inners, "", 2);
       })
       .join("");
   }
@@ -1844,10 +1818,6 @@
     render();
   }
 
-  function revealGroups(items) {
-    for (const key of collectGroupKeys(nest(items))) state.groupPrefs.set(groupPrefId(key), false);
-  }
-
   function setGroupMode(mode) {
     state.groupMode = mode === "type-suggest" ? "type-suggest" : "suggest-type";
     try {
@@ -1870,45 +1840,18 @@
 
   function setView(view) {
     state.view = view === "excluded" ? "excluded" : "main";
-    if (state.view === "excluded") revealGroups(excludedDisplayItems().map(displayItem));
     render();
   }
 
-  function toggleGroup(key, wasExpanded) {
-    state.groupPrefs.set(groupPrefId(key), !!wasExpanded);
-    render();
-    const escaped = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(key) : key;
-    const btn = els.sections.querySelector(
-      '.category[data-group-key="' + escaped + '"] > .category-toggle'
-    );
-    if (btn) btn.focus();
-  }
-
-  function toggleProduct(key) {
+  function toggleImages(key) {
     if (state.openProducts.has(key)) state.openProducts.delete(key);
     else state.openProducts.add(key);
     render();
     const escaped = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(key) : key;
     const btn = els.sections.querySelector(
-      '.item-card[data-key="' + escaped + '"] .product-toggle'
+      '.item-card[data-key="' + escaped + '"] .image-toggle'
     );
     if (btn) btn.focus();
-  }
-
-  function expandAllVisible() {
-    const visible = filterItems();
-    for (const key of collectGroupKeys(nest(visible))) state.groupPrefs.set(groupPrefId(key), false);
-    for (const item of visible) {
-      if (shownBrands(item).length > 0) state.openProducts.add(keyOf(item));
-    }
-    render();
-  }
-
-  function collapseAll() {
-    const visible = filterItems();
-    for (const key of collectGroupKeys(nest(visible))) state.groupPrefs.set(groupPrefId(key), true);
-    for (const item of visible) state.openProducts.delete(keyOf(item));
-    render();
   }
 
   function openExcludeDialog(type, name, trigger) {
@@ -2133,13 +2076,6 @@
       if (data.error) throw new Error(data.error);
       state.flashNotice = { kind: "done", action: action, name: name };
       state.flashLevel = "ok";
-      if (action === "exclude" && state.view === "excluded") {
-        revealGroups(
-          excludedDisplayItems()
-            .filter((item) => item.type === type && item.name === name)
-            .map(displayItem)
-        );
-      }
     } catch (err) {
       state.flashNotice = { kind: "failAction", action: action, err: err };
       state.flashLevel = "error";
@@ -2359,18 +2295,11 @@
         line2.classList.toggle("is-open");
         return;
       }
-      const productBtn = e.target.closest(".product-toggle");
-      if (productBtn) {
-        const card = productBtn.closest(".item-card");
-        const key = card && card.getAttribute("data-key");
-        if (key) toggleProduct(key);
-        return;
-      }
-      const btn = e.target.closest(".category-toggle");
-      if (!btn) return;
-      const section = btn.closest(".category");
-      const key = section && section.getAttribute("data-group-key");
-      if (key) toggleGroup(key, btn.getAttribute("aria-expanded") === "true");
+      const imageBtn = e.target.closest(".image-toggle");
+      if (!imageBtn) return;
+      const card = imageBtn.closest(".item-card");
+      const key = card && card.getAttribute("data-key");
+      if (key) toggleImages(key);
     });
 
     els.groupMode.addEventListener("click", (e) => {
@@ -2378,9 +2307,6 @@
       if (!btn) return;
       setGroupMode(btn.getAttribute("data-group-mode"));
     });
-
-    els.expandAll.addEventListener("click", expandAllVisible);
-    els.collapseAll.addEventListener("click", collapseAll);
 
     if (els.excludeCancel && els.excludeDialog && els.excludeForm) {
       els.excludeCancel.addEventListener("click", () => {
