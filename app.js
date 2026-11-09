@@ -49,7 +49,6 @@
     zh: {
       appTitle: "方氏超市補貨",
       metaDescription: "方氏超市補貨 — 依過住網購單歷史建議",
-      tagline: "依過住網購單歷史建議",
       loading: "載入緊…",
       langLabel: "語言",
       toolbarLabel: "搜尋同篩選",
@@ -100,7 +99,7 @@
       noApiTitle: "未設定 Web App 網址",
       processingPrefix: "處理緊：",
       actionPrefix: "操作：",
-      daysValue: "{n}日",
+      daysValue: "{n}日前購入",
       daysUntil: "還有 {n} 日",
       deliveringToday: "今日送貨",
       daysLabel: "距今天數",
@@ -158,7 +157,6 @@
     en: {
       appTitle: "Fong's grocery restock",
       metaDescription: "Fong's grocery restock — suggestions from past online-order history",
-      tagline: "Suggestions from past online-order history",
       loading: "Loading…",
       langLabel: "Language",
       toolbarLabel: "Search and filters",
@@ -209,7 +207,8 @@
       noApiTitle: "Web App URL is not set",
       processingPrefix: "Working: ",
       actionPrefix: "Actions: ",
-      daysValue: "{n} days",
+      daysValue: "bought {n} days ago",
+      daysValueOne: "bought 1 day ago",
       daysUntil: "{n} days left",
       deliveringToday: "Delivering today",
       daysLabel: "Days ago",
@@ -267,7 +266,6 @@
     id: {
       appTitle: "Restok supermarket Fong",
       metaDescription: "Restok supermarket Fong — saran dari riwayat pesanan daring sebelumnya",
-      tagline: "Saran dari riwayat pesanan daring sebelumnya",
       loading: "Memuat…",
       langLabel: "Bahasa",
       toolbarLabel: "Cari dan filter",
@@ -318,7 +316,7 @@
       noApiTitle: "URL Web App belum diatur",
       processingPrefix: "Memproses: ",
       actionPrefix: "Aksi: ",
-      daysValue: "{n} hari",
+      daysValue: "dibeli {n} hari lalu",
       daysUntil: "{n} hari lagi",
       deliveringToday: "Dikirim hari ini",
       daysLabel: "Hari lalu",
@@ -396,7 +394,7 @@
     lang: readStoredLang(),
     loadSettled: false,
     loadFailed: false,
-    collapsedGroups: new Set(),
+    groupPrefs: new Map(),
     openProducts: new Set(),
     exclusions: [],
     holds: [],
@@ -1337,20 +1335,20 @@
     );
   }
 
+  function daysAgoLabel(raw) {
+    const text = formatDaysSince(raw);
+    if (text === "—") return "—";
+    if (text === "1") {
+      const pack = I18N[state.lang] || I18N.zh;
+      if (pack.daysValueOne) return pack.daysValueOne;
+    }
+    return t("daysValue", { n: text });
+  }
+
   function daysHtml(entry) {
     const phrase = deliveryPhrase(entry);
-    if (phrase) {
-      return '<span class="item-days">' + escapeHtml(phrase) + "</span>";
-    }
-    const text = formatDaysSince(pastDaysValue(entry));
-    const shown = text === "—" ? "—" : t("daysValue", { n: text });
-    return (
-      '<span class="item-days"><span class="sr-only">' +
-      escapeHtml(t("daysLabel")) +
-      " </span>" +
-      escapeHtml(shown) +
-      "</span>"
-    );
+    const shown = phrase || daysAgoLabel(pastDaysValue(entry));
+    return '<span class="item-days">' + escapeHtml(shown) + "</span>";
   }
 
   function daysMetaHtml(entry) {
@@ -1403,32 +1401,27 @@
     return hold + reclass + clear + exclude;
   }
 
-  function holdMetaHtml(item) {
-    if (READ_ONLY || !item.manualHold) return "";
-    const note = item.holdNote
-      ? '<p class="item-note">' + escapeHtml(t("holdNotePrefix") + item.holdNote) + "</p>"
-      : "";
-    return '<p class="hold-flag">' + escapeHtml(t("holdFlag")) + "</p>" + note;
-  }
-
-  function reclassMetaHtml(item) {
-    if (READ_ONLY || !item.reclassPending) return "";
-    return '<p class="reclass-flag">' + escapeHtml(t("reclassFlag")) + "</p>";
-  }
-
-  function exclusionMetaHtml(item) {
-    if (state.view !== "excluded") return "";
-    const note = item.exclusionNote
-      ? '<p class="item-note">' + escapeHtml(t("exclusionNotePrefix") + item.exclusionNote) + "</p>"
-      : "";
-    return (
-      '<p class="exclusion-when"><span class="meta-label">' +
-      escapeHtml(t("excludedAtLabel")) +
-      '</span><span class="meta-value">' +
-      escapeHtml(formatExcludedAt(item.excludedAt)) +
-      "</span></p>" +
-      note
-    );
+  /**
+   * Second line of an item row: last delivery, then the consumption / ETA note,
+   * then any hold, reclass, or skip status. One string so the row stays two lines.
+   */
+  function line2Plain(item) {
+    const parts = [];
+    if (item.lastPurchased) parts.push(t("lastPurchased") + " " + formatDate(item.lastPurchased));
+    const note = item.note == null ? "" : String(item.note).trim();
+    if (note) parts.push(note);
+    if (!READ_ONLY && item.manualHold) {
+      parts.push(t("holdFlag"));
+      const holdNote = item.holdNote == null ? "" : String(item.holdNote).trim();
+      if (holdNote) parts.push(t("holdNotePrefix") + holdNote);
+    }
+    if (!READ_ONLY && item.reclassPending) parts.push(t("reclassFlag"));
+    if (state.view === "excluded") {
+      parts.push(t("excludedAtLabel") + " " + formatExcludedAt(item.excludedAt));
+      const exNote = item.exclusionNote == null ? "" : String(item.exclusionNote).trim();
+      if (exNote) parts.push(t("exclusionNotePrefix") + exNote);
+    }
+    return parts.join(" ");
   }
 
   function brandsOf(item) {
@@ -1533,28 +1526,44 @@
     );
   }
 
+  function line1Html(item) {
+    const subtypeSource =
+      item.subtype && String(item.subtype).trim() ? item.subtype : item.type || "";
+    const subtypeKind = item.subtype && String(item.subtype).trim() ? "subtype" : "type";
+    const subtype = subtypeSource
+      ? '<span class="item-subtype">' + escapeHtml(catalogLabel(subtypeKind, subtypeSource)) + "</span>"
+      : "";
+    return (
+      '<span class="item-line1">' +
+      '<span class="item-name">' +
+      escapeHtml(catalogLabel("name", item.name)) +
+      "</span>" +
+      subtype +
+      packHtml(item.pack, "item-pack") +
+      qtyHtml(item, "item-qty") +
+      "</span>"
+    );
+  }
+
+  function itemCopyHtml(item) {
+    const line2 = line2Plain(item);
+    const second = line2
+      ? '<span class="item-line2-slot"><span class="item-line2" title="' +
+        escapeHtml(line2) +
+        '">' +
+        escapeHtml(line2) +
+        "</span></span>"
+      : "";
+    return '<span class="item-copy">' + line1Html(item) + second + "</span>";
+  }
+
   function cardHtml(item) {
     const brands = shownBrands(item);
     const canExpand = brands.length > 0;
     const key = keyOf(item);
     const isOpen = canExpand && state.openProducts.has(key);
     const panelId = domId("brands", key);
-    const note = item.note
-      ? '<p class="item-note">' + escapeHtml(item.note) + "</p>"
-      : "";
-    const subtypeHtml =
-      item.subtype && String(item.subtype).trim()
-        ? '<span class="item-subtype">' + escapeHtml(catalogLabel("subtype", item.subtype)) + "</span>"
-        : "";
-    const nameAndPack =
-      '<span class="item-title"><span class="item-name-row"><span class="item-name">' +
-      escapeHtml(catalogLabel("name", item.name)) +
-      "</span>" +
-      packHtml(item.pack, "item-pack") +
-      qtyHtml(item, "item-qty") +
-      "</span>" +
-      subtypeHtml +
-      "</span>";
+    const copy = itemCopyHtml(item);
     const title = canExpand
       ? '<button type="button" class="product-toggle" aria-expanded="' +
         (isOpen ? "true" : "false") +
@@ -1562,13 +1571,9 @@
         panelId +
         '">' +
         '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
-        nameAndPack +
+        copy +
         "</button>"
-      : '<div class="product-title-static">' + nameAndPack + "</div>";
-    const empty =
-      canExpand || brandsOf(item).length > 0
-        ? ""
-        : '<p class="brand-empty">' + escapeHtml(t("noBrandDetail")) + "</p>";
+      : '<div class="product-title-static">' + copy + "</div>";
     const brandList = canExpand
       ? '<ul class="brand-list" id="' +
         panelId +
@@ -1577,13 +1582,6 @@
         ">" +
         brands.map(brandHtml).join("") +
         "</ul>"
-      : "";
-    const when = item.lastPurchased
-      ? '<p class="item-when"><span class="meta-label">' +
-        escapeHtml(t("lastPurchased")) +
-        '</span><span class="meta-value">' +
-        escapeHtml(formatDate(item.lastPurchased)) +
-        "</span></p>"
       : "";
     const historyOnly = isHistoryOnly(item);
     const suggestAndActions = historyOnly
@@ -1608,12 +1606,6 @@
       daysHtml(item) +
       suggestAndActions +
       "</div>" +
-      when +
-      note +
-      holdMetaHtml(item) +
-      reclassMetaHtml(item) +
-      exclusionMetaHtml(item) +
-      empty +
       brandList +
       "</li>"
     );
@@ -1625,8 +1617,41 @@
     return label;
   }
 
+  /**
+   * Pref id is per list view so opening 暫不考慮 does not force the main list open.
+   * true means the user collapsed this section; false means they opened it.
+   */
+  function groupPrefId(key) {
+    return state.view + "\0" + key;
+  }
+
+  /**
+   * Uses the suggest already on the display item (data.json, or an existing
+   * hold / delivery overlay). Does not recalculate suggest.
+   */
+  function sectionHasHotSuggest(node) {
+    if (node.items) {
+      for (let i = 0; i < node.items.length; i++) {
+        const suggest = node.items[i] && node.items[i].suggest;
+        if (suggest === "優先" || suggest === "在途") return true;
+      }
+    }
+    if (node.groups) {
+      for (let i = 0; i < node.groups.length; i++) {
+        if (sectionHasHotSuggest(node.groups[i])) return true;
+      }
+    }
+    return false;
+  }
+
+  function isGroupCollapsed(node) {
+    const pref = state.groupPrefs.get(groupPrefId(node.key));
+    if (pref != null) return pref === true;
+    return !sectionHasHotSuggest(node);
+  }
+
   function accordionHtml(node, bodyHtml, extraClass) {
-    const isOpen = !state.collapsedGroups.has(node.key);
+    const isOpen = !isGroupCollapsed(node);
     const panelId = domId("group", node.key);
     return (
       '<section class="category' +
@@ -1662,24 +1687,10 @@
 
   function itemListHtml(items) {
     const history = items.length > 0 && items.every(isHistoryOnly);
-    const suggestCols = history
-      ? ""
-      : "<span>" +
-        escapeHtml(t("suggestLabel")) +
-        "</span>" +
-        (READ_ONLY ? "" : "<span>" + escapeHtml(t("colAction")) + "</span>");
     return (
       '<ul class="item-list' +
       (history ? " is-history" : READ_ONLY ? " is-readonly" : "") +
       '">' +
-      '<li class="item-columns" aria-hidden="true">' +
-      "<span>" +
-      escapeHtml(t("colName")) +
-      "</span><span>" +
-      escapeHtml(t("colDays")) +
-      "</span>" +
-      suggestCols +
-      "</li>" +
       items.map(cardHtml).join("") +
       "</ul>"
     );
@@ -1834,7 +1845,7 @@
   }
 
   function revealGroups(items) {
-    for (const key of collectGroupKeys(nest(items))) state.collapsedGroups.delete(key);
+    for (const key of collectGroupKeys(nest(items))) state.groupPrefs.set(groupPrefId(key), false);
   }
 
   function setGroupMode(mode) {
@@ -1863,9 +1874,8 @@
     render();
   }
 
-  function toggleGroup(key) {
-    if (state.collapsedGroups.has(key)) state.collapsedGroups.delete(key);
-    else state.collapsedGroups.add(key);
+  function toggleGroup(key, wasExpanded) {
+    state.groupPrefs.set(groupPrefId(key), !!wasExpanded);
     render();
     const escaped = typeof CSS !== "undefined" && CSS.escape ? CSS.escape(key) : key;
     const btn = els.sections.querySelector(
@@ -1887,7 +1897,7 @@
 
   function expandAllVisible() {
     const visible = filterItems();
-    for (const key of collectGroupKeys(nest(visible))) state.collapsedGroups.delete(key);
+    for (const key of collectGroupKeys(nest(visible))) state.groupPrefs.set(groupPrefId(key), false);
     for (const item of visible) {
       if (shownBrands(item).length > 0) state.openProducts.add(keyOf(item));
     }
@@ -1896,7 +1906,7 @@
 
   function collapseAll() {
     const visible = filterItems();
-    for (const key of collectGroupKeys(nest(visible))) state.collapsedGroups.add(key);
+    for (const key of collectGroupKeys(nest(visible))) state.groupPrefs.set(groupPrefId(key), true);
     for (const item of visible) state.openProducts.delete(keyOf(item));
     render();
   }
@@ -2344,6 +2354,11 @@
         return;
       }
       closeRowMenus(false);
+      const line2 = e.target.closest(".item-line2");
+      if (line2) {
+        line2.classList.toggle("is-open");
+        return;
+      }
       const productBtn = e.target.closest(".product-toggle");
       if (productBtn) {
         const card = productBtn.closest(".item-card");
@@ -2355,7 +2370,7 @@
       if (!btn) return;
       const section = btn.closest(".category");
       const key = section && section.getAttribute("data-group-key");
-      if (key) toggleGroup(key);
+      if (key) toggleGroup(key, btn.getAttribute("aria-expanded") === "true");
     });
 
     els.groupMode.addEventListener("click", (e) => {
