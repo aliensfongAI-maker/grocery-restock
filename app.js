@@ -1568,11 +1568,11 @@
         (isOpen ? "true" : "false") +
         '" aria-controls="' +
         panelId +
+        '" aria-label="' +
+        escapeHtml(t("imagesToggle")) +
         '">' +
         '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
-        '<span class="image-toggle-label">' +
-        escapeHtml(t("imagesToggle")) +
-        "</span></button>"
+        "</button>"
       : "";
     const cards = brands.map(brandHtml);
     if (hasImages && !brands.some(brandHasImage) && safeLink(item && item.image)) {

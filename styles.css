@@ -381,8 +381,16 @@ body {
   flex: 1;
 }
 
+.category[data-kind="type"] > .category-heading {
+  background: var(--accent-soft);
+}
+
 .category[data-kind="type"] > .category-heading .category-title {
-  color: var(--accent);
+  color: var(--text);
+}
+
+.category[data-kind="type"] > .category-heading .category-count {
+  background: var(--surface);
 }
 
 .category-count {
@@ -495,22 +503,15 @@ body {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  gap: 0.1rem;
+  justify-content: center;
   margin: 0;
-  padding: 0.1rem 0.2rem 0.1rem 0;
+  padding: 0;
   border: 0;
   background: transparent;
-  font: inherit;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.2;
   color: var(--accent);
   cursor: pointer;
+  width: 1.75rem;
   min-height: 32px;
-}
-
-.image-toggle-label {
-  white-space: nowrap;
 }
 
 .image-toggle .chevron {
