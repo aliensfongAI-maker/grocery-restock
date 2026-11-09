@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="方氏超市補貨 — 依過住網購單歷史建議" data-i18n-content="metaDescription" />
   <title data-i18n="appTitle">方氏超市補貨</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=20261109-2" />
   <script>
     (function () {
       var lang = "zh-Hant";
@@ -20,10 +20,10 @@
 </head>
 <body>
   <header class="site-header">
+    <div class="header-band">
     <div class="header-inner">
       <div class="brand">
         <h1 data-i18n="appTitle">方氏超市補貨</h1>
-        <p class="tagline" data-i18n="tagline">依過住網購單歷史建議</p>
       </div>
       <div class="header-aside">
         <p class="updated" id="updatedAt" aria-live="polite" data-i18n="loading">載入緊…</p>
@@ -34,9 +34,8 @@
         </div>
       </div>
     </div>
-  </header>
-
-  <main class="main">
+    </div>
+    <div class="header-tools">
     <section class="toolbar" aria-label="搜尋同篩選" data-i18n-aria="toolbarLabel">
       <div class="search-wrap">
         <label for="searchInput" class="sr-only" data-i18n="searchLabel">搜尋品名、牌子、類型或備註</label>
@@ -87,7 +86,10 @@
         <p class="result-count" id="resultCount" aria-live="polite"></p>
       </div>
     </section>
+    </div>
+  </header>
 
+  <main class="main">
     <div id="errorBox" class="error-box" hidden role="alert"></div>
     <div id="sections" class="sections" translate="no"></div>
     <p id="emptyState" class="empty-state" hidden data-i18n="emptyFilter">冇符合條件嘅項目。</p>
@@ -147,6 +149,6 @@
   </dialog>
 
   <script src="./config.js"></script>
-  <script src="./app.js?v=20261103-1" defer></script>
+  <script src="./app.js?v=20261109-2" defer></script>
 </body>
 </html>
