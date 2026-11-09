@@ -9,7 +9,7 @@
 | `index.html` | 編輯頁：搜尋、分組、剔除同手動暫緩 |
 | `view.html` | 唯讀頁。同一份資料同語言，冇寫入動作，亦冇連去編輯頁 |
 | `styles.css` | 樣式（mobile-first） |
-| `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組、牌子摺疊。`window.GROCERY_READ_ONLY` 為真時唔呼叫剔除／暫緩 |
+| `app.js` | 讀 `data.json`、搜尋／篩選、兩層分組（永遠展開）。有圖先可以摺疊圖片。`window.GROCERY_READ_ONLY` 為真時唔呼叫剔除／暫緩 |
 | `i18n-data.json` | `type`、`subtype`、品名嘅英文同印尼文對照（靜態檔，冇翻譯 API） |
 | `config.js` | 剔除 API 網址。而家指住已部署嘅 Cloudflare Worker |
 | `workers/` | Cloudflare Worker + D1。直切取代 GAS 嘅後端（見 `workers/README.md`） |
@@ -34,9 +34,9 @@
 
 呢兩類只顯示上次購買、距今天數、包裝同牌子。唔顯示建議章，窄螢幕冇「⋯」，闊螢幕冇手動暫緩／暫不考慮／回復。舊有 Sheet 剔除或暫緩都唔會改佢哋嘅顯示（頁面唔寫 Sheet）。
 
-兩層都可以獨立展開同摺疊。選擇記喺瀏覽器 `grocery-restock-group-mode`（`suggest-type` 或 `type-suggest`）。
+兩層分組永遠展開。類型同建議標題唔係摺疊開關，亦冇「全部展開／全部摺疊」。大類標題用強調色（`--accent`），行內子類維持較淡嘅 `--muted`。選擇記喺瀏覽器 `grocery-restock-group-mode`（`suggest-type` 或 `type-suggest`）。
 
-每行預設顯示品名、`subtype`、包裝、距今天數同建議（水果同蔬菜冇建議欄同操作欄）。主清單品名、類型同 subtype 係純文字。展開後，牌子列嘅牌子名（冇牌子就用 `title`）如果有公開 http(s) `link`，個名會開新分頁；冇 link 就維持純文字。窄螢幕（手機）手動動作收喺右邊「⋯」入面（手動暫緩、暫不考慮、回復、回復日子），撳開先見到。闊螢幕（900px 或以上，例如 Windows 電腦）同一行直接顯示呢啲動作按鈕，欄位對齊成品名、距今、建議、操作。水果同蔬菜喺闊螢幕只對齊品名同距今。`view.html` 唔顯示呢啲動作。
+每行預設顯示品名、`subtype`、包裝、距今天數同建議（水果同蔬菜冇建議欄同操作欄）。主清單品名、類型同 subtype 係純文字。有圖片嘅項目先有「圖片」開關，撳開先見到牌子列同縮圖；冇圖嘅項目直接顯示牌子列，冇呢個開關。牌子名（冇牌子就用 `title`）如果有公開 http(s) `link`，個名會開新分頁；冇 link 就維持純文字。窄螢幕（手機）手動動作收喺右邊「⋯」入面（手動暫緩、暫不考慮、回復、回復日子），撳開先見到。闊螢幕（900px 或以上，例如 Windows 電腦）同一行直接顯示呢啲動作按鈕。水果同蔬菜喺闊螢幕只對齊品名同距今。`view.html` 唔顯示呢啲動作。
 
 ## 語言
 
@@ -44,7 +44,7 @@
 
 ## 唯讀頁
 
-`view.html` 同 `index.html` 讀同一份 `data.json` 同 `i18n-data.json`。保留語言、分組、搜尋、類型篩選、兩層摺疊同牌子展開。頁面喺載入 `app.js` 之前設 `window.GROCERY_READ_ONLY = true`，所以唔顯示「⋯」、手動暫緩、暫不考慮、回復、暫緩備註，亦唔讀寫 Google Sheet。文件標題同 `h1` 仍然係「方氏超市補貨」。頁內冇連去 `/` 或 `index.html`。
+`view.html` 同 `index.html` 讀同一份 `data.json` 同 `i18n-data.json`。保留語言、分組、搜尋、類型篩選。分組永遠展開；有圖先可以展開圖片。頁面喺載入 `app.js` 之前設 `window.GROCERY_READ_ONLY = true`，所以唔顯示「⋯」、手動暫緩、暫不考慮、回復、暫緩備註，亦唔讀寫 Google Sheet。文件標題同 `h1` 仍然係「方氏超市補貨」。頁內冇連去 `/` 或 `index.html`。
 
 ## GitHub Pages
 
@@ -140,7 +140,7 @@ python3 -m http.server 8080
 ## data.json
 
 - `updatedAt`：ISO 8601，HKT（例如 `2026-10-14T16:25:30+08:00`）
-- `items[]`：`type`（大類摺疊）、`subtype`（HKTVmall 第二層，顯示喺品名下）、`name`（貨品種類）、`lastPurchased`、`daysSince`、`suggest`（只得 `優先`｜`暫緩`｜`在途`；前端只顯示，唔重算。`暫緩` 顯示做「未使買住」，`在途` 顯示做「已下單」）、`note`、可選 `pack`、`brands[]`（一定有，可以係空陣列）
+- `items[]`：`type`（大類，永遠展開）、`subtype`（HKTVmall 第二層，顯示喺品名下）、`name`（貨品種類）、`lastPurchased`、`daysSince`、`suggest`（只得 `優先`｜`暫緩`｜`在途`；前端只顯示，唔重算。`暫緩` 顯示做「未使買住」，`在途` 顯示做「已下單」）、`note`、可選 `pack`、`brands[]`（一定有，可以係空陣列）
 - eng／印 顯示 `type`、`subtype`、`name` 時讀 `i18n-data.json`。`note`、`brand`、`title`、`pack` 維持呢度嘅原文。
 - `type` 剛好係「水果」或「蔬菜」：可以冇 `suggest`，或者係 null。前端唔顯示建議，亦唔提供暫緩／剔除。其他類型如果 `suggest` 缺失，會落入「未有建議」，唔會當成優先／暫緩／在途。
 - `brands[]`：`brand`（可空）、可選 `title`、`lastPurchased`、`daysSince`、`image`、`imageAlt`、`link`（公開 http(s)；有嘅話牌子名開新分頁）、`note`、可選 `pack`
