@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T11:15:53+08:00",
+  "updatedAt": "2026-11-09T12:46:19+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -1165,13 +1165,25 @@
     {
       "type": "嬰兒用品／食品",
       "name": "嬰兒濕紙巾",
-      "lastPurchased": "2026-10-06",
-      "daysSince": 34,
-      "suggest": "優先",
-      "note": "約每 2 日一包 · 預計已到期",
+      "lastPurchased": "2026-11-08",
+      "daysSince": 1,
+      "suggest": "暫緩",
+      "note": "約每 21 日一包 · 預計 62 日要補貨",
       "image": "https://images.hktvmall.com/h0888001/8e84825bc5baa215d0405fb57203370fd72f1025/h0888001_10050265a_200810071758_01_1200.jpg",
       "imageAlt": "[優惠孖裝]輕潤柔膚嬰兒濕紙巾72片裝(BB濕紙巾,低敏天然可可+乳木",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-08",
+          "daysSince": 1,
+          "image": null,
+          "imageAlt": null,
+          "link": null,
+          "note": "",
+          "title": "Huggies好奇純水嬰兒濕紙巾三眼仔(加蓋版) 70片 x 3包",
+          "pack": "70片",
+          "qty": 3
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-06",
@@ -1195,6 +1207,18 @@
           "title": "Huggies 純水嬰兒濕紙巾70片3包裝加蓋版(三眼仔) 送HUGGIES 濕紙巾70片3包裝",
           "pack": "70片",
           "qty": 2
+        },
+        {
+          "brand": "HUGGIES",
+          "lastPurchased": "2026-08-24",
+          "daysSince": 77,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.watsons.com.hk/zh_HK/好奇-huggies-純水嬰兒濕紙巾70片裝加蓋版-三眼仔/p/BP_825450",
+          "note": "",
+          "title": "HUGGIES 純水嬰兒濕紙巾70片裝加蓋版(三眼仔)",
+          "pack": "70片",
+          "qty": 6
         },
         {
           "brand": null,
@@ -1287,35 +1311,11 @@
           "title": "[原箱] 潔淨嬰兒濕紙巾30片裝 (敏感肌適用，pH平衡，帶走99%細",
           "pack": "30片",
           "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-03-13",
-          "daysSince": 606,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/36ba/892c/2d50/erqdOZYZqZ20241211170829_1200.jpg",
-          "imageAlt": "[3包優惠裝] ] 殺菌消毒濕紙巾10片(殺滅99%病毒及細菌, 韓國",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10050235B",
-          "note": "",
-          "title": "[3包優惠裝] ] 殺菌消毒濕紙巾10片(殺滅99%病毒及細菌, 韓國",
-          "pack": "10片",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-03-12",
-          "daysSince": 607,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/0e67/041e/5bba/GglAaxsuDL20260825183143_1200.jpg",
-          "imageAlt": "[3包優惠裝]天然加厚嬰兒濕紙巾192片 (BB濕紙巾, 銷量第一,帶",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10050037B",
-          "note": "",
-          "title": "[3包優惠裝]天然加厚嬰兒濕紙巾192片 (BB濕紙巾, 銷量第一,帶",
-          "pack": "192片",
-          "qty": 1
         }
       ],
       "subtype": "濕紙巾",
       "pack": "72片",
-      "qty": 1
+      "qty": 3
     },
     {
       "type": "嬰兒用品／食品",
@@ -1593,13 +1593,37 @@
     {
       "type": "嬰兒用品／食品",
       "name": "學習褲／拉拉褲",
-      "lastPurchased": "2026-10-06",
-      "daysSince": 34,
-      "suggest": "優先",
-      "note": "約每 11 日一包 · 預計已到期",
+      "lastPurchased": "2026-11-08",
+      "daysSince": 1,
+      "suggest": "暫緩",
+      "note": "約每 13 日一包 · 預計 151 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/048d/accd/1145/ovjvkXFLBf20260611161917_1200.webp",
       "imageAlt": "[優惠孖裝] 好奇天然透氣親膚學習褲大碼46片(拉拉褲) (新舊裝隨機",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-08",
+          "daysSince": 1,
+          "image": null,
+          "imageAlt": null,
+          "link": null,
+          "note": "",
+          "title": "Huggies好奇天然透氣好眠褲(大碼) 32片",
+          "pack": "32片",
+          "qty": 8
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-08",
+          "daysSince": 1,
+          "image": null,
+          "imageAlt": null,
+          "link": null,
+          "note": "",
+          "title": "Huggies好奇天然透氣好眠褲(加大碼) 24片",
+          "pack": "24片",
+          "qty": 4
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-06",
@@ -1718,45 +1742,33 @@
           "title": "[原裝正貨] 奢寵の舒適紙尿片-大碼32片 (添加真蠶絲 極緻奢養 嬌",
           "pack": "32片",
           "qty": 4
-        },
-        {
-          "brand": "Pampers",
-          "lastPurchased": "2025-10-10",
-          "daysSince": 395,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H0888001_S_P10159545",
-          "note": "",
-          "title": "[原裝正貨 / 優惠增量裝] Pampers史上最強Ichiban紙尿片-",
-          "qty": 1
-        },
-        {
-          "brand": "Pampers",
-          "lastPurchased": "2025-05-25",
-          "daysSince": 533,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/6a0e/17a8/ee7a/TkGGqmWtaa20250211164012_1200.jpg",
-          "imageAlt": "[原裝正貨] Pampers史上最強Ichiban紙尿片-初生碼64片",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10160548",
-          "note": "",
-          "title": "[原裝正貨] Pampers史上最強Ichiban紙尿片-初生碼64片",
-          "pack": "64片",
-          "qty": 2
         }
       ],
       "subtype": "紙尿褲",
       "pack": "46片",
-      "qty": 2
+      "qty": 12
     },
     {
       "type": "嬰兒用品／食品",
       "name": "幼兒奶粉（3 號）",
-      "lastPurchased": "2026-09-05",
-      "daysSince": 65,
-      "suggest": "優先",
-      "note": "約每 10 日一罐 · 預計已到期",
+      "lastPurchased": "2026-11-11",
+      "daysSince": -2,
+      "suggest": "在途",
+      "note": "約每 13 日一罐 · 預計 232 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/d249/3b00/fef0/fTLZQRgFMQ20260313191203_1200.jpg",
       "imageAlt": "有機荷蘭皇家美素佳兒® 3號成長配方奶粉 800克 ( 嬰兒奶粉 )",
       "brands": [
+        {
+          "brand": "FRISO",
+          "lastPurchased": "2026-11-11",
+          "daysSince": -2,
+          "image": null,
+          "imageAlt": null,
+          "link": null,
+          "note": "",
+          "title": "Friso Prestige有機荷蘭皇家美素佳兒 3號成長配方奶粉 800克",
+          "qty": 18
+        },
         {
           "brand": "皇家美素佳兒",
           "lastPurchased": "2026-09-05",
@@ -1805,7 +1817,7 @@
       ],
       "subtype": "奶粉",
       "pack": "800克",
-      "qty": 4
+      "qty": 18
     },
     {
       "type": "嬰兒用品／食品",
@@ -6337,7 +6349,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": 25,
       "suggest": "優先",
-      "note": "約每 13 日一件 · 預計已到期",
+      "note": "約每 66 日一件 · 預計 40 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/a958/345e/6598/zrSTpwbIdE20251113155112_1200.jpg",
       "imageAlt": "bouncia 牛乳泡泡保濕沐浴露 460ml （4901525010",
       "brands": [
@@ -6351,6 +6363,18 @@
           "note": "",
           "title": "bouncia 牛乳泡泡保濕沐浴露 460ml （4901525010",
           "pack": "460ml",
+          "qty": 1
+        },
+        {
+          "brand": "屈臣氏",
+          "lastPurchased": "2026-08-24",
+          "daysSince": 77,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.watsons.com.hk/zh_HK/屈臣氏-綠茶清香沐浴露1000ml/p/BP_817785",
+          "note": "",
+          "title": "屈臣氏 綠茶清香沐浴露1000ML",
+          "pack": "1000ML",
           "qty": 1
         },
         {
@@ -6468,13 +6492,35 @@
     {
       "type": "個人護理用品",
       "name": "洗頭水／護髮",
-      "lastPurchased": "2026-08-05",
-      "daysSince": 96,
+      "lastPurchased": "2026-08-24",
+      "daysSince": 77,
       "suggest": "優先",
-      "note": "約每 21 日一件 · 預計已到期",
+      "note": "約每 24 日一件 · 預計已到期",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/7558/ff1d/0222/nRDTCwDXnx20251111174609_1200.jpg",
       "imageAlt": "DRZERO NEOLOGY 女士護髮素 400mL",
       "brands": [
+        {
+          "brand": "DR ZERO",
+          "lastPurchased": "2026-08-24",
+          "daysSince": 77,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.watsons.com.hk/zh_HK/dr-zero-dr-zero-女士根源防脫洗髮水/p/BP_809597",
+          "note": "",
+          "title": "DR ZERO 女士根源防脫洗髮水",
+          "qty": 1
+        },
+        {
+          "brand": "DR ZERO",
+          "lastPurchased": "2026-08-24",
+          "daysSince": 77,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.watsons.com.hk/zh_HK/dr-zero-dr-zero-女士根源防脫護髮素/p/BP_809599",
+          "note": "",
+          "title": "DR ZERO 女士根源防脫護髮素",
+          "qty": 1
+        },
         {
           "brand": null,
           "lastPurchased": "2026-08-05",
@@ -6593,7 +6639,7 @@
       ],
       "subtype": "洗髮護髮",
       "pack": "400mL",
-      "qty": 1
+      "qty": 2
     },
     {
       "type": "個人護理用品",
@@ -7186,6 +7232,31 @@
       "subtype": "防曬",
       "pack": "30g",
       "qty": 1
+    },
+    {
+      "type": "個人護理用品",
+      "name": "葡萄糖胺",
+      "lastPurchased": "2026-11-03",
+      "daysSince": 6,
+      "suggest": "暫緩",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-03",
+          "daysSince": 6,
+          "image": null,
+          "imageAlt": null,
+          "link": null,
+          "note": "",
+          "title": "Viartril-S維固力葡萄糖胺1500毫克 30包",
+          "qty": 2
+        }
+      ],
+      "subtype": "保健食品",
+      "qty": 2
     },
     {
       "type": "未對上分類",
