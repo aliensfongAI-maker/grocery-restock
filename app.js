@@ -1396,22 +1396,33 @@
   function rowCopyParts(item) {
     const name = catalogLabel("name", item.name);
     const nameText = name ? String(name).trim() : "";
-    const bits = [];
     const subtypeSource =
       item.subtype && String(item.subtype).trim() ? item.subtype : item.type || "";
     const subtypeKind = item.subtype && String(item.subtype).trim() ? "subtype" : "type";
-    if (subtypeSource) bits.push(String(catalogLabel(subtypeKind, subtypeSource)).trim());
+    const subtypeText = subtypeSource
+      ? String(catalogLabel(subtypeKind, subtypeSource)).trim()
+      : "";
     const pack = item.pack == null ? "" : String(item.pack).trim();
+    const qtyText = t("qtyValue", { n: String(pieceCount(item)) });
+    const bits = [];
+    if (subtypeText) bits.push(subtypeText);
     if (pack) bits.push(pack);
-    bits.push(t("qtyValue", { n: String(pieceCount(item)) }));
-    let rest = bits.filter(Boolean).join(" ");
-    if (rest) rest = " " + rest;
+    bits.push(qtyText);
+    let plainRest = bits.join(" ");
+    if (plainRest) plainRest = " " + plainRest;
+    let afterQty = "";
     if (item.lastPurchased) {
-      rest += " - " + t("lastPurchased") + " " + formatDate(item.lastPurchased);
+      afterQty += " - " + t("lastPurchased") + " " + formatDate(item.lastPurchased);
     }
     const tails = rowTailParts(item);
-    if (tails.length) rest += " · " + tails.join(" · ");
-    return { name: nameText, rest: rest, full: nameText + rest };
+    if (tails.length) afterQty += " · " + tails.join(" · ");
+    return {
+      name: nameText,
+      subtype: subtypeText,
+      pack: pack,
+      afterQty: afterQty,
+      full: (nameText + plainRest + afterQty).trim(),
+    };
   }
 
   function brandsOf(item) {
@@ -1518,9 +1529,15 @@
 
   function itemCopyHtml(item) {
     const copy = rowCopyParts(item);
-    const body = copy.name
-      ? '<span class="item-name">' + escapeHtml(copy.name) + "</span>" + escapeHtml(copy.rest)
-      : escapeHtml(copy.full);
+    let body = "";
+    if (copy.name) body += '<span class="item-name">' + escapeHtml(copy.name) + "</span>";
+    if (copy.subtype) {
+      body += ' <span class="item-subtype">' + escapeHtml(copy.subtype) + "</span>";
+    }
+    const pack = packHtml(copy.pack, "item-pack");
+    if (pack) body += " " + pack;
+    body += " " + qtyHtml(item, "item-qty");
+    if (copy.afterQty) body += escapeHtml(copy.afterQty);
     return (
       '<span class="item-copy"><span class="item-line-slot">' +
       '<button type="button" class="item-line" title="' +

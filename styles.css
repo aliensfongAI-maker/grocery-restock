@@ -595,6 +595,12 @@ body {
   color: var(--text);
 }
 
+.item-line .item-pack,
+.item-line .item-qty {
+  margin-left: 0.15rem;
+  vertical-align: 0.08em;
+}
+
 .item-pack,
 .brand-pack,
 .item-qty,
