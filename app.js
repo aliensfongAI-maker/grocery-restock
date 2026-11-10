@@ -1320,22 +1320,6 @@
     );
   }
 
-  function daysAgoLabel(raw) {
-    const text = formatDaysSince(raw);
-    if (text === "—") return "—";
-    if (text === "1") {
-      const pack = I18N[state.lang] || I18N.zh;
-      if (pack.daysValueOne) return pack.daysValueOne;
-    }
-    return t("daysValue", { n: text });
-  }
-
-  function daysHtml(entry) {
-    const phrase = deliveryPhrase(entry);
-    const shown = phrase || daysAgoLabel(pastDaysValue(entry));
-    return '<span class="item-days">' + escapeHtml(shown) + "</span>";
-  }
-
   function daysMetaHtml(entry) {
     const phrase = deliveryPhrase(entry);
     if (phrase) {
@@ -1386,13 +1370,9 @@
     return hold + reclass + clear + exclude;
   }
 
-  /**
-   * Second line of an item row: last delivery, then the consumption / ETA note,
-   * then any hold, reclass, or skip status. One string so the row stays two lines.
-   */
-  function line2Plain(item) {
+  /** Note plus hold / reclass / skip status. Same cases line2 used to show. */
+  function rowTailParts(item) {
     const parts = [];
-    if (item.lastPurchased) parts.push(t("lastPurchased") + " " + formatDate(item.lastPurchased));
     const note = item.note == null ? "" : String(item.note).trim();
     if (note) parts.push(note);
     if (!READ_ONLY && item.manualHold) {
@@ -1406,7 +1386,43 @@
       const exNote = item.exclusionNote == null ? "" : String(item.exclusionNote).trim();
       if (exNote) parts.push(t("exclusionNotePrefix") + exNote);
     }
-    return parts.join(" ");
+    return parts;
+  }
+
+  /**
+   * One row of copy: name, subtype, pack, qty, then " - last delivery YYYY-MM-DD",
+   * then note and status bits separated by " · ".
+   */
+  function rowCopyParts(item) {
+    const name = catalogLabel("name", item.name);
+    const nameText = name ? String(name).trim() : "";
+    const subtypeSource =
+      item.subtype && String(item.subtype).trim() ? item.subtype : item.type || "";
+    const subtypeKind = item.subtype && String(item.subtype).trim() ? "subtype" : "type";
+    const subtypeText = subtypeSource
+      ? String(catalogLabel(subtypeKind, subtypeSource)).trim()
+      : "";
+    const pack = item.pack == null ? "" : String(item.pack).trim();
+    const qtyText = t("qtyValue", { n: String(pieceCount(item)) });
+    const bits = [];
+    if (subtypeText) bits.push(subtypeText);
+    if (pack) bits.push(pack);
+    bits.push(qtyText);
+    let plainRest = bits.join(" ");
+    if (plainRest) plainRest = " " + plainRest;
+    let afterQty = "";
+    if (item.lastPurchased) {
+      afterQty += " - " + t("lastPurchased") + " " + formatDate(item.lastPurchased);
+    }
+    const tails = rowTailParts(item);
+    if (tails.length) afterQty += " · " + tails.join(" · ");
+    return {
+      name: nameText,
+      subtype: subtypeText,
+      pack: pack,
+      afterQty: afterQty,
+      full: (nameText + plainRest + afterQty).trim(),
+    };
   }
 
   function brandsOf(item) {
@@ -1511,35 +1527,25 @@
     );
   }
 
-  function line1Html(item) {
-    const subtypeSource =
-      item.subtype && String(item.subtype).trim() ? item.subtype : item.type || "";
-    const subtypeKind = item.subtype && String(item.subtype).trim() ? "subtype" : "type";
-    const subtype = subtypeSource
-      ? '<span class="item-subtype">' + escapeHtml(catalogLabel(subtypeKind, subtypeSource)) + "</span>"
-      : "";
-    return (
-      '<span class="item-line1">' +
-      '<span class="item-name">' +
-      escapeHtml(catalogLabel("name", item.name)) +
-      "</span>" +
-      subtype +
-      packHtml(item.pack, "item-pack") +
-      qtyHtml(item, "item-qty") +
-      "</span>"
-    );
-  }
-
   function itemCopyHtml(item) {
-    const line2 = line2Plain(item);
-    const second = line2
-      ? '<span class="item-line2-slot"><span class="item-line2" title="' +
-        escapeHtml(line2) +
-        '">' +
-        escapeHtml(line2) +
-        "</span></span>"
-      : "";
-    return '<span class="item-copy">' + line1Html(item) + second + "</span>";
+    const copy = rowCopyParts(item);
+    let body = "";
+    if (copy.name) body += '<span class="item-name">' + escapeHtml(copy.name) + "</span>";
+    if (copy.subtype) {
+      body += ' <span class="item-subtype">' + escapeHtml(copy.subtype) + "</span>";
+    }
+    const pack = packHtml(copy.pack, "item-pack");
+    if (pack) body += " " + pack;
+    body += " " + qtyHtml(item, "item-qty");
+    if (copy.afterQty) body += escapeHtml(copy.afterQty);
+    return (
+      '<span class="item-copy"><span class="item-line-slot">' +
+      '<button type="button" class="item-line" title="' +
+      escapeHtml(copy.full) +
+      '" aria-expanded="false">' +
+      body +
+      "</button></span></span>"
+    );
   }
 
   function brandHasImage(entry) {
@@ -1568,11 +1574,11 @@
         (isOpen ? "true" : "false") +
         '" aria-controls="' +
         panelId +
+        '" aria-label="' +
+        escapeHtml(t("imagesToggle")) +
         '">' +
         '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
-        '<span class="image-toggle-label">' +
-        escapeHtml(t("imagesToggle")) +
-        "</span></button>"
+        "</button>"
       : "";
     const cards = brands.map(brandHtml);
     if (hasImages && !brands.some(brandHasImage) && safeLink(item && item.image)) {
@@ -1618,7 +1624,6 @@
       '<div class="product-head">' +
       title +
       "</div>" +
-      daysHtml(item) +
       suggestAndActions +
       "</div>" +
       brandList +
@@ -2290,9 +2295,21 @@
         return;
       }
       closeRowMenus(false);
-      const line2 = e.target.closest(".item-line2");
-      if (line2) {
-        line2.classList.toggle("is-open");
+      const line = e.target.closest(".item-line");
+      if (line) {
+        const willOpen = !line.classList.contains("is-open");
+        els.sections.querySelectorAll(".item-line.is-open").forEach((openLine) => {
+          openLine.classList.remove("is-open");
+          openLine.setAttribute("aria-expanded", "false");
+          const openCard = openLine.closest(".item-card");
+          if (openCard) openCard.classList.remove("is-copy-open");
+        });
+        if (willOpen) {
+          line.classList.add("is-open");
+          line.setAttribute("aria-expanded", "true");
+          const card = line.closest(".item-card");
+          if (card) card.classList.add("is-copy-open");
+        }
         return;
       }
       const imageBtn = e.target.closest(".image-toggle");
