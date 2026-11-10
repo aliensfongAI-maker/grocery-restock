@@ -1390,7 +1390,7 @@
   }
 
   /**
-   * One row of copy: name, subtype, pack, qty, then " - last delivery YYYY-MM-DD",
+   * One row of copy: name, pack, qty, subtype, then " - last delivery YYYY-MM-DD",
    * then note and status bits separated by " · ".
    */
   function rowCopyParts(item) {
@@ -1405,9 +1405,9 @@
     const pack = item.pack == null ? "" : String(item.pack).trim();
     const qtyText = t("qtyValue", { n: String(pieceCount(item)) });
     const bits = [];
-    if (subtypeText) bits.push(subtypeText);
     if (pack) bits.push(pack);
     bits.push(qtyText);
+    if (subtypeText) bits.push(subtypeText);
     let plainRest = bits.join(" ");
     if (plainRest) plainRest = " " + plainRest;
     let afterQty = "";
@@ -1531,12 +1531,12 @@
     const copy = rowCopyParts(item);
     let body = "";
     if (copy.name) body += '<span class="item-name">' + escapeHtml(copy.name) + "</span>";
-    if (copy.subtype) {
-      body += ' <span class="item-subtype">' + escapeHtml(copy.subtype) + "</span>";
-    }
     const pack = packHtml(copy.pack, "item-pack");
     if (pack) body += " " + pack;
     body += " " + qtyHtml(item, "item-qty");
+    if (copy.subtype) {
+      body += ' <span class="item-subtype">' + escapeHtml(copy.subtype) + "</span>";
+    }
     if (copy.afterQty) body += escapeHtml(copy.afterQty);
     return (
       '<span class="item-copy"><span class="item-line-slot">' +
