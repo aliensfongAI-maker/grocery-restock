@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T11:03:26+08:00",
+  "updatedAt": "2026-11-11T11:53:33+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -1933,6 +1933,56 @@
       "subtype": "嬰幼兒小食",
       "pack": "4包",
       "qty": 6
+    },
+    {
+      "type": "嬰兒用品／食品",
+      "name": "嬰兒2合1 洗髮沐浴露",
+      "lastPurchased": "2026-05-26",
+      "daysSince": 169,
+      "suggest": "優先",
+      "note": "約每 14 日一件 · 預計已到期",
+      "image": "https://medias.pns.hk/publishing/PNSHK-288576-front-thumbnail.jpg?version=1732798740",
+      "imageAlt": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 VIPDAY:92折 買2慳$44 26PAM2 comeback:$1000-$500",
+      "brands": [
+        {
+          "brand": "喜寶",
+          "lastPurchased": "2026-05-26",
+          "daysSince": 169,
+          "image": "https://medias.pns.hk/publishing/PNSHK-288576-front-thumbnail.jpg?version=1732798740",
+          "imageAlt": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 VIPDAY:92折 買2慳$44 26PAM2 comeback:$1000-$500",
+          "link": "https://www.pns.hk/hipp喜寶嬰兒2合1-洗髮沐浴露-400毫升/p/BP_288576",
+          "note": "",
+          "title": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 VIPDAY:92折 買2慳$44 26PAM2 comeback:$1000-$500",
+          "pack": "400ML",
+          "qty": 1
+        },
+        {
+          "brand": "喜寶",
+          "lastPurchased": "2026-05-12",
+          "daysSince": 183,
+          "image": "https://medias.pns.hk/publishing/PNSHK-288576-front-thumbnail.jpg?version=1732798740",
+          "imageAlt": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 26PAM2 comeback:$1000-$500 買2慳$44 VIPDAY:92折",
+          "link": "https://www.pns.hk/hipp喜寶嬰兒2合1-洗髮沐浴露-400毫升/p/BP_288576",
+          "note": "",
+          "title": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 26PAM2 comeback:$1000-$500 買2慳$44 VIPDAY:92折",
+          "pack": "400ML",
+          "qty": 2
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2025-03-07",
+          "daysSince": 614,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/b52f/7d3c/dab8/bDHsDqXdQx20260929180030_1200.jpg",
+          "imageAlt": "嬰兒二合一洗髮沐浴露 400毫升 (19391) DA90121#B",
+          "link": "https://www.hktvmall.com/p/H6924001_S_E9530",
+          "note": "",
+          "title": "嬰兒二合一洗髮沐浴露 400毫升 (19391) DA90121#B",
+          "qty": 1
+        }
+      ],
+      "subtype": "嬰兒沐浴",
+      "pack": "400ML",
+      "qty": 1
     },
     {
       "type": "飲品／即沖飲品",
@@ -6349,7 +6399,7 @@
       "lastPurchased": "2026-10-15",
       "daysSince": 27,
       "suggest": "暫緩",
-      "note": "約每 66 日一件 · 預計 38 日要補貨",
+      "note": "約每 88 日一件 · 預計 61 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/a958/345e/6598/zrSTpwbIdE20251113155112_1200.jpg",
       "imageAlt": "bouncia 牛乳泡泡保濕沐浴露 460ml （4901525010",
       "brands": [
@@ -6378,30 +6428,6 @@
           "qty": 1
         },
         {
-          "brand": "喜寶",
-          "lastPurchased": "2026-05-26",
-          "daysSince": 169,
-          "image": "https://medias.pns.hk/publishing/PNSHK-288576-front-thumbnail.jpg?version=1732798740",
-          "imageAlt": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 VIPDAY:92折 買2慳$44 26PAM2 comeback:$1000-$500",
-          "link": "https://www.pns.hk/hipp喜寶嬰兒2合1-洗髮沐浴露-400毫升/p/BP_288576",
-          "note": "",
-          "title": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 VIPDAY:92折 買2慳$44 26PAM2 comeback:$1000-$500",
-          "pack": "400ML",
-          "qty": 1
-        },
-        {
-          "brand": "喜寶",
-          "lastPurchased": "2026-05-12",
-          "daysSince": 183,
-          "image": "https://medias.pns.hk/publishing/PNSHK-288576-front-thumbnail.jpg?version=1732798740",
-          "imageAlt": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 26PAM2 comeback:$1000-$500 買2慳$44 VIPDAY:92折",
-          "link": "https://www.pns.hk/hipp喜寶嬰兒2合1-洗髮沐浴露-400毫升/p/BP_288576",
-          "note": "",
-          "title": "Hipp喜寶嬰兒2合1 洗髮沐浴露 400毫升 26PAM2 comeback:$1000-$500 買2慳$44 VIPDAY:92折",
-          "pack": "400ML",
-          "qty": 2
-        },
-        {
           "brand": null,
           "lastPurchased": "2025-11-07",
           "daysSince": 369,
@@ -6423,17 +6449,6 @@
           "note": "",
           "title": "麗白 Hatomugi 薏仁保濕沐浴乳 (補充裝) 1000ml (平",
           "pack": "1000ml",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-03-07",
-          "daysSince": 614,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/b52f/7d3c/dab8/bDHsDqXdQx20260929180030_1200.jpg",
-          "imageAlt": "嬰兒二合一洗髮沐浴露 400毫升 (19391) DA90121#B",
-          "link": "https://www.hktvmall.com/p/H6924001_S_E9530",
-          "note": "",
-          "title": "嬰兒二合一洗髮沐浴露 400毫升 (19391) DA90121#B",
           "qty": 1
         },
         {
@@ -6699,59 +6714,6 @@
       ],
       "subtype": "口腔護理",
       "pack": "250毫升",
-      "qty": 1
-    },
-    {
-      "type": "個人護理用品",
-      "name": "潤膚乳（一般／乳酸菌類）",
-      "lastPurchased": "2026-05-26",
-      "daysSince": 169,
-      "suggest": "優先",
-      "note": "",
-      "image": "https://medias.pns.hk/publishing/PNSHK-106039-front-thumbnail.jpg?version=1732703682",
-      "imageAlt": "森林系乳酸菌水嫩美肌潤膚乳 +$79換購MOIST DIANE VIPDAY:92折 26PAM2 comeback:$1000-$500",
-      "brands": [
-        {
-          "brand": "MOIST DIANE",
-          "lastPurchased": "2026-05-26",
-          "daysSince": 169,
-          "image": "https://medias.pns.hk/publishing/PNSHK-106039-front-thumbnail.jpg?version=1732703682",
-          "imageAlt": "森林系乳酸菌水嫩美肌潤膚乳 +$79換購MOIST DIANE VIPDAY:92折 26PAM2 comeback:$1000-$500",
-          "link": "https://www.pns.hk/森林系乳酸菌水嫩美肌潤膚乳/p/BP_106039",
-          "note": "",
-          "title": "森林系乳酸菌水嫩美肌潤膚乳 +$79換購MOIST DIANE VIPDAY:92折 26PAM2 comeback:$1000-$500",
-          "pack": "500ML",
-          "qty": 1
-        }
-      ],
-      "subtype": "潤膚",
-      "pack": "500ML",
-      "qty": 1
-    },
-    {
-      "type": "個人護理用品",
-      "name": "潤膚膏／保濕霜（厚霜）",
-      "lastPurchased": "2026-10-06",
-      "daysSince": 36,
-      "suggest": "優先",
-      "note": "",
-      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/6f49/6e62/494e/wiFnCDUVye20251202123924_1200.jpg",
-      "imageAlt": "Cetaphil 潤膚膏 保濕霜 550克 (13024) (到期日:",
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-10-06",
-          "daysSince": 36,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/6f49/6e62/494e/wiFnCDUVye20251202123924_1200.jpg",
-          "imageAlt": "Cetaphil 潤膚膏 保濕霜 550克 (13024) (到期日:",
-          "link": "https://www.hktvmall.com/p/H7353001_S_PC-0032-0150",
-          "note": "",
-          "title": "Cetaphil 潤膚膏 保濕霜 550克 (13024) (到期日:",
-          "qty": 1
-        }
-      ],
-      "subtype": "潤膚",
-      "pack": "550克",
       "qty": 1
     },
     {
@@ -7270,6 +7232,44 @@
         }
       ],
       "subtype": "護手",
+      "qty": 1
+    },
+    {
+      "type": "個人護理用品",
+      "name": "潤膚",
+      "lastPurchased": "2026-10-06",
+      "daysSince": 36,
+      "suggest": "暫緩",
+      "note": "約每 133 日一件 · 預計 97 日要補貨",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/6f49/6e62/494e/wiFnCDUVye20251202123924_1200.jpg",
+      "imageAlt": "Cetaphil 潤膚膏 保濕霜 550克 (13024) (到期日:",
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-10-06",
+          "daysSince": 36,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/6f49/6e62/494e/wiFnCDUVye20251202123924_1200.jpg",
+          "imageAlt": "Cetaphil 潤膚膏 保濕霜 550克 (13024) (到期日:",
+          "link": "https://www.hktvmall.com/p/H7353001_S_PC-0032-0150",
+          "note": "",
+          "title": "Cetaphil 潤膚膏 保濕霜 550克 (13024) (到期日:",
+          "qty": 1
+        },
+        {
+          "brand": "MOIST DIANE",
+          "lastPurchased": "2026-05-26",
+          "daysSince": 169,
+          "image": "https://medias.pns.hk/publishing/PNSHK-106039-front-thumbnail.jpg?version=1732703682",
+          "imageAlt": "森林系乳酸菌水嫩美肌潤膚乳 +$79換購MOIST DIANE VIPDAY:92折 26PAM2 comeback:$1000-$500",
+          "link": "https://www.pns.hk/森林系乳酸菌水嫩美肌潤膚乳/p/BP_106039",
+          "note": "",
+          "title": "森林系乳酸菌水嫩美肌潤膚乳 +$79換購MOIST DIANE VIPDAY:92折 26PAM2 comeback:$1000-$500",
+          "pack": "500ML",
+          "qty": 1
+        }
+      ],
+      "subtype": "潤膚",
+      "pack": "550克",
       "qty": 1
     },
     {
