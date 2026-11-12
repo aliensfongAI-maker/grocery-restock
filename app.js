@@ -642,11 +642,6 @@
     return ymd;
   }
 
-  function formatDaysSince(n) {
-    if (n == null || n === "") return "—";
-    return String(n);
-  }
-
   function typeSortKey(type) {
     const i = TYPE_ORDER.indexOf(type);
     return i === -1 ? 999 : i;
@@ -897,25 +892,6 @@
   /** Today or a later HKT delivery date. */
   function isOpenDelivery(entry) {
     return deliveryTiming(entry) != null;
-  }
-
-  function deliveryPhrase(entry) {
-    if (!entry || entry.manualHold) return "";
-    const timing = deliveryTiming(entry);
-    if (!timing) return "";
-    if (timing.kind === "today") return t("deliveringToday");
-    return t("daysUntil", { n: String(timing.n) });
-  }
-
-  /** Days-ago figure. A stale negative daysSince on a past date uses the calendar. */
-  function pastDaysValue(entry) {
-    const since = finiteNumber(entry && entry.daysSince);
-    if (since != null && since < 0) {
-      const ahead = daysAfterHktToday(entry && entry.lastPurchased);
-      if (ahead != null && ahead < 0) return Math.abs(ahead);
-      return null;
-    }
-    return entry ? entry.daysSince : null;
   }
 
   /** Bought pieces: qty, then quantity, then count. Missing or invalid is 1. */
@@ -1320,20 +1296,6 @@
     );
   }
 
-  function daysMetaHtml(entry) {
-    const phrase = deliveryPhrase(entry);
-    if (phrase) {
-      return '<div><span class="meta-value">' + escapeHtml(phrase) + "</span></div>";
-    }
-    return (
-      '<div><span class="meta-label">' +
-      escapeHtml(t("daysLabel")) +
-      '</span><span class="meta-value">' +
-      escapeHtml(formatDaysSince(pastDaysValue(entry))) +
-      "</span></div>"
-    );
-  }
-
   function qtyHtml(entry, className) {
     return (
       '<span class="' +
@@ -1487,10 +1449,6 @@
     const secondary = labels.secondary
       ? '<p class="brand-title">' + escapeHtml(labels.secondary) + "</p>"
       : "";
-    const note =
-      entry.note && String(entry.note).trim()
-        ? '<p class="item-note">' + escapeHtml(entry.note) + "</p>"
-        : "";
     const imgSrc = safeLink(entry.image);
     const img = imgSrc
       ? thumbHtml(
@@ -1512,15 +1470,6 @@
       qtyHtml(entry, "brand-qty") +
       "</p>" +
       secondary +
-      '<div class="item-meta brand-meta">' +
-      '<div><span class="meta-label">' +
-      escapeHtml(t("lastPurchased")) +
-      '</span><span class="meta-value">' +
-      escapeHtml(formatDate(entry.lastPurchased)) +
-      "</span></div>" +
-      daysMetaHtml(entry) +
-      "</div>" +
-      note +
       "</div></div></li>"
     );
   }
@@ -1701,17 +1650,38 @@
     );
   }
 
+  /** Same tie-break sortItems uses inside one type section: daysSince desc, then name. */
+  function compareWithinSubtype(a, b) {
+    const day = (b.daysSince || 0) - (a.daysSince || 0);
+    if (day) return day;
+    return String(a.name).localeCompare(String(b.name), "zh-HK");
+  }
+
   /**
-   * Consecutive main rows that share a non-empty subtype. Empty subtypes never
-   * join a neighbor, including another empty subtype.
+   * One type section's rows. Identical non-empty subtypes are gathered into a
+   * single run so the subtype cell can merge, even when daysSince had split them.
+   * Run order follows the first item of each subtype in that date/name order.
+   * A blank subtype is never a group: each empty row stays its own cell, and the
+   * type heading is not used as a stand-in.
    */
   function subtypeRuns(items) {
+    const sorted = items.slice().sort(compareWithinSubtype);
     const runs = [];
-    for (let i = 0; i < items.length; i++) {
-      const key = rowCopyParts(items[i]).subtypeKey;
-      const prev = runs.length ? runs[runs.length - 1] : null;
-      if (prev && key && prev.key === key) prev.items.push(items[i]);
-      else runs.push({ key: key, items: [items[i]] });
+    const indexByKey = new Map();
+    for (let i = 0; i < sorted.length; i++) {
+      const item = sorted[i];
+      const key = item.subtype == null ? "" : String(item.subtype).trim();
+      if (!key) {
+        runs.push({ key: "", items: [item] });
+        continue;
+      }
+      let at = indexByKey.get(key);
+      if (at == null) {
+        at = runs.length;
+        indexByKey.set(key, at);
+        runs.push({ key: key, items: [] });
+      }
+      runs[at].items.push(item);
     }
     return runs;
   }
