@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T11:04:51+08:00",
+  "updatedAt": "2026-11-12T12:14:06+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -334,7 +334,7 @@
       "lastPurchased": "2026-11-17",
       "daysSince": -5,
       "suggest": "在途",
-      "note": "約每 25 日一包 · 預計 54 日要補貨",
+      "note": "約每 5 日一包 · 預計 15 日要補貨",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/c95f/9e1b/3cd5/fpmVlfeqVm20260518161249_1200.jpg",
       "imageAlt": "[2件優惠裝] 皇牌系列懸掛式面紙 (忠犬麻糬柴犬/蠟筆小新)",
       "brands": [
@@ -348,6 +348,17 @@
           "note": "",
           "title": "VIRJOY 4層懸掛式面紙 (新舊包裝隨機發貨)",
           "qty": 2
+        },
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-14",
+          "daysSince": -2,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H0888001_S_10157998",
+          "note": "",
+          "title": "皇牌系列懸掛式面紙 (忠犬麻糬柴犬/蠟筆小新)(新舊包裝隨機發送)",
+          "qty": 1
         },
         {
           "brand": null,
@@ -2048,13 +2059,24 @@
     {
       "type": "飲品／即沖飲品",
       "name": "盒裝牛奶",
-      "lastPurchased": "2026-10-15",
-      "daysSince": 28,
-      "suggest": "優先",
-      "note": "約每 4 日一件 · 預計已到期；紙盒／利樂；唔歸入膠樽裝",
+      "lastPurchased": "2026-11-14",
+      "daysSince": -2,
+      "suggest": "在途",
+      "note": "約每 5 日一件 · 預計 11 日要補貨；紙盒／利樂；唔歸入膠樽裝",
       "image": "https://images.hktvmall.com/h0888001/4b9d740002e048c7c1b612f938c750be7b68ab59/h0888001_10015493a_221128103133_01_1200.jpg",
       "imageAlt": "高鈣低脂牛奶飲品 6 x 225毫升 x 2 排",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-14",
+          "daysSince": -2,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/S2090001_S_4004421C",
+          "note": "",
+          "title": "高鈣低脂牛奶 飲品 (綠) (250毫升 X 6 X 2)",
+          "qty": 2
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-15",
@@ -2178,23 +2200,11 @@
           "note": "",
           "title": "高鈣低脂奶 / 到期日:2026年2月20日 /",
           "qty": 2
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2025-12-30",
-          "daysSince": 317,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/27b8/e072/0d5d/dAbpxcJnit20241204143145_1200.jpg",
-          "imageAlt": "【6盒裝】韓國延世大學 1A 牛乳 高品質牛奶 190ml 早餐奶 全",
-          "link": "https://www.hktvmall.com/p/H0967001_S_SD8801753000543_6pcs",
-          "note": "",
-          "title": "【6盒裝】韓國延世大學 1A 牛乳 高品質牛奶 190ml 早餐奶 全",
-          "pack": "190ml",
-          "qty": 1
         }
       ],
       "subtype": "乳製品",
       "pack": "6×225毫升",
-      "qty": 4
+      "qty": 2
     },
     {
       "type": "飲品／即沖飲品",
@@ -3476,13 +3486,24 @@
     {
       "type": "水果",
       "name": "奇異果",
-      "lastPurchased": "2026-10-24",
-      "daysSince": 19,
+      "lastPurchased": "2026-11-14",
+      "daysSince": -2,
       "suggest": "",
       "note": "",
       "image": "https://medias.pns.hk/publishing/PNSHK-33082-front-thumbnail.jpg?version=1732811758",
       "imageAlt": "奇異果（新西蘭） VIP26:$400-$30 買5慳$9.5",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-14",
+          "daysSince": -2,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/B0812001_S_00080",
+          "note": "",
+          "title": "紐西蘭Zespri陽光珍寶金奇異果 - 1個",
+          "qty": 2
+        },
         {
           "brand": null,
           "lastPurchased": "2026-10-24",
@@ -3518,7 +3539,7 @@
         }
       ],
       "subtype": "新鮮水果",
-      "qty": 5
+      "qty": 2
     },
     {
       "type": "水果",
@@ -3667,8 +3688,8 @@
     {
       "type": "水果",
       "name": "火龍果",
-      "lastPurchased": "2026-11-08",
-      "daysSince": 4,
+      "lastPurchased": "2026-11-14",
+      "daysSince": -2,
       "suggest": "",
       "note": "",
       "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/66f2/2011/e659/mmxtkhlYTa20260615123130_96.png",
@@ -3676,8 +3697,8 @@
       "brands": [
         {
           "brand": null,
-          "lastPurchased": "2026-11-08",
-          "daysSince": 4,
+          "lastPurchased": "2026-11-14",
+          "daysSince": -2,
           "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/66f2/2011/e659/mmxtkhlYTa20260615123130_96.png",
           "imageAlt": "紅肉火龍果 - 1個",
           "link": "https://www.hktvmall.com/p/B0812001_S_00033",
@@ -6095,13 +6116,24 @@
     {
       "type": "豉油／生抽／頭抽／蒸魚豉油／蠔油",
       "name": "生抽",
-      "lastPurchased": "2026-05-26",
-      "daysSince": 170,
-      "suggest": "優先",
-      "note": "約每 16 日一件 · 預計已到期",
-      "image": "https://medias.pns.hk/publishing/PNSHK-402979-front-thumbnail.jpg?version=1758288823",
-      "imageAlt": "頭道原釀生抽 VIPDAY:92折 26PAM2 comeback:$1000-$500",
+      "lastPurchased": "2026-11-14",
+      "daysSince": -2,
+      "suggest": "在途",
+      "note": "約每 24 日一件 · 預計 26 日要補貨",
+      "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ebc5/7c64/ab39/ZMgnwSCqqd20250218180948_1200.jpg",
+      "imageAlt": "頭道原釀頭抽 #豉油 #生抽 #醬油 (新舊包裝隨機送出) 舊名:",
       "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-14",
+          "daysSince": -2,
+          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ebc5/7c64/ab39/ZMgnwSCqqd20250218180948_1200.jpg",
+          "imageAlt": "頭道原釀頭抽 #豉油 #生抽 #醬油 (新舊包裝隨機送出) 舊名:",
+          "link": "https://www.hktvmall.com/p/H0888001_S_10143996",
+          "note": "",
+          "title": "頭道原釀頭抽 #豉油 #生抽 #醬油 (新舊包裝隨機送出) 舊名:",
+          "qty": 1
+        },
         {
           "brand": "李錦記",
           "lastPurchased": "2026-05-26",
@@ -6124,17 +6156,6 @@
           "note": "",
           "title": "減鹽生抽 送李錦記減鹽頭抽",
           "pack": "500ML",
-          "qty": 1
-        },
-        {
-          "brand": null,
-          "lastPurchased": "2026-04-22",
-          "daysSince": 204,
-          "image": "https://cdn-media.hktvmall.com/hktv-mms/HKTV/mms/uploadProductImage/ebc5/7c64/ab39/ZMgnwSCqqd20250218180948_1200.jpg",
-          "imageAlt": "頭道原釀頭抽 #豉油 #生抽 #醬油 (新舊包裝隨機送出) 舊名:",
-          "link": "https://www.hktvmall.com/p/H0888001_S_10143996",
-          "note": "",
-          "title": "頭道原釀頭抽 #豉油 #生抽 #醬油 (新舊包裝隨機送出) 舊名:",
           "qty": 1
         },
         {
@@ -6174,7 +6195,7 @@
       ],
       "subtype": "生抽",
       "pack": "500ML",
-      "qty": 2
+      "qty": 1
     },
     {
       "type": "豉油／生抽／頭抽／蒸魚豉油／蠔油",
@@ -7444,6 +7465,7 @@
           "qty": 2
         }
       ],
+      "subtype": "內用藥品",
       "pack": "16粒",
       "qty": 2
     },
@@ -7466,6 +7488,30 @@
           "link": "https://www.hktvmall.com/p/H0888001_S_10170168",
           "note": "",
           "title": "健康礦物質黑豆麥茶",
+          "qty": 1
+        }
+      ],
+      "qty": 1
+    },
+    {
+      "type": "未對上分類",
+      "name": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
+      "lastPurchased": "2026-11-20",
+      "daysSince": -8,
+      "suggest": "在途",
+      "note": "分類未對上（暫列）",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-20",
+          "daysSince": -8,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.hktvmall.com/p/H6966001_S_10913",
+          "note": "",
+          "title": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
           "qty": 1
         }
       ],
