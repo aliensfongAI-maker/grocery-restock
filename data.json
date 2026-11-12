@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T12:14:06+08:00",
+  "updatedAt": "2026-11-12T13:55:24+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -2029,6 +2029,31 @@
         }
       ],
       "subtype": "嬰兒用品",
+      "qty": 1
+    },
+    {
+      "type": "嬰兒用品／食品",
+      "name": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
+      "lastPurchased": "2026-11-20",
+      "daysSince": -8,
+      "suggest": "在途",
+      "note": "",
+      "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/f8cd/2309/9098/PdauQuyIDD20230216162112_1200.jpg",
+      "imageAlt": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
+      "brands": [
+        {
+          "brand": null,
+          "lastPurchased": "2026-11-20",
+          "daysSince": -8,
+          "image": "https://cdn-mms.hktvmall.com/hktv/mms/uploadProductImage/f8cd/2309/9098/PdauQuyIDD20230216162112_1200.jpg",
+          "imageAlt": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
+          "link": "https://www.hktvmall.com/p/H6966001_S_10913",
+          "note": "",
+          "title": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
+          "qty": 1
+        }
+      ],
+      "subtype": "嬰兒玩具",
       "qty": 1
     },
     {
@@ -7488,30 +7513,6 @@
           "link": "https://www.hktvmall.com/p/H0888001_S_10170168",
           "note": "",
           "title": "健康礦物質黑豆麥茶",
-          "qty": 1
-        }
-      ],
-      "qty": 1
-    },
-    {
-      "type": "未對上分類",
-      "name": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
-      "lastPurchased": "2026-11-20",
-      "daysSince": -8,
-      "suggest": "在途",
-      "note": "分類未對上（暫列）",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": null,
-          "lastPurchased": "2026-11-20",
-          "daysSince": -8,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.hktvmall.com/p/H6966001_S_10913",
-          "note": "",
-          "title": "LEGO® DUPLO® 拼砌顆粒盒 10913 (得寶, 經典積木盒",
           "qty": 1
         }
       ],
