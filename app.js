@@ -67,7 +67,7 @@
       suggestTransit: "已下單",
       typeLabel: "類型",
       typeAll: "全部類型",
-      imagesToggle: "圖片",
+      detailsToggle: "詳情",
       emptyFilter: "冇符合條件嘅項目。",
       footer: "公開建議工具 · 唔含私人資料 · 時間為香港時間（HKT） · 剔除同手動暫緩另存 Google Sheet",
       excludeHelp: "呢項會喺補貨清單隱藏，之後可以「回復」。同「手動暫緩」唔同：未使買住會留喺主清單。建議維持原樣，唔改 data.json。",
@@ -174,7 +174,7 @@
       suggestTransit: "Ordered",
       typeLabel: "Type",
       typeAll: "All types",
-      imagesToggle: "Images",
+      detailsToggle: "Details",
       emptyFilter: "No matching items.",
       footer: "Public suggestion tool · no private data · times are Hong Kong time (HKT) · skips and manual holds are stored in a Google Sheet",
       excludeHelp: "This item is hidden from the restock list. You can restore it later. A manual hold is different: it stays on the main list. The suggestion is left as-is, and data.json is not changed.",
@@ -282,7 +282,7 @@
       suggestTransit: "Sudah dipesan",
       typeLabel: "Jenis",
       typeAll: "Semua jenis",
-      imagesToggle: "Gambar",
+      detailsToggle: "Detail",
       emptyFilter: "Tidak ada item yang cocok.",
       footer: "Alat saran publik · tanpa data pribadi · waktu dalam Waktu Hong Kong (HKT) · lewati dan tunda manual disimpan di Google Sheet",
       excludeHelp: "Item ini disembunyikan dari daftar restok. Nanti bisa dipulihkan. Tunda manual berbeda: item tetap ada di daftar utama. Saran tidak diubah, dan data.json tidak diubah.",
@@ -1390,38 +1390,32 @@
   }
 
   /**
-   * One row of copy: name, pack, qty, subtype, then " - last delivery YYYY-MM-DD",
-   * then note and status bits separated by " · ".
+   * Three visible columns: subtype, then name + pack + qty, then
+   * "- last delivery YYYY-MM-DD · note / ETA". Subtype is not copied into the name.
+   * A missing subtype stays blank and does not fall back to the type heading.
    */
   function rowCopyParts(item) {
     const name = catalogLabel("name", item.name);
     const nameText = name ? String(name).trim() : "";
-    const subtypeSource =
-      item.subtype && String(item.subtype).trim() ? item.subtype : item.type || "";
-    const subtypeKind = item.subtype && String(item.subtype).trim() ? "subtype" : "type";
-    const subtypeText = subtypeSource
-      ? String(catalogLabel(subtypeKind, subtypeSource)).trim()
-      : "";
+    const subtypeRaw = item.subtype == null ? "" : String(item.subtype).trim();
+    const subtypeText = subtypeRaw ? String(catalogLabel("subtype", subtypeRaw)).trim() : "";
     const pack = item.pack == null ? "" : String(item.pack).trim();
     const qtyText = t("qtyValue", { n: String(pieceCount(item)) });
-    const bits = [];
-    if (pack) bits.push(pack);
-    bits.push(qtyText);
-    if (subtypeText) bits.push(subtypeText);
-    let plainRest = bits.join(" ");
-    if (plainRest) plainRest = " " + plainRest;
-    let afterQty = "";
+    let tail = "";
     if (item.lastPurchased) {
-      afterQty += " - " + t("lastPurchased") + " " + formatDate(item.lastPurchased);
+      tail = "- " + t("lastPurchased") + " " + formatDate(item.lastPurchased);
     }
     const tails = rowTailParts(item);
-    if (tails.length) afterQty += " · " + tails.join(" · ");
+    if (tails.length) tail = tail ? tail + " · " + tails.join(" · ") : tails.join(" · ");
+    const nameLine = [nameText, pack, qtyText].filter(Boolean).join(" ");
     return {
       name: nameText,
       subtype: subtypeText,
+      subtypeKey: subtypeRaw,
       pack: pack,
-      afterQty: afterQty,
-      full: (nameText + plainRest + afterQty).trim(),
+      tail: tail,
+      nameLine: nameLine,
+      full: [subtypeText, nameLine, tail].filter(Boolean).join(" | "),
     };
   }
 
@@ -1538,17 +1532,24 @@
     const pack = packHtml(copy.pack, "item-pack");
     if (pack) body += " " + pack;
     body += " " + qtyHtml(item, "item-qty");
-    if (copy.subtype) {
-      body += ' <span class="item-subtype">' + escapeHtml(copy.subtype) + "</span>";
-    }
-    if (copy.afterQty) body += escapeHtml(copy.afterQty);
     return (
       '<span class="item-copy"><span class="item-line-slot">' +
       '<button type="button" class="item-line" title="' +
-      escapeHtml(copy.full) +
+      escapeHtml(copy.nameLine) +
       '" aria-expanded="false">' +
       body +
       "</button></span></span>"
+    );
+  }
+
+  function itemTailHtml(item) {
+    const tail = rowCopyParts(item).tail;
+    return (
+      '<span class="item-tail"' +
+      (tail ? ' title="' + escapeHtml(tail) + '"' : "") +
+      ">" +
+      escapeHtml(tail) +
+      "</span>"
     );
   }
 
@@ -1565,27 +1566,52 @@
     return !!safeLink(item && item.image);
   }
 
+  /**
+   * Detail block content: brand title, date, days, note, or pack.
+   * An empty note does not count. Image-only rows are handled separately.
+   */
+  function brandHasDetail(entry) {
+    if (!entry || typeof entry !== "object") return false;
+    const keys = ["title", "brand", "note", "lastPurchased", "pack"];
+    for (let i = 0; i < keys.length; i++) {
+      const value = entry[keys[i]];
+      if (value != null && String(value).trim() !== "") return true;
+    }
+    return entry.daysSince != null && entry.daysSince !== "";
+  }
+
+  /** Chevron when expanding would reveal a title, date, note, or image. */
+  function itemHasDetails(item) {
+    if (itemHasImages(item)) return true;
+    const brands = shownBrands(item);
+    for (let i = 0; i < brands.length; i++) {
+      if (brandHasDetail(brands[i])) return true;
+    }
+    return false;
+  }
+
   function cardHtml(item) {
     const brands = shownBrands(item);
-    const hasImages = itemHasImages(item);
+    const canExpand = itemHasDetails(item);
     const key = keyOf(item);
-    const isOpen = hasImages && state.openProducts.has(key);
+    const isOpen = canExpand && state.openProducts.has(key);
     const panelId = domId("images", key);
     const copy = itemCopyHtml(item);
+    const tail = itemTailHtml(item);
     const title = '<div class="product-title-static">' + copy + "</div>";
-    const imageBtn = hasImages
+    const imageBtn = canExpand
       ? '<button type="button" class="image-toggle" aria-expanded="' +
         (isOpen ? "true" : "false") +
         '" aria-controls="' +
         panelId +
         '" aria-label="' +
-        escapeHtml(t("imagesToggle")) +
+        escapeHtml(t("detailsToggle")) +
         '">' +
         '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
         "</button>"
-      : "";
+      : '<span class="image-toggle image-toggle-spacer" aria-hidden="true"></span>';
     const itemThumb =
-      hasImages && !brands.some(brandHasImage) && safeLink(item && item.image)
+      canExpand && !brands.some(brandHasImage) && safeLink(item && item.image)
         ? thumbHtml(
             {
               image: safeLink(item.image),
@@ -1596,17 +1622,19 @@
           )
         : "";
     const cards = brands.map((entry, index) => brandHtml(entry, isOpen, index === 0 ? itemThumb : ""));
-    if (!cards.length && itemThumb && isOpen) {
+    if (!cards.length && itemThumb) {
       cards.push(
         '<li class="brand-card"><div class="brand-column"><div class="brand-visual">' +
           itemThumb +
           "</div></div></li>"
       );
     }
-    // Titles stay in the list. The chevron only reveals thumbnails.
+    // Item date, note, and ETA stay on the main row. Title and image stay hidden until expanded.
     const brandList = cards.length
-      ? '<ul class="brand-list"' +
-        (hasImages ? ' id="' + panelId + '"' : "") +
+      ? '<ul class="brand-list" id="' +
+        panelId +
+        '"' +
+        (isOpen ? "" : " hidden") +
         ">" +
         cards.join("") +
         "</ul>"
@@ -1632,6 +1660,7 @@
       '<div class="product-head">' +
       title +
       "</div>" +
+      tail +
       suggestAndActions +
       "</div>" +
       brandList +
@@ -1672,15 +1701,46 @@
     );
   }
 
+  /**
+   * Consecutive main rows that share a non-empty subtype. Empty subtypes never
+   * join a neighbor, including another empty subtype.
+   */
+  function subtypeRuns(items) {
+    const runs = [];
+    for (let i = 0; i < items.length; i++) {
+      const key = rowCopyParts(items[i]).subtypeKey;
+      const prev = runs.length ? runs[runs.length - 1] : null;
+      if (prev && key && prev.key === key) prev.items.push(items[i]);
+      else runs.push({ key: key, items: [items[i]] });
+    }
+    return runs;
+  }
+
   function itemListHtml(items) {
     const history = items.length > 0 && items.every(isHistoryOnly);
-    return (
-      '<ul class="item-list' +
-      (history ? " is-history" : READ_ONLY ? " is-readonly" : "") +
-      '">' +
-      items.map(cardHtml).join("") +
-      "</ul>"
-    );
+    const listClass = "item-list" + (history ? " is-history" : READ_ONLY ? " is-readonly" : "");
+    const groups = subtypeRuns(items)
+      .map(function (run) {
+        const label = run.key ? rowCopyParts(run.items[0]).subtype : "";
+        return (
+          '<div class="subtype-group' +
+          (run.items.length > 1 ? " is-merged" : "") +
+          (run.key ? "" : " is-empty-subtype") +
+          '" data-subtype="' +
+          escapeHtml(run.key) +
+          '">' +
+          '<div class="subtype-cell">' +
+          (label ? '<span class="subtype-label">' + escapeHtml(label) + "</span>" : "") +
+          "</div>" +
+          '<ul class="' +
+          listClass +
+          '">' +
+          run.items.map(cardHtml).join("") +
+          "</ul></div>"
+        );
+      })
+      .join("");
+    return '<div class="subtype-groups">' + groups + "</div>";
   }
 
   function nestedHtml(outers) {

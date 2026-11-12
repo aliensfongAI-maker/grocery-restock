@@ -472,16 +472,59 @@ body {
   min-width: 0;
 }
 
-.product-row {
+.subtype-groups {
   display: flex;
+  flex-direction: column;
+}
+
+.subtype-group {
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+
+.subtype-group:last-child {
+  border-bottom: none;
+}
+
+.subtype-cell {
+  display: flex;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 0.4rem 0.4rem 0.35rem 0.35rem;
+  border-right: 1px solid var(--border);
+  background: #f6f8f8;
+}
+
+.subtype-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.subtype-group .item-list {
+  min-width: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.subtype-group .item-card:last-child {
+  border-bottom: none;
+}
+
+.product-row {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) minmax(0, 1.35fr) auto auto;
   align-items: center;
-  flex-wrap: nowrap;
-  gap: 0.35rem;
+  column-gap: 0.4rem;
   min-width: 0;
 }
 
 .product-head {
-  flex: 1 1 auto;
+  grid-column: 2;
   min-width: 0;
   display: flex;
   align-items: center;
@@ -501,6 +544,7 @@ body {
 
 .image-toggle {
   appearance: none;
+  grid-column: 1;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -513,6 +557,11 @@ body {
   cursor: pointer;
   width: 1.75rem;
   min-height: 32px;
+}
+
+.image-toggle-spacer {
+  cursor: default;
+  pointer-events: none;
 }
 
 .image-toggle .chevron {
@@ -636,8 +685,70 @@ body {
 }
 
 .item-suggest {
+  grid-column: 4;
+  justify-self: end;
   display: inline-flex;
   align-items: center;
+}
+
+.item-tail {
+  grid-column: 3;
+  min-width: 0;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.product-row > .row-menu,
+.product-row > .row-actions {
+  grid-column: 5;
+  justify-self: end;
+}
+
+/* Narrow screens cannot fit subtype, name, and the delivery note on one line.
+   Keep subtype on the left. Name stays on the first line; the note wraps
+   under it so it stays readable. */
+@media (max-width: 767px) {
+  .product-row {
+    grid-template-columns: 1.75rem minmax(0, 1fr) auto auto;
+    align-items: center;
+    row-gap: 0.12rem;
+  }
+
+  .product-row > .image-toggle {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    margin-top: 0.1rem;
+  }
+
+  .product-head {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .item-suggest {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .product-row > .row-menu,
+  .product-row > .row-actions {
+    grid-column: 4;
+    grid-row: 1;
+  }
+
+  .item-tail {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  .item-line {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
 }
 
 .row-actions {
@@ -687,7 +798,8 @@ body {
   gap: 0.35rem;
 }
 
-.brand-list[hidden] {
+.brand-list[hidden],
+.item-card:not(.is-open) > .brand-list {
   display: none;
 }
 
@@ -1226,7 +1338,8 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 
-  .brand-list[hidden] {
+  .brand-list[hidden],
+  .item-card:not(.is-open) > .brand-list {
     display: none;
   }
 
@@ -1402,6 +1515,19 @@ body {
 
   .item-card:hover {
     background: #f5f8f8;
+  }
+
+  .subtype-group {
+    grid-template-columns: 6.75rem minmax(0, 1fr);
+  }
+
+  .subtype-cell {
+    padding: 0.22rem 0.45rem 0.18rem 0.4rem;
+  }
+
+  .subtype-label,
+  .item-tail {
+    font-size: 0.75rem;
   }
 
   .item-line {
