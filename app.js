@@ -1488,7 +1488,7 @@
     );
   }
 
-  function brandHtml(entry) {
+  function brandHtml(entry, imagesOpen, extraThumb) {
     const labels = brandLabelParts(entry);
     const secondary = labels.secondary
       ? '<p class="brand-title">' + escapeHtml(labels.secondary) + "</p>"
@@ -1503,10 +1503,14 @@
           { image: imgSrc, imageAlt: entry.imageAlt || labels.primary, name: labels.primary },
           "brand-thumb"
         )
+      : extraThumb || "";
+    const visual = img
+      ? '<div class="brand-visual"' + (imagesOpen ? "" : " hidden") + ">" + img + "</div>"
       : "";
     return (
       '<li class="brand-card">' +
-      img +
+      '<div class="brand-column">' +
+      visual +
       '<div class="brand-main">' +
       '<p class="brand-name">' +
       brandNameHtml(entry, labels) +
@@ -1523,7 +1527,7 @@
       daysMetaHtml(entry) +
       "</div>" +
       note +
-      "</div></li>"
+      "</div></div></li>"
     );
   }
 
@@ -1580,25 +1584,29 @@
         '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
         "</button>"
       : "";
-    const cards = brands.map(brandHtml);
-    if (hasImages && !brands.some(brandHasImage) && safeLink(item && item.image)) {
-      cards.unshift(
-        '<li class="brand-card">' +
-          thumbHtml(
+    const itemThumb =
+      hasImages && !brands.some(brandHasImage) && safeLink(item && item.image)
+        ? thumbHtml(
             {
               image: safeLink(item.image),
               imageAlt: item.imageAlt || catalogLabel("name", item.name),
               name: item.name,
             },
             "brand-thumb"
-          ) +
-          "</li>"
+          )
+        : "";
+    const cards = brands.map((entry, index) => brandHtml(entry, isOpen, index === 0 ? itemThumb : ""));
+    if (!cards.length && itemThumb && isOpen) {
+      cards.push(
+        '<li class="brand-card"><div class="brand-column"><div class="brand-visual">' +
+          itemThumb +
+          "</div></div></li>"
       );
     }
+    // Titles stay in the list. The chevron only reveals thumbnails.
     const brandList = cards.length
       ? '<ul class="brand-list"' +
         (hasImages ? ' id="' + panelId + '"' : "") +
-        (hasImages && !isOpen ? " hidden" : "") +
         ">" +
         cards.join("") +
         "</ul>"
