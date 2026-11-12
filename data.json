@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T11:00:18+08:00",
+  "updatedAt": "2026-11-12T11:04:51+08:00",
   "items": [
     {
       "type": "紙品／即棄品",
@@ -1996,6 +1996,31 @@
       "qty": 2
     },
     {
+      "type": "嬰兒用品／食品",
+      "name": "Pigeon Baby Feeding Set 嬰兒進階自學叉匙套裝連盒子, 水",
+      "lastPurchased": "2026-11-17",
+      "daysSince": -5,
+      "suggest": "在途",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": "PIGEON貝親",
+          "lastPurchased": "2026-11-17",
+          "daysSince": -5,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.watsons.com.hk/zh_HK/pigeon貝親-嬰兒進階自學叉匙套裝連盒子-水果色系-18個月-不銹鋼/p/BP_826119",
+          "note": "",
+          "title": "Pigeon Baby Feeding Set 嬰兒進階自學叉匙套裝連盒子, 水果色系 (18個月+, 不銹鋼)",
+          "qty": 1
+        }
+      ],
+      "subtype": "嬰兒用品",
+      "qty": 1
+    },
+    {
       "type": "飲品／即沖飲品",
       "name": "即溶／罐裝咖啡",
       "lastPurchased": "2026-07-02",
@@ -2355,6 +2380,33 @@
       "subtype": "水",
       "pack": "1.2公升",
       "qty": 3
+    },
+    {
+      "type": "飲品／即沖飲品",
+      "name": "Tao Ti Plant Protein Series 道地生。椰乳250毫升6",
+      "lastPurchased": "2026-11-17",
+      "daysSince": -5,
+      "suggest": "在途",
+      "note": "",
+      "image": null,
+      "imageAlt": null,
+      "brands": [
+        {
+          "brand": "道地",
+          "lastPurchased": "2026-11-17",
+          "daysSince": -5,
+          "image": null,
+          "imageAlt": null,
+          "link": "https://www.watsons.com.hk/zh_HK/道地-道地生。椰乳250毫升6包裝/p/BP_379508",
+          "note": "",
+          "title": "Tao Ti Plant Protein Series 道地生。椰乳250毫升6包裝",
+          "pack": "250毫升6包裝",
+          "qty": 1
+        }
+      ],
+      "subtype": "乳製品",
+      "pack": "250毫升6包裝",
+      "qty": 1
     },
     {
       "type": "即食麵／麵／意粉",
@@ -7417,56 +7469,6 @@
           "qty": 1
         }
       ],
-      "qty": 1
-    },
-    {
-      "type": "未對上分類",
-      "name": "Pigeon Baby Feeding Set 嬰兒進階自學叉匙套裝連盒子, 水",
-      "lastPurchased": "2026-11-17",
-      "daysSince": -5,
-      "suggest": "在途",
-      "note": "分類未對上（暫列）",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": "PIGEON貝親",
-          "lastPurchased": "2026-11-17",
-          "daysSince": -5,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.watsons.com.hk/zh_HK/pigeon貝親-嬰兒進階自學叉匙套裝連盒子-水果色系-18個月-不銹鋼/p/BP_826119",
-          "note": "",
-          "title": "Pigeon Baby Feeding Set 嬰兒進階自學叉匙套裝連盒子, 水果色系 (18個月+, 不銹鋼)",
-          "qty": 1
-        }
-      ],
-      "qty": 1
-    },
-    {
-      "type": "未對上分類",
-      "name": "Tao Ti Plant Protein Series 道地生。椰乳250毫升6",
-      "lastPurchased": "2026-11-17",
-      "daysSince": -5,
-      "suggest": "在途",
-      "note": "分類未對上（暫列）",
-      "image": null,
-      "imageAlt": null,
-      "brands": [
-        {
-          "brand": "道地",
-          "lastPurchased": "2026-11-17",
-          "daysSince": -5,
-          "image": null,
-          "imageAlt": null,
-          "link": "https://www.watsons.com.hk/zh_HK/道地-道地生。椰乳250毫升6包裝/p/BP_379508",
-          "note": "",
-          "title": "Tao Ti Plant Protein Series 道地生。椰乳250毫升6包裝",
-          "pack": "250毫升6包裝",
-          "qty": 1
-        }
-      ],
-      "pack": "250毫升6包裝",
       "qty": 1
     }
   ]
