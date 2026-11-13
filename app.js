@@ -101,6 +101,7 @@
       daysValue: "{n}日前購入",
       daysUntil: "還有 {n} 日",
       deliveringToday: "今日送貨",
+      deliveringOn: "將於{date}號送貨",
       daysLabel: "距今天數",
       restore: "回復",
       unhold: "回復日子",
@@ -209,6 +210,7 @@
       daysValueOne: "bought 1 day ago",
       daysUntil: "{n} days left",
       deliveringToday: "Delivering today",
+      deliveringOn: "Delivering on {date}",
       daysLabel: "Days ago",
       restore: "Restore",
       unhold: "Restore dates",
@@ -316,6 +318,7 @@
       daysValue: "dibeli {n} hari lalu",
       daysUntil: "{n} hari lagi",
       deliveringToday: "Dikirim hari ini",
+      deliveringOn: "Akan dikirim pada {date}",
       daysLabel: "Hari lalu",
       restore: "Pulihkan",
       unhold: "Pulihkan tanggal",
@@ -856,10 +859,13 @@
     return null;
   }
 
-  /** Calendar days from HKT today to ymd. 0 is today. Negative means that date is in the past. */
-  function daysAfterHktToday(ymd) {
+  /**
+   * Calendar days from HKT today to ymd. 0 is today. Negative means that date is in the past.
+   * todayYmd, when it is a calendar day, is that HKT day from hktYmd. Otherwise this reads hktYmd(new Date()).
+   */
+  function daysAfterHktToday(ymd, todayYmd) {
     const day = calendarYmd(ymd);
-    const today = hktYmd(new Date());
+    const today = calendarYmd(todayYmd) || hktYmd(new Date());
     if (!day || !/^\d{4}-\d{2}-\d{2}$/.test(today)) return null;
     if (day === today) return 0;
     const start = Date.UTC(+today.slice(0, 4), +today.slice(5, 7) - 1, +today.slice(8, 10));
@@ -1352,9 +1358,104 @@
   }
 
   /**
+   * Unique valid YYYY-MM-DD dates on the item and its brands.
+   * Does not read suggest or rewrite data.json.
+   */
+  function deliveryDatesOf(item) {
+    const seen = new Set();
+    const out = [];
+    const push = (value) => {
+      const day = calendarYmd(value);
+      if (!day || seen.has(day)) return;
+      seen.add(day);
+      out.push(day);
+    };
+    if (!item || typeof item !== "object") return out;
+    push(item.lastPurchased);
+    const brands = Array.isArray(item.brands) ? item.brands : [];
+    for (let i = 0; i < brands.length; i++) {
+      if (brands[i]) push(brands[i].lastPurchased);
+    }
+    return out;
+  }
+
+  /**
+   * Collapsed-row date parts, compared with an HKT calendar day from hktYmd.
+   * Past, today, and future are independent.
+   * Last delivery is only a date strictly before today. Today is 「今日送貨」.
+   * A future date is only 「將於」, including when nothing has been delivered yet.
+   * A manual hold does not add that upcoming phrase. Its own day still cannot
+   * be labeled last delivery unless that day is already before today.
+   * History-only rows use the same parts; this does not change their bucket.
+   * Parts: { kind: "last", date } | { kind: "today" } | { kind: "upcoming", dates }.
+   */
+  function deliveryDateParts(item, todayYmd) {
+    if (!item || typeof item !== "object") return [];
+    if (item.manualHold) {
+      const shown = calendarYmd(item.lastPurchased);
+      const ahead = shown ? daysAfterHktToday(shown, todayYmd) : null;
+      if (ahead != null && ahead < 0) return [{ kind: "last", date: shown }];
+      if (ahead === 0) return [{ kind: "today" }];
+      return [];
+    }
+    const dates = deliveryDatesOf(item);
+    const past = [];
+    const future = [];
+    let hasToday = false;
+    for (let i = 0; i < dates.length; i++) {
+      const day = dates[i];
+      const ahead = daysAfterHktToday(day, todayYmd);
+      if (ahead == null) continue;
+      if (ahead < 0) past.push(day);
+      else if (ahead > 0) future.push(day);
+      else hasToday = true;
+    }
+    past.sort();
+    future.sort();
+    const parts = [];
+    if (past.length) parts.push({ kind: "last", date: past[past.length - 1] });
+    if (hasToday) parts.push({ kind: "today" });
+    if (future.length) parts.push({ kind: "upcoming", dates: future });
+    return parts;
+  }
+
+  /**
+   * "- " plus the date parts joined with " · ". Empty when none apply.
+   * Refuses to print 「上次送貨」 unless the date is before todayYmd.
+   */
+  function deliveryDatePhrase(item, todayYmd, labels) {
+    const lastLabel =
+      labels && labels.lastPurchased != null ? String(labels.lastPurchased) : t("lastPurchased");
+    const todayLabel =
+      labels && labels.deliveringToday != null ? String(labels.deliveringToday) : t("deliveringToday");
+    const upcomingTemplate = labels && labels.deliveringOn != null ? String(labels.deliveringOn) : "";
+    const parts = deliveryDateParts(item, todayYmd);
+    const bits = [];
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      if (part.kind === "last") {
+        const ahead = daysAfterHktToday(part.date, todayYmd);
+        if (ahead != null && ahead < 0) bits.push(lastLabel + " " + formatDate(part.date));
+      } else if (part.kind === "today") bits.push(todayLabel);
+      else if (part.kind === "upcoming" && part.dates && part.dates.length) {
+        const joined = part.dates.join("、");
+        bits.push(
+          upcomingTemplate
+            ? upcomingTemplate.replace(/\{date\}/g, joined)
+            : t("deliveringOn", { date: joined })
+        );
+      }
+    }
+    if (!bits.length) return "";
+    return "- " + bits.join(" · ");
+  }
+
+  /**
    * Three visible columns: subtype, then name + pack + qty, then
-   * "- last delivery YYYY-MM-DD · note / ETA". Subtype is not copied into the name.
+   * "- last delivery · delivering today · delivering on · note / ETA".
+   * Subtype is not copied into the name.
    * A missing subtype stays blank and does not fall back to the type heading.
+   * Date phrases are independent and use HKT today from hktYmd.
    */
   function rowCopyParts(item) {
     const name = catalogLabel("name", item.name);
@@ -1363,10 +1464,7 @@
     const subtypeText = subtypeRaw ? String(catalogLabel("subtype", subtypeRaw)).trim() : "";
     const pack = item.pack == null ? "" : String(item.pack).trim();
     const qtyText = t("qtyValue", { n: String(pieceCount(item)) });
-    let tail = "";
-    if (item.lastPurchased) {
-      tail = "- " + t("lastPurchased") + " " + formatDate(item.lastPurchased);
-    }
+    let tail = deliveryDatePhrase(item, hktYmd(new Date()));
     const tails = rowTailParts(item);
     if (tails.length) tail = tail ? tail + " · " + tails.join(" · ") : tails.join(" · ");
     const nameLine = [nameText, pack, qtyText].filter(Boolean).join(" ");
