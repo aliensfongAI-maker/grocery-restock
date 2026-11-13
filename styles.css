@@ -516,8 +516,20 @@ body {
 }
 
 .product-row {
+  /* Chevron | 品名 | 上次送貨／備註／ETA | badge | actions.
+     Badge width is locked to 未使買住. Actions stay 0 until this page
+     actually renders a menu or buttons, then a fixed length so 優先 vs
+     未使買住, or 改類 vs 取消改類, cannot move the delivery column.
+     ≤767px replaces this template and stacks the note under the name. */
+  --suggest-track: 4.5rem;
+  --actions-track: 0px;
   display: grid;
-  grid-template-columns: 1.75rem minmax(0, 1fr) minmax(0, 1.35fr) auto auto;
+  grid-template-columns:
+    1.75rem
+    minmax(0, 1fr)
+    minmax(0, 1.35fr)
+    var(--suggest-track)
+    var(--actions-track);
   align-items: center;
   column-gap: 0.4rem;
   min-width: 0;
@@ -1333,6 +1345,26 @@ body {
 }
 
 @media (min-width: 768px) {
+  /* ⋯ is 44px. Reserve it on every row of a page that has the menu,
+     including history rows, so the delivery column shares one left edge. */
+  body:has(.row-menu) .product-row {
+    --actions-track: 2.75rem;
+  }
+
+  .item-suggest {
+    justify-self: stretch;
+    justify-content: flex-end;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .item-suggest .badge {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: end;
+  }
+
   .brand-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1538,12 +1570,30 @@ body {
     display: none;
   }
 
+  /* Full cluster: 手動暫緩／回復日子 + 改類 + 取消改類 + 暫不考慮.
+     Fixed on every row of the editable page. view.html has no buttons,
+     so its delivery column only locks against badge width. Extra labels
+     wrap inside this track instead of pushing the note. */
+  body:has(.row-actions) .product-row {
+    --actions-track: 16.5rem;
+  }
+
+  .product-row > .row-actions {
+    justify-self: stretch;
+    align-self: center;
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .row-actions {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    flex-wrap: nowrap;
+    align-content: center;
+    flex-wrap: wrap;
     gap: 0.25rem;
+    width: 100%;
+    max-width: 100%;
     flex: 0 0 auto;
   }
 
