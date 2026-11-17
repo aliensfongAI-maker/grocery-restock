@@ -65,8 +65,8 @@ describe("decideReclassOverlay", () => {
       source,
       /function applyReclassOverlay\(item\) \{\s*return decideReclassOverlay\(item, state\.overrides, READ_ONLY\);/
     );
-    assert.match(readFileSync(new URL("../index.html", import.meta.url), "utf8"), /app\.js\?v=20261113-1/);
-    assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /app\.js\?v=20261113-1/);
+    assert.match(readFileSync(new URL("../index.html", import.meta.url), "utf8"), /app\.js\?v=20261113-2/);
+    assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /app\.js\?v=20261113-2/);
     assert.match(readFileSync(new URL("../index.html", import.meta.url), "utf8"), /styles\.css\?v=20261113-1/);
     assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /styles\.css\?v=20261113-1/);
     assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /GROCERY_READ_ONLY = true/);
