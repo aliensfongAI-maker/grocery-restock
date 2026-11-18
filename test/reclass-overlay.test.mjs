@@ -24,16 +24,25 @@ const names = [
   "exclusionKey",
   "reclassText",
   "reclassCaughtUp",
+  "reclassClearVisible",
   "findOverride",
   "decideReclassOverlay",
 ];
 const sandbox = {};
 vm.runInNewContext(
   names.map(extractFunction).join("\n") +
-    "\nthis.api = { exclusionKey, reclassText, reclassCaughtUp, findOverride, decideReclassOverlay };",
+    "\nthis.api = { exclusionKey, reclassText, reclassCaughtUp, reclassClearVisible, findOverride, decideReclassOverlay };",
   sandbox
 );
-const { decideReclassOverlay } = sandbox.api;
+const { reclassClearVisible, findOverride, decideReclassOverlay } = sandbox.api;
+
+/** Same lookup the row and the dialog use: sheet identity, then the data.json row. */
+function rowWouldShowClear(grocery, overrides) {
+  const shown = decideReclassOverlay(grocery, overrides, false);
+  const type = shown && shown.sourceType ? shown.sourceType : shown && shown.type;
+  const name = shown && shown.sourceName ? shown.sourceName : shown && shown.name;
+  return reclassClearVisible(grocery, findOverride(overrides, type, name));
+}
 
 function item(extra) {
   return Object.assign(
@@ -65,10 +74,19 @@ describe("decideReclassOverlay", () => {
       source,
       /function applyReclassOverlay\(item\) \{\s*return decideReclassOverlay\(item, state\.overrides, READ_ONLY\);/
     );
-    assert.match(readFileSync(new URL("../index.html", import.meta.url), "utf8"), /app\.js\?v=20261113-2/);
-    assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /app\.js\?v=20261113-2/);
+    assert.match(readFileSync(new URL("../index.html", import.meta.url), "utf8"), /app\.js\?v=20261118-1/);
+    assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /app\.js\?v=20261118-1/);
     assert.match(readFileSync(new URL("../index.html", import.meta.url), "utf8"), /styles\.css\?v=20261113-1/);
     assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /styles\.css\?v=20261113-1/);
+    assert.match(
+      source,
+      /const clear = reclassClearVisible\(rawItem\(sheetType, sheetName\), overrideRecord\(sheetType, sheetName\)\)/
+    );
+    assert.match(source, /els\.reclassClear\.hidden = !reclassClearVisible\(raw, override\)/);
+    assert.match(source, /sheetButtonHtml\(item, "reclass", t\("reclass"\)/);
+    assert.match(source, /return hold \+ reclass \+ clear \+ exclude/);
+    const view = readFileSync(new URL("../view.html", import.meta.url), "utf8");
+    assert.doesNotMatch(view, /reclassClear|action-reclass|取消改類|data-action/);
     assert.match(readFileSync(new URL("../view.html", import.meta.url), "utf8"), /GROCERY_READ_ONLY = true/);
     const css = readFileSync(new URL("../styles.css", import.meta.url), "utf8");
     assert.match(css, /--suggest-track:\s*4\.5rem/);
@@ -189,5 +207,39 @@ describe("decideReclassOverlay", () => {
     assert.equal(decideReclassOverlay(grocery, [row({ newType: "" })], false), grocery);
     assert.equal(decideReclassOverlay(grocery, [row({ newType: "   " })], false), grocery);
     assert.equal(decideReclassOverlay(grocery, null, false), grocery);
+  });
+
+  test("取消改類 only while data.json has not caught up", () => {
+    const pendingSubtype = item({ subtype: "餅" });
+    const caughtSubtype = item({ subtype: "幼兒小食" });
+    const subtypeOverride = row();
+    assert.equal(reclassClearVisible(pendingSubtype, subtypeOverride), true);
+    assert.equal(reclassClearVisible(caughtSubtype, subtypeOverride), false);
+    assert.equal(rowWouldShowClear(pendingSubtype, [subtypeOverride]), true);
+    assert.equal(rowWouldShowClear(caughtSubtype, [subtypeOverride]), false);
+    assert.equal(decideReclassOverlay(pendingSubtype, [subtypeOverride], false).reclassPending, true);
+    assert.equal(decideReclassOverlay(caughtSubtype, [subtypeOverride], false).reclassPending, undefined);
+
+    const typeOverride = row({
+      oldType: "零食／甜品",
+      newType: "嬰兒用品／食品",
+      newSubtype: "幼兒小食",
+    });
+    const stillOld = item({ type: "零食／甜品", subtype: "餅" });
+    const moved = item({ type: "嬰兒用品／食品", subtype: "幼兒小食" });
+    assert.equal(reclassClearVisible(stillOld, typeOverride), true);
+    assert.equal(reclassClearVisible(moved, typeOverride), false);
+    assert.equal(rowWouldShowClear(stillOld, [typeOverride]), true);
+    assert.equal(rowWouldShowClear(moved, [typeOverride]), false);
+
+    const subtypeLeftBehind = item({ type: "嬰兒用品／食品", subtype: "餅" });
+    assert.equal(rowWouldShowClear(subtypeLeftBehind, [typeOverride]), false);
+    assert.equal(decideReclassOverlay(subtypeLeftBehind, [typeOverride], false).reclassPending, undefined);
+
+    assert.equal(reclassClearVisible(pendingSubtype, null), false);
+    assert.equal(reclassClearVisible(pendingSubtype, row({ newType: "  " })), false);
+    assert.equal(reclassClearVisible(item({ subtype: "" }), row({ newSubtype: "" })), false);
+    assert.equal(reclassClearVisible(item({ subtype: "  幼兒小食  " }), subtypeOverride), false);
+    assert.equal(rowWouldShowClear(pendingSubtype, []), false);
   });
 });
