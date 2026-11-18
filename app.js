@@ -992,6 +992,18 @@
     return reclassText(item.subtype) === wanted;
   }
 
+  /**
+   * 「取消改類」 only while this override is written and data.json has not
+   * applied it. `item` is the data.json row (not the display overlay, whose
+   * type and subtype are already newType / newSubtype). Hidden once those
+   * fields match, including a blank newSubtype once the type matches. An
+   * empty newType is not a pending reclass. 「改類」 stays available either way.
+   */
+  function reclassClearVisible(item, override) {
+    if (!override || !reclassText(override.newType)) return false;
+    return !reclassCaughtUp(item, override);
+  }
+
   function findOverride(overrides, type, name) {
     const key = exclusionKey(type, name);
     if (!Array.isArray(overrides)) return null;
@@ -1331,8 +1343,9 @@
       ? sheetButtonHtml(item, "unhold", t("unhold"), "action-unhold", asMenuItem)
       : sheetButtonHtml(item, "hold", t("hold"), "action-hold", asMenuItem);
     const reclass = sheetButtonHtml(item, "reclass", t("reclass"), "action-reclass", asMenuItem);
-    const pending = overrideRecord(sheetTypeOf(item), sheetNameOf(item));
-    const clear = pending
+    const sheetType = sheetTypeOf(item);
+    const sheetName = sheetNameOf(item);
+    const clear = reclassClearVisible(rawItem(sheetType, sheetName), overrideRecord(sheetType, sheetName))
       ? sheetButtonHtml(item, "reclass_clear", t("reclassClear"), "action-reclass-clear", asMenuItem)
       : "";
     return hold + reclass + clear + exclude;
@@ -2121,7 +2134,7 @@
     fillReclassTypes(selectedType);
     fillReclassSubtypes(els.reclassType.value, selectedSubtype);
     els.reclassNote.value = "";
-    if (els.reclassClear) els.reclassClear.hidden = !override;
+    if (els.reclassClear) els.reclassClear.hidden = !reclassClearVisible(raw, override);
     if (typeof els.reclassDialog.showModal === "function") {
       els.reclassDialog.showModal();
       els.reclassType.focus();
